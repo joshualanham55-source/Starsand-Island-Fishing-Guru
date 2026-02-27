@@ -8,879 +8,581 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Syne:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:      #080d14;
-  --surf:    #0d1520;
-  --raised:  #111c2a;
-  --border:  rgba(255,255,255,0.07);
-  --bhi:     rgba(0,210,230,0.35);
-  --acc:     #00d2e6;
-  --acc2:    #00ffb3;
-  --gold:    #f5c842;
-  --coral:   #ff6b6b;
-  --rain:    #7ec8f8;
-  --snow:    #c8e8ff;
-  --text:    #b8cfd8;
-  --hi:      #e8f4f8;
-  --dim:     #4a6878;
-  --mono:    'JetBrains Mono', monospace;
-}
+:root{--bg:#070c13;--surf:#0c1520;--panel:#101e2e;--raised:#152334;--bdr:rgba(255,255,255,0.065);--acc:#00d2e6;--acc2:#00ffb3;--gold:#f5c842;--coral:#ff6b6b;--rain:#7ec8f8;--snow:#c8e8ff;--txt:#adc8d4;--hi:#e4f2f8;--dim:#3f5f72;--mono:'JetBrains Mono',monospace}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-size:14px;line-height:1.6;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.6}
-.glow-bg{position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 50% at 15% 90%,rgba(0,180,210,.06) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 85% 5%,rgba(0,255,179,.04) 0%,transparent 70%)}
+body{background:var(--bg);color:var(--txt);font-family:'Syne',sans-serif;font-size:14px;line-height:1.6;overflow-x:hidden;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.7}
+.ambient{position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 60% 40% at 10% 95%,rgba(0,180,210,.055) 0%,transparent 70%),radial-gradient(ellipse 45% 35% at 90% 5%,rgba(0,255,179,.035) 0%,transparent 70%)}
 .app{position:relative;z-index:1}
-
-/* HEADER */
-header{padding:52px 48px 36px;max-width:1240px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.logo-eyebrow{font-family:var(–mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(–acc);margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.logo-eyebrow::before{content:’’;display:inline-block;width:24px;height:1px;background:var(–acc);opacity:.6}
-h1{font-family:‘Cinzel’,serif;font-size:clamp(1.7rem,4.5vw,3rem);font-weight:600;color:var(–hi);letter-spacing:3px;line-height:1}
-h1 em{display:block;font-style:normal;font-size:.38em;font-weight:400;color:var(–acc);letter-spacing:6px;margin-top:8px;font-family:var(–mono)}
-.header-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;padding-bottom:4px}
-.meta-pill{font-family:var(–mono);font-size:10px;color:var(–dim);border:1px solid var(–border);padding:5px 12px;border-radius:4px;letter-spacing:1px;white-space:nowrap}
-.meta-pill span{color:var(–hi);font-size:12px;font-weight:600}
-
-/* NAV */
-.nav-wrap{position:sticky;top:0;z-index:50;background:rgba(8,13,20,.9);backdrop-filter:blur(20px) saturate(1.4);border-bottom:1px solid var(–border)}
-nav{max-width:1240px;margin:0 auto;padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none}
+header{padding:44px 48px 30px;max-width:1280px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.logo-eye{font-family:var(--mono);font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:var(--acc);margin-bottom:9px;display:flex;align-items:center;gap:8px;opacity:.8}
+.logo-eye::before{content:'';width:20px;height:1px;background:var(--acc)}
+h1{font-family:'Cinzel',serif;font-size:clamp(1.5rem,4vw,2.8rem);font-weight:600;color:var(--hi);letter-spacing:3px;line-height:1}
+h1 em{display:block;font-style:normal;font-size:.36em;font-weight:400;color:var(--acc);letter-spacing:5px;margin-top:7px;font-family:var(--mono)}
+.hstats{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;padding-bottom:3px}
+.hs{font-family:var(--mono);font-size:10px;color:var(--dim);border:1px solid var(--bdr);padding:4px 11px;border-radius:3px;letter-spacing:.8px;white-space:nowrap}
+.hs b{color:var(--hi);font-size:11px}
+.nav-wrap{position:sticky;top:0;z-index:60;background:rgba(7,12,19,.93);backdrop-filter:blur(22px) saturate(1.5);border-bottom:1px solid var(--bdr)}
+nav{max-width:1280px;margin:0 auto;padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
-.nb{flex-shrink:0;background:none;border:none;border-bottom:2px solid transparent;padding:16px 22px;font-family:var(–mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(–dim);cursor:pointer;transition:color .2s,border-color .2s;white-space:nowrap}
-.nb:hover{color:var(–text)}
-.nb.active{color:var(–acc);border-bottom-color:var(–acc)}
-
-/* MAIN */
-main{max-width:1240px;margin:0 auto;padding:36px 48px 96px}
+.nb{flex-shrink:0;background:none;border:none;border-bottom:2px solid transparent;padding:15px 20px;font-family:var(--mono);font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);cursor:pointer;transition:color .18s,border-color .18s;white-space:nowrap}
+.nb:hover{color:var(--txt)}
+.nb.active{color:var(--acc);border-bottom-color:var(--acc)}
+main{max-width:1280px;margin:0 auto;padding:0 48px 96px}
 .tab{display:none}
-.tab.active{display:block;animation:reveal .25s ease}
-@keyframes reveal{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-
-/* TAB HEAD */
-.tab-head{margin-bottom:28px}
-.tab-head h2{font-family:‘Cinzel’,serif;font-size:1.15rem;font-weight:600;color:var(–hi);letter-spacing:1px;margin-bottom:5px}
-.tab-head p{font-size:12px;color:var(–dim);font-family:var(–mono)}
-
-/* FILTERS */
-.filter-bar{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:24px;align-items:flex-end}
-.fg{display:flex;flex-direction:column;gap:7px}
-.fl{font-family:var(–mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(–dim)}
-.chips{display:flex;flex-wrap:wrap;gap:5px}
-.chip{padding:4px 12px;border:1px solid var(–border);border-radius:3px;font-family:var(–mono);font-size:10px;color:var(–dim);background:transparent;cursor:pointer;transition:all .15s;letter-spacing:.5px}
-.chip:hover{border-color:rgba(0,210,230,.3);color:var(–text)}
-.chip.active{background:rgba(0,210,230,.1);border-color:var(–acc);color:var(–acc)}
-.search-box{background:var(–surf);border:1px solid var(–border);border-radius:4px;padding:7px 14px 7px 36px;color:var(–hi);font-family:var(–mono);font-size:12px;width:220px;outline:none;transition:border-color .2s;background-image:url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘13’ height=‘13’ viewBox=‘0 0 24 24’ fill=‘none’ stroke=’%234a6878’ stroke-width=‘2’%3E%3Ccircle cx=‘11’ cy=‘11’ r=‘8’/%3E%3Cpath d=‘m21 21-4.35-4.35’/%3E%3C/svg%3E”);background-repeat:no-repeat;background-position:12px center}
-.search-box::placeholder{color:var(–dim)}
-.search-box:focus{border-color:rgba(0,210,230,.4)}
-
-/* BIOME SECTION */
-.biome-sec{margin-bottom:48px}
-.biome-label{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(–border)}
-.biome-icon{width:28px;height:28px;background:var(–raised);border:1px solid var(–border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
-.biome-title{font-family:‘Cinzel’,serif;font-size:.85rem;letter-spacing:1.5px;color:var(–hi);font-weight:600}
-.biome-badge{font-family:var(–mono);font-size:9px;color:var(–dim);border:1px solid var(–border);padding:2px 8px;border-radius:3px;letter-spacing:1px;margin-left:auto}
-.biome-note{font-family:var(–mono);font-size:9px;color:var(–acc);background:rgba(0,210,230,.08);border:1px solid rgba(0,210,230,.2);padding:2px 8px;border-radius:3px}
-.biome-senior{font-family:var(–mono);font-size:9px;color:var(–gold);background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.2);padding:2px 8px;border-radius:3px}
-
-/* TABLE */
-.tw{overflow-x:auto;border-radius:6px;border:1px solid var(–border)}
-table{width:100%;border-collapse:collapse;font-size:13px}
-thead tr{background:var(–surf)}
-th{font-family:var(–mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(–dim);padding:10px 14px;text-align:left;font-weight:400;white-space:nowrap;border-bottom:1px solid var(–border)}
-tbody tr{border-bottom:1px solid var(–border);transition:background .1s}
+.tab.active{display:block;animation:reveal .22s ease}
+@keyframes reveal{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.filter-panel{position:sticky;top:47px;z-index:55;background:rgba(7,12,19,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);padding:11px 0 8px;margin:0 -48px;padding-left:48px;padding-right:48px}
+.fp-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:7px}
+.fp-row:last-of-type{margin-bottom:0}
+.fp-label{font-family:var(--mono);font-size:8.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--dim);flex-shrink:0;min-width:50px}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{padding:3px 10px;border:1px solid var(--bdr);border-radius:2px;font-family:var(--mono);font-size:9.5px;color:var(--dim);background:transparent;cursor:pointer;transition:all .12s;letter-spacing:.4px;white-space:nowrap;user-select:none}
+.chip:hover{border-color:rgba(0,210,230,.28);color:var(--txt)}
+.chip.on{background:rgba(0,210,230,.11);border-color:var(--acc);color:var(--acc)}
+.chip.on-gold{background:rgba(245,200,66,.09);border-color:rgba(245,200,66,.45);color:var(--gold)}
+.search-wrap{position:relative;flex-shrink:0}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--dim)}
+.search-box{background:var(--panel);border:1px solid var(--bdr);border-radius:2px;padding:5px 12px 5px 32px;color:var(--hi);font-family:var(--mono);font-size:11px;width:190px;outline:none;transition:border-color .15s,box-shadow .15s}
+.search-box::placeholder{color:var(--dim)}
+.search-box:focus{border-color:rgba(0,210,230,.35);box-shadow:0 0 0 2px rgba(0,210,230,.07)}
+.fp-right{margin-left:auto;display:flex;align-items:center;gap:9px;flex-shrink:0}
+.result-count{font-family:var(--mono);font-size:10px;color:var(--dim);white-space:nowrap}
+.result-count b{color:var(--acc);font-size:11px}
+.clear-btn{font-family:var(--mono);font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--dim);background:none;border:1px solid var(--bdr);border-radius:2px;padding:3px 8px;cursor:pointer;transition:all .12s;display:none}
+.clear-btn:hover{border-color:rgba(0,210,230,.3);color:var(--acc)}
+.clear-btn.show{display:block}
+.active-pills{display:none;flex-wrap:wrap;gap:4px;padding:7px 0 2px}
+.active-pills.show{display:flex}
+.apill{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:rgba(0,210,230,.09);border:1px solid rgba(0,210,230,.22);border-radius:2px;font-family:var(--mono);font-size:8.5px;color:var(--acc);cursor:pointer;transition:all .12s}
+.apill:hover{background:rgba(0,210,230,.17)}
+.apill .x{opacity:.55;font-size:10px}
+.catalog-wrap{padding-top:18px}
+.biome-sec{margin-bottom:38px}
+.biome-hd{display:flex;align-items:center;gap:9px;margin-bottom:9px;padding-bottom:8px;border-bottom:1px solid var(--bdr)}
+.bicon{width:24px;height:24px;background:var(--raised);border:1px solid var(--bdr);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.btitle{font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:1.5px;color:var(--hi);font-weight:600}
+.bnote{font-family:var(--mono);font-size:8.5px;color:var(--acc);background:rgba(0,210,230,.07);border:1px solid rgba(0,210,230,.16);padding:2px 7px;border-radius:2px}
+.bcount{font-family:var(--mono);font-size:8.5px;color:var(--dim);border:1px solid var(--bdr);padding:2px 7px;border-radius:2px;margin-left:auto}
+.tw{overflow-x:auto;border-radius:4px;border:1px solid var(--bdr)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+thead tr{background:var(--surf)}
+th{font-family:var(--mono);font-size:8.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--dim);padding:8px 12px;text-align:left;font-weight:400;white-space:nowrap;border-bottom:1px solid var(--bdr)}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.038);transition:background .1s}
 tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:rgba(255,255,255,.02)}
+tbody tr:hover{background:rgba(0,210,230,.028)}
 tbody tr.hidden{display:none}
-td{padding:9px 14px;color:var(–text);vertical-align:middle}
-td.fn{font-size:13px;font-weight:600;color:var(–hi);white-space:nowrap}
-td.fn.king{color:var(–gold)}
-td.tc{font-family:var(–mono);font-size:11px;color:var(–dim);white-space:nowrap}
-td.pr{font-family:var(–mono);font-size:11px;color:var(–acc2)}
-.senior-dot{display:inline-block;width:6px;height:6px;background:var(–gold);border-radius:50%;margin-left:6px;vertical-align:middle;flex-shrink:0}
-
-/* TAGS */
-.t{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:3px;font-family:var(–mono);font-size:10px;white-space:nowrap;margin:1px}
-.t-bug   {background:rgba(134,200,100,.1); border:1px solid rgba(134,200,100,.25);color:#8BC34A}
-.t-veggie{background:rgba(0,188,140,.1);   border:1px solid rgba(0,188,140,.25); color:#00bfa5}
-.t-meat  {background:rgba(245,120,60,.1);  border:1px solid rgba(245,120,60,.25);color:#FF8C42}
-.t-any   {background:rgba(0,210,230,.08);  border:1px solid rgba(0,210,230,.2);  color:var(–acc)}
-.t-sp    {background:rgba(130,200,100,.1); border:1px solid rgba(130,200,100,.25);color:#a5d67a}
-.t-su    {background:rgba(255,170,50,.1);  border:1px solid rgba(255,170,50,.25);color:#FFA726}
-.t-au    {background:rgba(220,120,60,.1);  border:1px solid rgba(220,120,60,.25);color:#e8855a}
-.t-wi    {background:rgba(120,190,255,.1); border:1px solid rgba(120,190,255,.25);color:#90CAF9}
-.t-sun   {background:rgba(255,235,80,.08); border:1px solid rgba(255,235,80,.2);  color:#f5e642}
-.t-rain  {background:rgba(126,200,248,.1); border:1px solid rgba(126,200,248,.25);color:var(–rain)}
-.t-snow  {background:rgba(200,232,255,.1); border:1px solid rgba(200,232,255,.25);color:var(–snow)}
-.t-all   {background:rgba(255,255,255,.04);border:1px solid var(–border);color:var(–dim)}
-
-/* NO RESULTS */
-.empty{text-align:center;padding:56px 0;color:var(–dim);font-family:var(–mono);font-size:12px;display:none}
+td{padding:7px 12px;color:var(--txt);vertical-align:middle}
+td.fn{font-size:12.5px;font-weight:600;color:var(--hi);white-space:nowrap}
+td.fn.king{color:var(--gold)}
+td.tc{font-family:var(--mono);font-size:10.5px;color:var(--dim);white-space:nowrap}
+td.pr{font-family:var(--mono);font-size:10.5px;color:var(--acc2);text-align:right}
+.sdot{display:inline-block;width:5px;height:5px;background:var(--gold);border-radius:50%;margin-left:4px;vertical-align:middle;position:relative;top:-1px}
+.t{display:inline-flex;align-items:center;padding:1px 6px;border-radius:2px;font-family:var(--mono);font-size:9.5px;white-space:nowrap;margin:1px}
+.t-bug{background:rgba(134,200,100,.09);border:1px solid rgba(134,200,100,.22);color:#8BC34A}
+.t-veggie{background:rgba(0,188,140,.09);border:1px solid rgba(0,188,140,.22);color:#00bfa5}
+.t-meat{background:rgba(245,120,60,.09);border:1px solid rgba(245,120,60,.22);color:#FF8C42}
+.t-any{background:rgba(0,210,230,.07);border:1px solid rgba(0,210,230,.18);color:var(--acc)}
+.t-sp{background:rgba(130,200,100,.09);border:1px solid rgba(130,200,100,.22);color:#a5d67a}
+.t-su{background:rgba(255,170,50,.09);border:1px solid rgba(255,170,50,.22);color:#FFA726}
+.t-au{background:rgba(220,120,60,.09);border:1px solid rgba(220,120,60,.22);color:#e8855a}
+.t-wi{background:rgba(120,190,255,.09);border:1px solid rgba(120,190,255,.22);color:#90CAF9}
+.t-sun{background:rgba(255,235,80,.07);border:1px solid rgba(255,235,80,.18);color:#f5e642}
+.t-rain{background:rgba(126,200,248,.09);border:1px solid rgba(126,200,248,.22);color:var(--rain)}
+.t-snow{background:rgba(200,232,255,.09);border:1px solid rgba(200,232,255,.22);color:var(--snow)}
+.t-all{background:rgba(255,255,255,.03);border:1px solid var(--bdr);color:var(--dim)}
+.empty{text-align:center;padding:56px 0;color:var(--dim);font-family:var(--mono);font-size:11px;display:none}
 .empty.show{display:block}
-
-/* STRATEGY */
-.season-block{margin-bottom:56px}
-.season-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(–border)}
-.season-badge{width:44px;height:44px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
-.sb-summer{background:rgba(255,170,50,.12);border:1px solid rgba(255,170,50,.3)}
-.sb-autumn{background:rgba(220,120,60,.12);border:1px solid rgba(220,120,60,.3)}
-.sb-winter{background:rgba(120,190,255,.12);border:1px solid rgba(120,190,255,.3)}
-.sb-spring{background:rgba(130,200,100,.12);border:1px solid rgba(130,200,100,.3)}
-.season-title{font-family:‘Cinzel’,serif;font-size:1.1rem;color:var(–hi);letter-spacing:.5px}
-.season-sub{font-family:var(–mono);font-size:10px;color:var(–dim);margin-top:3px}
-.new-count{font-family:var(–mono);font-size:10px;background:rgba(0,210,230,.1);border:1px solid rgba(0,210,230,.25);color:var(–acc);padding:3px 10px;border-radius:3px}
-
-/* ZONE WITHIN STRATEGY */
-.strat-zone{margin-bottom:20px}
-.strat-zone-head{font-family:var(–mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(–acc);margin-bottom:8px;padding-bottom:6px;border-bottom:1px dashed rgba(0,210,230,.15)}
-.strat-fish-list{display:flex;flex-wrap:wrap;gap:6px}
-.sfl-item{display:flex;align-items:center;gap:6px;padding:5px 10px;background:var(–surf);border:1px solid var(–border);border-radius:4px;font-size:12px}
-.sfl-item:hover{border-color:rgba(0,210,230,.25)}
-.sfl-name{color:var(–hi);font-weight:600}
-.sfl-name.king-item{color:var(–gold)}
-.sfl-detail{font-family:var(–mono);font-size:10px;color:var(–dim)}
-
-/* TIPS/NOTES CALLOUT */
-.callout{display:flex;gap:12px;padding:14px 16px;background:rgba(0,210,230,.05);border:1px solid rgba(0,210,230,.2);border-radius:6px;margin:16px 0;font-size:13px;color:var(–text)}
-.callout-warn{background:rgba(245,200,66,.05);border-color:rgba(245,200,66,.25)}
-.callout-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px}
-.callout b{color:var(–hi)}
-.callout .hl{color:var(–acc2);font-weight:600}
-.callout .warn{color:var(–gold);font-weight:600}
-
-/* GEAR */
-.gear-sec{margin-bottom:44px}
-.gear-head{font-family:var(–mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(–acc);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(–border)}
-.tier{font-family:var(–mono);font-size:10px;color:var(–acc2)}
-.bait-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
-.bait-card{background:var(–surf);border:1px solid var(–border);border-radius:6px;padding:14px 16px}
-.bait-title{font-size:13px;font-weight:600;color:var(–hi);margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.bait-body{font-size:12px;color:var(–dim);line-height:1.65}
-
-/* SOURCES */
-.src-list{display:flex;flex-direction:column;gap:9px}
-.src{display:flex;align-items:flex-start;gap:14px;padding:13px 16px;background:var(–surf);border:1px solid var(–border);border-radius:6px;text-decoration:none;transition:border-color .2s,background .2s}
-.src:hover{border-color:rgba(0,210,230,.3);background:var(–raised)}
-.src-n{font-family:var(–mono);font-size:10px;color:var(–acc);flex-shrink:0;margin-top:1px;width:22px;text-align:right}
-.src-title{font-size:13px;color:var(–hi);font-weight:600;margin-bottom:2px}
-.src-url{font-family:var(–mono);font-size:10px;color:var(–dim)}
-.src-desc{font-size:12px;color:var(–dim);margin-top:3px}
-
-/* LEGEND */
-.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;align-items:center}
-.legend-label{font-family:var(–mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(–dim);margin-right:4px}
-
-/* MOBILE */
-@media(max-width:700px){
-header{padding:28px 18px 20px}
-nav{padding:0 18px}
-main{padding:24px 18px 72px}
-.bait-grid{grid-template-columns:1fr}
-th,td{padding:7px 10px;font-size:12px}
-.filter-bar{gap:14px}
+.empty span{display:block;font-size:22px;margin-bottom:10px;opacity:.3}
+.callout{display:flex;gap:11px;padding:12px 14px;background:rgba(0,210,230,.04);border:1px solid rgba(0,210,230,.17);border-radius:4px;margin:12px 0;font-size:12.5px;color:var(--txt);line-height:1.6}
+.callout-warn{background:rgba(245,200,66,.04);border-color:rgba(245,200,66,.2)}
+.callout-icon{font-size:.95rem;flex-shrink:0;margin-top:2px}
+.callout b{color:var(--hi)}
+.callout .hl{color:var(--acc2);font-weight:600}
+.callout .warn{color:var(--gold);font-weight:600}
+.season-block{margin-bottom:50px}
+.season-hdr{display:flex;align-items:center;gap:13px;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid var(--bdr)}
+.sico{width:38px;height:38px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0}
+.s-su{background:rgba(255,170,50,.11);border:1px solid rgba(255,170,50,.27)}
+.s-au{background:rgba(220,120,60,.11);border:1px solid rgba(220,120,60,.27)}
+.s-wi{background:rgba(120,190,255,.11);border:1px solid rgba(120,190,255,.27)}
+.s-sp{background:rgba(130,200,100,.11);border:1px solid rgba(130,200,100,.27)}
+.stitle{font-family:'Cinzel',serif;font-size:1rem;color:var(--hi);letter-spacing:.5px}
+.ssub{font-family:var(--mono);font-size:9.5px;color:var(--dim);margin-top:3px}
+.snew{font-family:var(--mono);font-size:9.5px;background:rgba(0,210,230,.09);border:1px solid rgba(0,210,230,.2);color:var(--acc);padding:3px 9px;border-radius:2px;flex-shrink:0;margin-left:auto}
+.zone-block{margin-bottom:16px}
+.zone-head{font-family:var(--mono);font-size:8.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--acc);margin-bottom:7px;padding-bottom:5px;border-bottom:1px dashed rgba(0,210,230,.12)}
+.fish-pills{display:flex;flex-wrap:wrap;gap:5px}
+.fpill{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;background:var(--surf);border:1px solid var(--bdr);border-radius:3px;font-size:11.5px;transition:border-color .12s}
+.fpill:hover{border-color:rgba(0,210,230,.2)}
+.fpname{color:var(--hi);font-weight:600}
+.fpname.king{color:var(--gold)}
+.fptime{font-family:var(--mono);font-size:9px;color:var(--dim)}
+.zone-note{font-size:10.5px;color:var(--dim);font-family:var(--mono);margin-top:6px;line-height:1.55}
+.gear-sec{margin-bottom:38px;padding-top:24px}
+.gear-head{font-family:var(--mono);font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--acc);margin-bottom:12px;padding-bottom:7px;border-bottom:1px solid var(--bdr)}
+.tier{font-family:var(--mono);font-size:9.5px;color:var(--acc2)}
+.bait-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(218px,1fr));gap:8px}
+.bait-card{background:var(--surf);border:1px solid var(--bdr);border-radius:4px;padding:12px 14px}
+.bait-ttl{font-size:12px;font-weight:600;color:var(--hi);margin-bottom:5px;display:flex;align-items:center;gap:7px}
+.bait-body{font-size:11px;color:var(--dim);line-height:1.65}
+@media(max-width:720px){
+  header{padding:22px 16px 16px}
+  nav,main{padding-left:16px;padding-right:16px}
+  .filter-panel{margin:0 -16px;padding-left:16px;padding-right:16px}
+  .bait-grid{grid-template-columns:1fr}
+  th,td{padding:6px 9px;font-size:11.5px}
+  .search-box{width:150px}
 }
 </style>
-
 </head>
 <body>
-<div class="glow-bg"></div>
+<div class="ambient"></div>
 <div class="app">
-
 <header>
   <div>
-    <div class="logo-eyebrow">Aquatic Field Reference</div>
+    <div class="logo-eye">Aquatic Field Reference</div>
     <h1>Starsand Island<em>Fishing Compendium</em></h1>
   </div>
-  <div class="header-meta">
-    <div class="meta-pill"><span>105</span> Species</div>
-    <div class="meta-pill"><span>11</span> Biomes</div>
-    <div class="meta-pill"><span>4</span> Bait Types</div>
-    <div class="meta-pill"><span>3</span> Weather Conditions</div>
-    <div class="meta-pill"><span id="seniorCount">0</span> Senior Angler Required</div>
+  <div class="hstats">
+    <div class="hs"><b id="totalCount">—</b> Species</div>
+    <div class="hs"><b>11</b> Biomes</div>
+    <div class="hs"><b>4</b> Bait Types</div>
+    <div class="hs"><b id="seniorCount">—</b> Senior Angler</div>
+    <div class="hs"><b>6</b> King Variants</div>
   </div>
 </header>
-
 <div class="nav-wrap">
   <nav>
     <button class="nb active" onclick="show('catalog',this)">Fish Catalog</button>
-    <button class="nb" onclick="show('path',this)">Optimal Catch Path</button>
-    <button class="nb" onclick="show('gear',this)">Rods & Bait</button>
-    <button class="nb" onclick="show('sources',this)">Sources</button>
+    <button class="nb" onclick="show('path',this)">Catch Path</button>
+    <button class="nb" onclick="show('gear',this)">Gear &amp; Info</button>
   </nav>
 </div>
-
 <main>
-
-<!-- ══════════════════════════════════════════════════════
-     FISH CATALOG
-══════════════════════════════════════════════════════ -->
-
 <div id="tab-catalog" class="tab active">
-  <div class="tab-head">
-    <h2>Fish Catalog</h2>
-    <p>All 105 confirmed species · Conditions verified from spreadsheet data · <span style="color:var(--gold)">●</span> = Senior Angler required</p>
-  </div>
-
-  <div class="legend">
-    <span class="legend-label">Season</span>
-    <span class="t t-sp">Spring</span><span class="t t-su">Summer</span><span class="t t-au">Autumn</span><span class="t t-wi">Winter</span>
-    <span style="width:12px"></span>
-    <span class="legend-label">Weather</span>
-    <span class="t t-sun">Sunny</span><span class="t t-rain">Rainy</span><span class="t t-snow">Snowy</span><span class="t t-all">Any</span>
-    <span style="width:12px"></span>
-    <span class="legend-label">Bait</span>
-    <span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span><span class="t t-any">Any</span>
-  </div>
-
-  <div class="filter-bar">
-    <div class="fg">
-      <div class="fl">Search</div>
-      <input class="search-box" type="text" id="fishSearch" placeholder="Species name…" oninput="filterFish()">
-    </div>
-    <div class="fg">
-      <div class="fl">Bait</div>
-      <div class="chips" id="baitChips">
-        <div class="chip active" onclick="setF('bait','all',this)">All</div>
-        <div class="chip" onclick="setF('bait','bug',this)">Bug</div>
-        <div class="chip" onclick="setF('bait','veggie',this)">Veggie</div>
-        <div class="chip" onclick="setF('bait','meat',this)">Meat</div>
-        <div class="chip" onclick="setF('bait','any',this)">Any/Omni</div>
+  <div class="filter-panel">
+    <div class="fp-row">
+      <div class="fp-label">Search</div>
+      <div class="search-wrap">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="search-box" type="text" id="fishSearch" placeholder="Species name…" oninput="doFilter()">
+      </div>
+      <div class="fp-right">
+        <div class="result-count"><b id="matchCount">—</b> <span id="matchOf">species</span></div>
+        <button class="clear-btn" id="clearBtn" onclick="clearAll()">✕ Clear all</button>
       </div>
     </div>
-    <div class="fg">
-      <div class="fl">Season</div>
+    <div class="fp-row">
+      <div class="fp-label">Biome</div>
+      <div class="chips" id="biomeChips">
+        <div class="chip on" onclick="setF('biome','all',this)">All</div>
+        <div class="chip" onclick="setF('biome','Lake',this)">🏞 Lake</div>
+        <div class="chip" onclick="setF('biome','River',this)">🌊 River</div>
+        <div class="chip" onclick="setF('biome','Ocean',this)">🌍 Ocean</div>
+        <div class="chip" onclick="setF('biome','Coral Sea',this)">🪸 Coral Sea</div>
+        <div class="chip" onclick="setF('biome','Celestewave',this)">🌙 Celestewave</div>
+        <div class="chip" onclick="setF('biome','Luminwave',this)">⭐ Luminwave</div>
+        <div class="chip" onclick="setF('biome','Moonlit Forest',this)">🌲 Moonlit Forest</div>
+        <div class="chip" onclick="setF('biome','Spiritshade River',this)">✨ Spiritshade</div>
+        <div class="chip" onclick="setF('biome','Spore Cascade',this)">🍄 Spore Cascade</div>
+      </div>
+    </div>
+    <div class="fp-row">
+      <div class="fp-label">Season</div>
       <div class="chips" id="seasonChips">
-        <div class="chip active" onclick="setF('season','all',this)">All</div>
-        <div class="chip" onclick="setF('season','summer',this)">Summer</div>
-        <div class="chip" onclick="setF('season','autumn',this)">Autumn</div>
-        <div class="chip" onclick="setF('season','winter',this)">Winter</div>
-        <div class="chip" onclick="setF('season','spring',this)">Spring</div>
+        <div class="chip on" onclick="setF('season','all',this)">All</div>
+        <div class="chip" onclick="setF('season','summer',this)">☀️ Summer</div>
+        <div class="chip" onclick="setF('season','autumn',this)">🍂 Autumn</div>
+        <div class="chip" onclick="setF('season','winter',this)">❄️ Winter</div>
+        <div class="chip" onclick="setF('season','spring',this)">🌸 Spring</div>
       </div>
-    </div>
-    <div class="fg">
-      <div class="fl">Weather</div>
+      <div style="width:14px;flex-shrink:0"></div>
+      <div class="fp-label">Weather</div>
       <div class="chips" id="weatherChips">
-        <div class="chip active" onclick="setF('weather','all',this)">All</div>
+        <div class="chip on" onclick="setF('weather','all',this)">All</div>
         <div class="chip" onclick="setF('weather','sunny',this)">Sunny</div>
         <div class="chip" onclick="setF('weather','rainy',this)">Rainy</div>
         <div class="chip" onclick="setF('weather','snowy',this)">Snowy</div>
       </div>
-    </div>
-    <div class="fg">
-      <div class="fl">Rank</div>
+      <div style="width:14px;flex-shrink:0"></div>
+      <div class="fp-label">Bait</div>
+      <div class="chips" id="baitChips">
+        <div class="chip on" onclick="setF('bait','all',this)">All</div>
+        <div class="chip" onclick="setF('bait','bug',this)">Bug</div>
+        <div class="chip" onclick="setF('bait','veggie',this)">Veggie</div>
+        <div class="chip" onclick="setF('bait','meat',this)">Meat</div>
+        <div class="chip" onclick="setF('bait','any',this)">Omni</div>
+      </div>
+      <div style="width:14px;flex-shrink:0"></div>
+      <div class="fp-label">Type</div>
       <div class="chips" id="rankChips">
-        <div class="chip active" onclick="setF('rank','all',this)">All</div>
-        <div class="chip" onclick="setF('rank','senior',this)">Senior Angler Only</div>
-        <div class="chip" onclick="setF('rank','king',this)">King Variants</div>
+        <div class="chip on" onclick="setF('rank','all',this)">All</div>
+        <div class="chip on-gold" onclick="setF('rank','senior',this)">★ Senior</div>
+        <div class="chip" onclick="setF('rank','king',this)">👑 King</div>
       </div>
     </div>
+    <div class="active-pills" id="activePills"></div>
   </div>
-
-  <div id="catalogContent"></div>
-  <div class="empty" id="catalogEmpty">No species match the current filters.</div>
+  <div class="catalog-wrap">
+    <div id="catalogContent"></div>
+    <div class="empty" id="catalogEmpty"><span>🎣</span>No species match — adjust filters above.</div>
+  </div>
 </div>
-
-<!-- ══════════════════════════════════════════════════════
-     OPTIMAL CATCH PATH
-══════════════════════════════════════════════════════ -->
-
 <div id="tab-path" class="tab">
-  <div class="tab-head">
-    <h2>Optimal Catch Path</h2>
-    <p>Computed from Summer Day 1 · 105 fish across 4 seasons · Zones grouped to minimize travel</p>
+  <div style="padding-top:26px">
+    <div style="font-family:'Cinzel',serif;font-size:1.08rem;color:var(--hi);letter-spacing:1px;margin-bottom:4px">Optimal Catch Path</div>
+    <div id="pathDesc" style="font-family:var(--mono);font-size:10px;color:var(--dim);margin-bottom:18px"></div>
+    <div class="callout"><div class="callout-icon">📊</div><div><b>Route logic:</b> Starting Summer Day 1, each phase targets fish newly available that season, batched by zone to minimize travel. All-season species are caught immediately. <span class="hl">Summer unlocks 54 species</span> — the highest single-season density.</div></div>
+    <div id="pathContent"></div>
   </div>
-
-  <div class="callout">
-    <div class="callout-icon">📊</div>
-    <div>
-      <b>Route logic:</b> Each phase lists fish that become newly available that season — fish available all season or across seasons are targeted as early as possible. Within each season, targets are batched by zone to minimize travel time. <span class="hl">Summer unlocks 54 fish.</span> Autumn adds 21. Winter adds 19. Spring closes out the final 11.
+</div>
+<div id="tab-gear" class="tab">
+  <div class="gear-sec">
+    <div class="gear-head">Fishing Minigame</div>
+    <div class="tw" style="max-width:500px">
+      <table><thead><tr><th>Line Color</th><th>Action</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--hi);font-weight:600">⚪ White</td><td>Hold M1 — Reel in</td><td style="color:var(--dim);font-family:var(--mono);font-size:10.5px">Fish moving toward you; safe to pull</td></tr>
+        <tr><td style="color:var(--coral);font-weight:600">🔴 Red</td><td>Release M1 — Let go</td><td style="color:var(--dim);font-family:var(--mono);font-size:10.5px">Fish fighting; line snaps if held</td></tr>
+      </tbody></table>
     </div>
   </div>
-
-  <div id="pathContent"></div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
-     RODS & BAIT
-══════════════════════════════════════════════════════ -->
-
-<div id="tab-gear" class="tab">
-  <div class="tab-head">
-    <h2>Rods & Bait</h2>
-    <p>Higher rod tier = slower line tension build = more reaction time during the minigame</p>
-  </div>
-
-  <div class="gear-sec">
+  <div class="gear-sec" style="padding-top:0">
     <div class="gear-head">Rod Progression</div>
     <div class="tw">
-      <table>
-        <thead><tr><th>Rod</th><th>Tier</th><th>Materials / Source</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td class="fn">Wooden Rod</td><td><span class="tier">Starter</span></td><td>Given by Delphin (AquaBlue Outpost)</td><td style="color:var(--dim)">Suitable for common species only — do not use for deep-sea</td></tr>
-          <tr><td class="fn">Chrono Rod</td><td><span class="tier">Early</span></td><td>Blueprint from Delphin · Copper</td><td style="color:var(--dim)">Improves rare fish spawn rate; first real upgrade</td></tr>
-          <tr><td class="fn">Silent Rod</td><td><span class="tier">Early–Mid</span></td><td>Carbon Line + Charcoal</td><td style="color:var(--dim)">Improved sensitivity; quieter cast radius</td></tr>
-          <tr><td class="fn">Cloud Rod</td><td><span class="tier">Mid</span></td><td>Cloud materials</td><td style="color:var(--dim)">Reliable open-ocean workhorse</td></tr>
-          <tr><td class="fn">Noble Rod</td><td><span class="tier">Late</span></td><td>Prism + Iron Sheets</td><td style="color:var(--dim)">Required for deep-sea zones (Celestewave, Luminwave)</td></tr>
-          <tr><td class="fn">Titanium Rod</td><td><span class="tier">Endgame</span></td><td>Titanium · Unlocked at Senior Angler</td><td style="color:var(--dim)">King Variant specialist; Senior Angler required fish</td></tr>
-          <tr><td class="fn">Astra Rod</td><td><span class="tier">Endgame</span></td><td>Astra materials</td><td style="color:var(--dim)">Minimal tension; top-tier general performance</td></tr>
-          <tr><td class="fn">Solar Rod</td><td><span class="tier">Endgame</span></td><td>Solar materials</td><td style="color:var(--dim)">Best-in-class; tension bar barely moves</td></tr>
-        </tbody>
-      </table>
+      <table><thead><tr><th>Rod</th><th>Tier</th><th>Materials / Source</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="fn">Wooden Rod</td><td><span class="tier">Starter</span></td><td>Given by Delphin</td><td style="color:var(--dim)">Common species only — avoid deep-sea zones</td></tr>
+        <tr><td class="fn">Chrono Rod</td><td><span class="tier">Early</span></td><td>Blueprint: Delphin · Copper</td><td style="color:var(--dim)">Improves rare spawn rate; first real upgrade</td></tr>
+        <tr><td class="fn">Silent Rod</td><td><span class="tier">Early–Mid</span></td><td>Carbon Line + Charcoal</td><td style="color:var(--dim)">Improved sensitivity; quieter cast</td></tr>
+        <tr><td class="fn">Cloud Rod</td><td><span class="tier">Mid</span></td><td>Cloud materials</td><td style="color:var(--dim)">Reliable open-ocean workhorse</td></tr>
+        <tr><td class="fn">Noble Rod</td><td><span class="tier">Late</span></td><td>Prism + Iron Sheets</td><td style="color:var(--dim)"><b>Minimum for Celestewave / Luminwave</b></td></tr>
+        <tr><td class="fn">Titanium Rod</td><td><span class="tier">Endgame</span></td><td>Titanium · Senior Angler unlock</td><td style="color:var(--dim)">King Variants + rare fish specialist</td></tr>
+        <tr><td class="fn">Astra Rod</td><td><span class="tier">Endgame</span></td><td>Astra materials</td><td style="color:var(--dim)">Minimal tension; top-tier general use</td></tr>
+        <tr><td class="fn">Solar Rod</td><td><span class="tier">Endgame</span></td><td>Solar materials</td><td style="color:var(--dim)">Best-in-class; tension bar barely moves</td></tr>
+      </tbody></table>
     </div>
-    <div class="callout callout-warn" style="margin-top:12px">
-      <div class="callout-icon">⚠️</div>
-      <div><span class="warn">Never use Wooden or Chrono Rod</span> for Tuna, Mola Mola, or any Luminwave/Celestewave species. Line tension fills instantly — Noble Rod minimum for deep-sea zones. King Variants require Titanium, Astra, or Solar Rod.</div>
-    </div>
+    <div class="callout callout-warn" style="margin-top:9px"><div class="callout-icon">⚠️</div><div><span class="warn">Never use Wooden or Chrono Rod</span> for Tuna, Mola Mola, or any Celestewave/Luminwave species — line fills instantly. Noble Rod minimum for deep-sea. King Variants require Titanium, Astra, or Solar.</div></div>
   </div>
-
-  <div class="gear-sec">
+  <div class="gear-sec" style="padding-top:0">
     <div class="gear-head">Bait Types</div>
     <div class="bait-grid">
-      <div class="bait-card">
-        <div class="bait-title"><span class="t t-bug">Bug Bait</span></div>
-        <div class="bait-body">Insectivores: Betta, Foureye Butterflyfish, Tilapia, Holland's Carp, Archerfish, Alligator Gar, Alaska Blackfish, Trevally, Royal Twig Catfish, Medaka, Barracuda, Noodlefish, Carp, Glowfish (King). Available from Delphin.</div>
-      </div>
-      <div class="bait-card">
-        <div class="bait-title"><span class="t t-veggie">Veggie Bait</span></div>
-        <div class="bait-body">Herbivores: Blue Tang, Sardine, Mandarinfish, Lionfish, Mackerel, Chinese Perch, Koi, Baikal Sculpin, Lungfish, Guppy, Paradise Fish, Potato Grouper, Flathead Catfish, Fringetail Glowfish. Most coral/river species.</div>
-      </div>
-      <div class="bait-card">
-        <div class="bait-title"><span class="t t-meat">Meat Bait</span></div>
-        <div class="bait-body">Carnivores: Humphead Wrasse, Dolphinfish, Ribbon Eel, Tuna, Mola Mola, Red Porgy, Snakehead, Siberian Taimen, Anchovy, Common Rudd, Crucian Carp, Upside-Down Catfish. Essential for all deep-sea zones.</div>
-      </div>
-      <div class="bait-card">
-        <div class="bait-title"><span class="t t-any">Any / Omni</span></div>
-        <div class="bait-body">Generalists: Giant Barb, Zander, Clownfish, Bitterling, Giant River Prawn, Mototo Stingray, Brown Tiger Prawn, Greasyback Shrimp, Green Swordtail, Pearl Glowfish, Velora Cichlid, Topmouth Culter, Ide, Pale Chub.</div>
-      </div>
+      <div class="bait-card"><div class="bait-ttl"><span class="t t-bug">Bug Bait</span></div><div class="bait-body">Betta, Foureye Butterflyfish, Tilapia, Holland's Carp, Archerfish, Alligator Gar, Alaska Blackfish, Trevally, Royal Twig Catfish, Medaka, Barracuda, Noodlefish, Carp, Glowfish (King). Available from Delphin.</div></div>
+      <div class="bait-card"><div class="bait-ttl"><span class="t t-veggie">Veggie Bait</span></div><div class="bait-body">Blue Tang, Sardine, Mandarinfish, Lionfish, Mackerel, Chinese Perch, Koi, Baikal Sculpin, Lungfish, Guppy, Paradise Fish, Potato Grouper, Flathead Catfish, Fringetail Glowfish.</div></div>
+      <div class="bait-card"><div class="bait-ttl"><span class="t t-meat">Meat Bait</span></div><div class="bait-body">Humphead Wrasse, Dolphinfish, Ribbon Eel, Tuna, Mola Mola, Red Porgy, Snakehead, Siberian Taimen, Anchovy, Common Rudd, Crucian Carp, Upside-Down Catfish. Essential for all deep-sea zones.</div></div>
+      <div class="bait-card"><div class="bait-ttl"><span class="t t-any">Any / Omni</span></div><div class="bait-body">Giant Barb, Zander, Clownfish, Bitterling, Giant River Prawn, Mototo Stingray, Brown Tiger Prawn, Greasyback Shrimp, Green Swordtail, Pearl Glowfish, Velora Cichlid, Topmouth Culter, Ide, Pale Chub.</div></div>
     </div>
-    <div class="callout" style="margin-top:12px">
-      <div class="callout-icon">💡</div>
-      <div><b>Spawn refresh:</b> If your target fish isn't appearing as shadows, <span class="hl">throw bait into the area</span> to cycle the local spawn pool — much faster than waiting. Leave and re-enter the zone to fully reset all fish shadows. <b>Lake Trout</b> has no listed bait requirement — use any bait or bare hook.</div>
-    </div>
+    <div class="callout" style="margin-top:9px"><div class="callout-icon">💡</div><div><b>Spawn refresh:</b> Target not appearing? <span class="hl">Throw bait</span> to cycle the local spawn pool. Leave and re-enter the zone to fully reset shadows. <b>Lake Trout</b> has no bait listed — any bait works.</div></div>
   </div>
-
-  <div class="gear-sec">
-    <div class="gear-head">Minigame Quick Reference</div>
-    <div class="tw" style="max-width:560px">
-      <table>
-        <thead><tr><th>Line Color</th><th>Action</th><th>Meaning</th></tr></thead>
-        <tbody>
-          <tr><td style="color:var(--hi);font-weight:600">⚪ White</td><td>Hold M1 — Reel in</td><td style="color:var(--dim);font-family:var(--mono);font-size:11px">Fish moving toward you; safe to pull</td></tr>
-          <tr><td style="color:var(--coral);font-weight:600">🔴 Red</td><td>Release M1 — Let go</td><td style="color:var(--dim);font-family:var(--mono);font-size:11px">Fish fighting; line snaps if held</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="gear-sec">
+  <div class="gear-sec" style="padding-top:0">
     <div class="gear-head">Fish Traps</div>
-    <div class="tw" style="max-width:600px">
-      <table>
-        <thead><tr><th>Detail</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr><td>Unlock</td><td style="color:var(--hi)">Intermediate Angler rank</td></tr>
-          <tr><td>Crafted At</td><td style="color:var(--hi)">Worktable II — Rubber + Magnets + Alloy</td></tr>
-          <tr><td>Load With</td><td style="color:var(--hi)">Advanced Fish Food (via Chopper III)</td></tr>
-          <tr><td>Placement</td><td style="color:var(--hi)">Active spawn areas with visible fish shadows only</td></tr>
-          <tr><td>Harvest</td><td style="color:var(--hi)">Next morning; reload immediately after collecting</td></tr>
-        </tbody>
-      </table>
+    <div class="tw" style="max-width:540px">
+      <table><thead><tr><th>Detail</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Unlock</td><td style="color:var(--hi)">Intermediate Angler rank</td></tr>
+        <tr><td>Craft At</td><td style="color:var(--hi)">Worktable II — Rubber + Magnets + Alloy</td></tr>
+        <tr><td>Load With</td><td style="color:var(--hi)">Advanced Fish Food (via Chopper III)</td></tr>
+        <tr><td>Placement</td><td style="color:var(--hi)">Active spawn zones with visible fish shadows only</td></tr>
+        <tr><td>Harvest</td><td style="color:var(--hi)">Next morning — reload immediately after collecting</td></tr>
+      </tbody></table>
     </div>
   </div>
 </div>
-
-<!-- ══════════════════════════════════════════════════════
-     SOURCES
-══════════════════════════════════════════════════════ -->
-
-<div id="tab-sources" class="tab">
-  <div class="tab-head">
-    <h2>Sources</h2>
-    <p>All fish data verified against the Starsand_Island_List_V2_22_2026.xlsx community spreadsheet and the following references</p>
-  </div>
-  <div class="src-list">
-    <div class="src" style="cursor:default;border-color:rgba(0,255,179,.25);background:rgba(0,255,179,.04)">
-      <div class="src-n">★</div>
-      <div>
-        <div class="src-title" style="color:var(--acc2)">Starsand_Island_List_V2_22_2026.xlsx — Primary Data Source</div>
-        <div class="src-url">Community spreadsheet · Fish sheet · 105 species</div>
-        <div class="src-desc">All fish names, prices, conditions (season/weather), time windows, locations, bait types, and Senior Angler flags sourced directly from this spreadsheet. This is the authoritative data for this compendium.</div>
-      </div>
-    </div>
-    <a class="src" href="https://starsandgame.fandom.com/wiki/Fishing" target="_blank" rel="noopener">
-      <div class="src-n">01</div>
-      <div>
-        <div class="src-title">Starsand Wiki — Fishing</div>
-        <div class="src-url">starsandgame.fandom.com/wiki/Fishing</div>
-        <div class="src-desc">Fishing mechanic explanations, profession unlock requirements, rod descriptions, and trap crafting details</div>
-      </div>
-    </a>
-    <a class="src" href="https://starsandgame.fandom.com/wiki/Fish" target="_blank" rel="noopener">
-      <div class="src-n">02</div>
-      <div>
-        <div class="src-title">Starsand Wiki — Fish Species Index</div>
-        <div class="src-url">starsandgame.fandom.com/wiki/Fish</div>
-        <div class="src-desc">Individual species pages with biome, season, and additional gameplay notes</div>
-      </div>
-    </a>
-    <a class="src" href="https://starsandgame.fandom.com/wiki/Aquatic_Life" target="_blank" rel="noopener">
-      <div class="src-n">03</div>
-      <div>
-        <div class="src-title">Starsand Wiki — Aquatic Life (Islandpedia)</div>
-        <div class="src-url">starsandgame.fandom.com/wiki/Aquatic_Life</div>
-        <div class="src-desc">In-game Islandpedia mirror; species discovery categories and collection tracking reference</div>
-      </div>
-    </a>
-    <a class="src" href="https://www.reddit.com/r/starsandgame/" target="_blank" rel="noopener">
-      <div class="src-n">04</div>
-      <div>
-        <div class="src-title">r/starsandgame — Community Subreddit</div>
-        <div class="src-url">reddit.com/r/starsandgame</div>
-        <div class="src-desc">Player-reported catch conditions, spawn timing corrections, rare fish location tips, and patch-based updates</div>
-      </div>
-    </a>
-    <a class="src" href="https://steamcommunity.com/app/1275460/guides/" target="_blank" rel="noopener">
-      <div class="src-n">05</div>
-      <div>
-        <div class="src-title">Steam Community — Starsand Guides</div>
-        <div class="src-url">steamcommunity.com/app/1275460/guides</div>
-        <div class="src-desc">User-authored fishing guides with completionist strategies and biome-specific notes</div>
-      </div>
-    </a>
-  </div>
-</div>
-
 </main>
 </div>
-
 <script>
-// ══════════════════════════════════════════════════════
-// DATA — sourced from Starsand_Island_List_V2_22_2026.xlsx
-// Columns: name, price, conditions, time, location, bait, senior
-// ══════════════════════════════════════════════════════
-const FISH = [
-  {name:"Alaska Blackfish",              price:"88",    cond:"Winter (Sunny)",                    time:"06:00–22:00",                    loc:"Lake",                              bait:["bug"],          seasons:["winter"],                  weather:["sunny"],              senior:true},
-  {name:"Alligator Gar",                 price:"163",   cond:"Autumn (Rainy)",                    time:"08:00–20:00",                    loc:"Lake",                              bait:["bug"],          seasons:["autumn"],                  weather:["rainy"],              senior:false},
-  {name:"Anchovy",                       price:"115",   cond:"Spring (Rainy)",                    time:"12:00–24:00",                    loc:"Ocean",                             bait:["meat"],         seasons:["spring"],                  weather:["rainy"],              senior:false},
-  {name:"Anglerfish",                    price:"207",   cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"20:00–24:00",                    loc:"Luminwave",                         bait:["meat"],         seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Arapaima (King)",               price:"782",   cond:"Summer/Autumn (Sunny/Rainy/Snowy)", time:"12:00–24:00 / 00:00–02:00",      loc:"River",                             bait:["veggie","meat"],seasons:["summer","autumn"],         weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Archerfish",                    price:"98",    cond:"Summer/Autumn (Sunny/Rainy)",       time:"06:00–20:00",                    loc:"River",                             bait:["bug","veggie"], seasons:["summer","autumn"],         weather:["sunny","rainy"],      senior:true},
-  {name:"Arowana",                       price:"101",   cond:"Autumn (Rainy)",                    time:"08:00–24:00",                    loc:"River",                             bait:["veggie"],       seasons:["autumn"],                  weather:["rainy"],              senior:false},
-  {name:"Baikal Sculpin",                price:"238",   cond:"Winter (Sunny)",                    time:"10:00–24:00",                    loc:"Lake",                              bait:["veggie"],       seasons:["winter"],                  weather:["sunny"],              senior:false},
-  {name:"Barracuda",                     price:"210",   cond:"Winter (Sunny)",                    time:"16:00–24:00",                    loc:"Ocean",                             bait:["bug"],          seasons:["winter"],                  weather:["sunny"],              senior:false},
-  {name:"Bass",                          price:"103",   cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"06:00–08:00 / 18:00–20:00",      loc:"Coral Sea",                         bait:["meat"],         seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Betta",                         price:"101",   cond:"Summer (Sunny)",                    time:"10:00–22:00",                    loc:"Lake",                              bait:["bug"],          seasons:["summer"],                  weather:["sunny"],              senior:false},
-  {name:"Bighead Carp",                  price:"65",    cond:"Spring/Summer (Sunny/Rainy)",       time:"06:00–22:00",                    loc:"Lake",                              bait:["veggie","meat"],seasons:["spring","summer"],         weather:["sunny","rainy"],      senior:true},
-  {name:"Bitterling",                    price:"58",    cond:"Autumn/Winter (Sunny/Rainy/Snowy)", time:"06:00–02:00",                    loc:"Lake",                              bait:["any"],          seasons:["autumn","winter"],         weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Black Scraper",                 price:"106",   cond:"Spring/Winter (Sunny/Rainy/Snowy)", time:"06:00–12:00 / 16:00–22:00",      loc:"Ocean",                             bait:["bug","meat"],   seasons:["spring","winter"],         weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Blue Angelfish",                price:"98",    cond:"Spring/Winter (Sunny/Rainy/Snowy)", time:"06:00–20:00",                    loc:"Ocean",                             bait:["bug","veggie"], seasons:["spring","winter"],         weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Blue Tang",                     price:"121",   cond:"Spring/Summer/Autumn (Sunny/Rainy)","time":"08:00–18:00",                  loc:"Coral Sea",                         bait:["veggie"],       seasons:["spring","summer","autumn"],weather:["sunny","rainy"],      senior:true},
-  {name:"Boxfish",                       price:"70",    cond:"Spring/Summer (Sunny/Rainy)",       time:"08:00–22:00",                    loc:"Ocean",                             bait:["veggie","meat"],seasons:["spring","summer"],         weather:["sunny","rainy"],      senior:true},
-  {name:"Brown Tiger Prawn",             price:"—",     cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"06:00–02:00",                    loc:"Ocean",                             bait:["any"],          seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Butterflyfish",                 price:"121",   cond:"Autumn/Winter (Sunny/Rainy/Snowy)", time:"06:00–20:00",                    loc:"Ocean",                             bait:["bug","veggie"], seasons:["autumn","winter"],         weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Carp",                          price:"94",    cond:"Spring (Sunny)",                    time:"06:00–24:00 / 00:00–02:00",      loc:"River",                             bait:["bug"],          seasons:["spring"],                  weather:["sunny"],              senior:false},
-  {name:"Cichlid",                       price:"75",    cond:"Autumn/Winter (Sunny/Rainy/Snowy)", time:"08:00–20:00",                    loc:"Lake",                              bait:["bug","veggie"], seasons:["autumn","winter"],         weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Chinese Hooksnout Carp",        price:"73",    cond:"Summer/Autumn (Sunny/Rainy)",       time:"06:00–24:00 / 00:00–02:00",      loc:"River",                             bait:["bug","veggie","meat"], seasons:["summer","autumn"],  weather:["sunny","rainy"],      senior:true},
-  {name:"Chinese Perch",                 price:"106",   cond:"Autumn (Sunny)",                    time:"10:00–00:00",                    loc:"Lake",                              bait:["veggie"],       seasons:["autumn"],                  weather:["sunny"],              senior:true},
-  {name:"Cleaner Fish",                  price:"65",    cond:"Spring/Winter (Sunny/Rainy/Snowy)", time:"08:00–24:00",                    loc:"Lake",                              bait:["bug","veggie"], seasons:["spring","winter"],         weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Clown Featherback",             price:"129",   cond:"Summer/Autumn (Sunny/Rainy)",       time:"06:00–12:00 / 18:00–00:00",      loc:"River",                             bait:["bug","meat"],   seasons:["summer","autumn"],         weather:["sunny","rainy"],      senior:true},
-  {name:"Clownfish",                     price:"50",    cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"06:00–02:00",                    loc:"Ocean",                             bait:["any"],          seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Comet Glowfish",                price:"143",   cond:"Summer (Sunny/Rainy)",              time:"06:00–24:00 / 00:00–02:00",      loc:"Spore Cascade",                     bait:["veggie"],       seasons:["summer"],                  weather:["sunny","rainy"],      senior:false},
-  {name:"Common Rudd",                   price:"163",   cond:"Spring (Rainy)",                    time:"12:00–24:00",                    loc:"River",                             bait:["meat"],         seasons:["spring"],                  weather:["rainy"],              senior:false},
-  {name:"Crucian Carp",                  price:"108",   cond:"Spring (Rainy)",                    time:"10:00–24:00",                    loc:"Lake",                              bait:["meat"],         seasons:["spring"],                  weather:["rainy"],              senior:false},
-  {name:"Daisy's Ricefish",              price:"143",   cond:"Spring (Sunny/Rainy)",              time:"06:00–24:00 / 00:00–02:00",      loc:"Spiritshade River",                 bait:["bug"],          seasons:["spring"],                  weather:["sunny","rainy"],      senior:false},
-  {name:"Discus",                        price:"70",    cond:"Autumn/Winter (Sunny/Rainy/Snowy)", time:"06:00–12:00 / 16:00–00:00",      loc:"Ocean",                             bait:["bug","meat"],   seasons:["autumn","winter"],         weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Dolphinfish",                   price:"119",   cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"08:00–18:00",                    loc:"Celestewave",                       bait:["meat"],         seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Electric Eel",                  price:"129",   cond:"Spring/Summer (Sunny/Rainy)",       time:"06:00–18:00",                    loc:"River",                             bait:["bug","veggie"], seasons:["spring","summer"],         weather:["sunny","rainy"],      senior:false},
-  {name:"Emperor Angelfish",             price:"152",   cond:"Summer (Rainy)",                    time:"08:00–22:00",                    loc:"Ocean",                             bait:["meat"],         seasons:["summer"],                  weather:["rainy"],              senior:false},
-  {name:"Flathead Catfish",              price:"152",   cond:"Spring (Rainy)",                    time:"10:00–22:00",                    loc:"River",                             bait:["veggie"],       seasons:["spring"],                  weather:["rainy"],              senior:false},
-  {name:"Flounder",                      price:"121",   cond:"Spring/Summer/Autumn (Sunny/Rainy)","time":"08:00–18:00",                  loc:"Celestewave",                       bait:["meat"],         seasons:["spring","summer","autumn"],weather:["sunny","rainy"],      senior:false},
-  {name:"Four-Eyed Sleeper",             price:"92",    cond:"Spring/Summer (Sunny/Rainy)",       time:"10:00–02:00",                    loc:"River",                             bait:["veggie","meat"],seasons:["spring","summer"],         weather:["sunny","rainy"],      senior:false},
-  {name:"Foureye Butterflyfish",         price:"163",   cond:"Summer (Sunny)",                    time:"12:00–02:00",                    loc:"Ocean",                             bait:["bug"],          seasons:["summer"],                  weather:["sunny"],              senior:true},
-  {name:"Fringetail Glowfish",           price:"124",   cond:"Spring (Sunny/Rainy)",              time:"06:00–24:00 / 00:00–02:00",      loc:"Spore Cascade",                     bait:["veggie"],       seasons:["spring"],                  weather:["sunny","rainy"],      senior:false},
-  {name:"Giant Barb",                    price:"100",   cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"06:00–02:00",                    loc:"River",                             bait:["any"],          seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Giant River Prawn",             price:"50",    cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"06:00–24:00 / 00:00–02:00",      loc:"River / Lake",                      bait:["bug","veggie","meat"], seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Glass Bloodfin Tetra",          price:"121",   cond:"Autumn/Winter (Sunny/Rainy/Snowy)", time:"06:00–20:00",                    loc:"River",                             bait:["bug","veggie"], seasons:["autumn","winter"],         weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Glassfish",                     price:"143",   cond:"Autumn (Sunny/Rainy)",              time:"06:00–24:00 / 00:00–02:00",      loc:"Spiritshade River",                 bait:["meat"],         seasons:["autumn"],                  weather:["sunny","rainy"],      senior:true},
-  {name:"Glowfish (King)",               price:"1607",  cond:"Autumn (Sunny/Rainy/Snowy)",        time:"00:00–02:00",                    loc:"Spore Cascade",                     bait:["bug"],          seasons:["autumn"],                  weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Grass Carp",                    price:"108",   cond:"Summer (Rainy)",                    time:"10:00–24:00",                    loc:"Lake",                              bait:["meat"],         seasons:["summer"],                  weather:["rainy"],              senior:false},
-  {name:"Greasyback Shrimp",             price:"—",     cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"06:00–02:00",                    loc:"Ocean",                             bait:["any"],          seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Green Sunfish",                 price:"70",    cond:"Spring/Summer (Sunny/Rainy)",       time:"12:00–02:00",                    loc:"Lake",                              bait:["bug","meat"],   seasons:["spring","summer"],         weather:["sunny","rainy"],      senior:true},
-  {name:"Green Swordtail",               price:"57",    cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"06:00–02:00",                    loc:"Moonlit Forest: Darkwater Shore",   bait:["any"],          seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Guppy",                         price:"115",   cond:"Summer (Rainy)",                    time:"08:00–20:00",                    loc:"River",                             bait:["veggie"],       seasons:["summer"],                  weather:["rainy"],              senior:false},
-  {name:"Holland's Carp",                price:"75",    cond:"Autumn (Sunny)",                    time:"10:00–00:00",                    loc:"River",                             bait:["bug"],          seasons:["autumn"],                  weather:["sunny"],              senior:false},
-  {name:"Humphead Wrasse",               price:"138",   cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"08:00–18:00",                    loc:"Coral Sea",                         bait:["meat"],         seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Ide",                           price:"101",   cond:"Spring/Winter (Sunny/Rainy/Snowy)", time:"06:00–24:00 / 00:00–02:00",      loc:"Lake",                              bait:["any"],          seasons:["spring","winter"],         weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Ink Phoenixfish",               price:"124",   cond:"Summer (Sunny/Rainy)",              time:"06:00–24:00 / 00:00–02:00",      loc:"Spiritshade River",                 bait:["veggie"],       seasons:["summer"],                  weather:["sunny","rainy"],      senior:false},
-  {name:"Kissing Gourami",               price:"140",   cond:"Autumn/Winter (Sunny/Rainy/Snowy)", time:"10:00–00:00",                    loc:"Lake",                              bait:["veggie","meat"],seasons:["autumn","winter"],         weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Koi",                           price:"101",   cond:"Spring (Sunny)",                    time:"12:00–24:00",                    loc:"Lake",                              bait:["veggie"],       seasons:["spring"],                  weather:["sunny"],              senior:false},
-  {name:"Lake Trout",                    price:"127",   cond:"Winter (Snowy)",                    time:"08:00–18:00 / 00:00–02:00",      loc:"Lake",                              bait:["any"],          seasons:["winter"],                  weather:["snowy"],              senior:false},
-  {name:"Leaffish",                      price:"121",   cond:"Autumn/Winter (Sunny/Rainy/Snowy)", time:"12:00–02:00",                    loc:"River",                             bait:["veggie","meat"],seasons:["autumn","winter"],         weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Lionfish",                      price:"176",   cond:"Summer (Rainy)",                    time:"10:00–20:00",                    loc:"Ocean",                             bait:["veggie"],       seasons:["summer"],                  weather:["rainy"],              senior:false},
-  {name:"Long-barbelled Dragonfish (King)",price:"1051",cond:"All Seasons (Sunny/Rainy/Snowy)",  time:"20:00–24:00 / 00:00–02:00",      loc:"Celestewave",                       bait:["meat"],         seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Lungfish",                      price:"237",   cond:"Winter (Sunny)",                    time:"10:00–20:00",                    loc:"River",                             bait:["veggie"],       seasons:["winter"],                  weather:["sunny"],              senior:false},
-  {name:"Mackerel",                      price:"135",   cond:"Autumn (Rainy)",                    time:"12:00–20:00",                    loc:"Ocean",                             bait:["veggie"],       seasons:["autumn"],                  weather:["rainy"],              senior:false},
-  {name:"Magnificent Killifish",         price:"106",   cond:"Autumn/Winter (Sunny/Rainy/Snowy)", time:"06:00–00:00",                    loc:"River",                             bait:["bug","meat"],   seasons:["autumn","winter"],         weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Mandarinfish",                  price:"103",   cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"20:00–00:00",                    loc:"Celestewave",                       bait:["veggie"],       seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Medaka",                        price:"108",   cond:"Spring (Rainy)",                    time:"06:00–20:00",                    loc:"Lake",                              bait:["bug"],          seasons:["spring"],                  weather:["rainy"],              senior:false},
-  {name:"Megamouth Shark (King)",        price:"1051",  cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"20:00–24:00 / 00:00–02:00",      loc:"Luminwave",                         bait:["meat"],         seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Mola Mola",                     price:"159",   cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"08:00–18:00",                    loc:"Luminwave",                         bait:["meat"],         seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Moorish Idol",                  price:"75",    cond:"Summer/Autumn (Sunny/Rainy)",       time:"06:00–18:00",                    loc:"Ocean",                             bait:["bug","meat"],   seasons:["summer","autumn"],         weather:["sunny","rainy"],      senior:true},
-  {name:"Mototo Stingray",               price:"—",     cond:"Autumn/Winter (Sunny/Rainy/Snowy)", time:"06:00–02:00",                    loc:"River / Lake",                      bait:["any"],          seasons:["autumn","winter"],         weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Mud Carp",                      price:"163",   cond:"Autumn (Rainy)",                    time:"10:00–20:00",                    loc:"Lake",                              bait:["meat"],         seasons:["autumn"],                  weather:["rainy"],              senior:false},
-  {name:"Noodlefish",                    price:"109",   cond:"Spring (Sunny)",                    time:"14:00–24:00",                    loc:"Ocean",                             bait:["bug"],          seasons:["spring"],                  weather:["sunny"],              senior:false},
-  {name:"Orangespine Unicornfish",       price:"98",    cond:"Autumn/Winter (Sunny/Rainy/Snowy)", time:"12:00–02:00",                    loc:"Ocean",                             bait:["veggie","meat"],seasons:["autumn","winter"],         weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Paddlefish (King)",             price:"733",   cond:"Spring/Winter (Sunny/Rainy/Snowy)", time:"06:00–22:00",                    loc:"River",                             bait:["bug","veggie"], seasons:["spring","winter"],         weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Pale Chub",                     price:"82",    cond:"Spring/Winter (Sunny/Rainy/Snowy)", time:"06:00–24:00 / 00:00–02:00",      loc:"River",                             bait:["any"],          seasons:["spring","winter"],         weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Paradise Fish",                 price:"118",   cond:"Summer (Rainy)",                    time:"18:00–24:00 / 00:00–02:00",      loc:"Lake",                              bait:["veggie"],       seasons:["summer"],                  weather:["rainy"],              senior:false},
-  {name:"Payara",                        price:"129",   cond:"Spring/Summer (Sunny/Rainy)",       time:"06:00–12:00 / 18:00–00:00",      loc:"River",                             bait:["bug","meat"],   seasons:["spring","summer"],         weather:["sunny","rainy"],      senior:false},
-  {name:"Pearl Glowfish",                price:"57",    cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"06:00–02:00",                    loc:"Moonlit Forest: Dreamfall Garden",  bait:["any"],          seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Pope's Goby",                   price:"131",   cond:"Spring/Winter (Sunny/Rainy/Snowy)", time:"08:00–24:00",                    loc:"River",                             bait:["veggie","meat"],seasons:["spring","winter"],         weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Potato Grouper",                price:"176",   cond:"Spring (Rainy)",                    time:"06:00–16:00",                    loc:"Ocean",                             bait:["veggie"],       seasons:["spring"],                  weather:["rainy"],              senior:false},
-  {name:"Pumpkinseed",                   price:"70",    cond:"Summer/Autumn (Sunny/Rainy)",       time:"10:00–00:00",                    loc:"Lake",                              bait:["veggie","meat"],seasons:["summer","autumn"],         weather:["sunny","rainy"],      senior:true},
-  {name:"Rainbow Trout",                 price:"137",   cond:"Winter (Snowy)",                    time:"12:00–22:00",                    loc:"Ocean",                             bait:["meat"],         seasons:["winter"],                  weather:["snowy"],              senior:false},
-  {name:"Red Carp",                      price:"82",    cond:"Spring/Summer (Sunny/Rainy)",       time:"06:00–24:00 / 00:00–02:00",      loc:"River",                             bait:["bug","veggie","meat"], seasons:["spring","summer"],  weather:["sunny","rainy"],      senior:false},
-  {name:"Red Porgy",                     price:"143",   cond:"Autumn (Sunny)",                    time:"10:00–22:00",                    loc:"Ocean",                             bait:["meat"],         seasons:["autumn"],                  weather:["sunny"],              senior:true},
-  {name:"Redfish",                       price:"75",    cond:"Summer/Autumn (Sunny/Rainy)",       time:"06:00–12:00 / 18:00–00:00",      loc:"Ocean",                             bait:["bug","meat"],   seasons:["summer","autumn"],         weather:["sunny","rainy"],      senior:true},
-  {name:"Redtail Catfish",               price:"121",   cond:"Spring/Winter (Sunny/Rainy/Snowy)", time:"06:00–14:00 / 18:00–24:00",      loc:"River",                             bait:["bug","meat"],   seasons:["spring","winter"],         weather:["sunny","rainy","snowy"], senior:true},
-  {name:"Ribbon Eel",                    price:"188",   cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"20:00–02:00",                    loc:"Celestewave",                       bait:["meat"],         seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Royal Gramma",                  price:"98",    cond:"Spring/Winter (Sunny/Rainy/Snowy)", time:"10:00–24:00",                    loc:"Ocean",                             bait:["veggie","meat"],seasons:["spring","winter"],         weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Royal Twig Catfish",            price:"206",   cond:"Winter (Snowy)",                    time:"08:00–22:00",                    loc:"River",                             bait:["bug"],          seasons:["winter"],                  weather:["snowy"],              senior:false},
-  {name:"Sardine",                       price:"75",    cond:"Spring/Summer/Autumn (Sunny/Rainy)","time":"08:00–18:00",                  loc:"Coral Sea",                         bait:["veggie"],       seasons:["spring","summer","autumn"],weather:["sunny","rainy"],      senior:false},
-  {name:"Siberian Taimen",               price:"163",   cond:"Winter (Sunny)",                    time:"10:00–24:00",                    loc:"River",                             bait:["meat"],         seasons:["winter"],                  weather:["sunny"],              senior:false},
-  {name:"Silver Carp",                   price:"70",    cond:"Summer/Autumn (Sunny/Rainy)",       time:"06:00–02:00",                    loc:"Lake",                              bait:["bug","veggie"], seasons:["summer","autumn"],         weather:["sunny","rainy"],      senior:true},
-  {name:"Snakehead",                     price:"163",   cond:"Summer (Rainy)",                    time:"06:00–18:00",                    loc:"River",                             bait:["meat"],         seasons:["summer"],                  weather:["rainy"],              senior:false},
-  {name:"Spinefoot",                     price:"139",   cond:"Spring/Summer (Sunny/Rainy)",       time:"06:00–14:00 / 00:00–02:00",      loc:"Ocean",                             bait:["bug","meat"],   seasons:["spring","summer"],         weather:["sunny","rainy"],      senior:true},
-  {name:"Swordfish (King)",              price:"826",   cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"06:00–18:00",                    loc:"Coral Sea",                         bait:["meat"],         seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Tiger Puffer",                  price:"114",   cond:"Summer/Autumn (Sunny/Rainy)",       time:"14:00–00:00",                    loc:"Ocean",                             bait:["veggie","meat"],seasons:["summer","autumn"],         weather:["sunny","rainy"],      senior:false},
-  {name:"Tilapia",                       price:"101",   cond:"Summer (Sunny)",                    time:"10:00–22:00",                    loc:"River",                             bait:["bug"],          seasons:["summer"],                  weather:["sunny"],              senior:false},
-  {name:"Topmouth Culter",               price:"116",   cond:"Summer/Autumn (Sunny/Rainy)",       time:"06:00–02:00",                    loc:"Lake",                              bait:["any"],          seasons:["summer","autumn"],         weather:["sunny","rainy"],      senior:true},
-  {name:"Trevally",                      price:"234",   cond:"Autumn (Rainy)",                    time:"08:00–16:00",                    loc:"Ocean",                             bait:["bug"],          seasons:["autumn"],                  weather:["rainy"],              senior:true},
-  {name:"Tuna",                          price:"121",   cond:"Spring/Summer/Autumn (Sunny/Rainy)","time":"08:00–18:00",                  loc:"Luminwave",                         bait:["meat"],         seasons:["spring","summer","autumn"],weather:["sunny","rainy"],      senior:true},
-  {name:"Upside-Down Catfish",           price:"175",   cond:"Autumn (Rainy)",                    time:"10:00–24:00 / 00:00–02:00",      loc:"River",                             bait:["meat"],         seasons:["autumn"],                  weather:["rainy"],              senior:false},
-  {name:"Velora Cichlid",                price:"58",    cond:"Spring/Summer (Sunny/Rainy)",       time:"06:00–02:00",                    loc:"Lake",                              bait:["any"],          seasons:["spring","summer"],         weather:["sunny","rainy"],      senior:true},
-  {name:"Viperfish",                     price:"207",   cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"20:00–24:00",                    loc:"Luminwave",                         bait:["meat"],         seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Wheatfish",                     price:"140",   cond:"Spring/Winter (Sunny/Rainy/Snowy)", time:"06:00–20:00",                    loc:"Lake",                              bait:["veggie","meat"],seasons:["spring","winter"],         weather:["sunny","rainy","snowy"], senior:false},
-  {name:"Whitefish",                     price:"218",   cond:"Winter (Snowy)",                    time:"10:00–20:00",                    loc:"Ocean",                             bait:["veggie"],       seasons:["winter"],                  weather:["snowy"],              senior:false},
-  {name:"Yellowtail Damselfish",         price:"106",   cond:"Spring/Summer (Sunny/Rainy)",       time:"08:00–20:00",                    loc:"Ocean",                             bait:["bug","veggie"], seasons:["spring","summer"],         weather:["sunny","rainy"],      senior:true},
-  {name:"Zander",                        price:"86",    cond:"All Seasons (Sunny/Rainy/Snowy)",   time:"06:00–02:00",                    loc:"River",                             bait:["any"],          seasons:["spring","summer","autumn","winter"], weather:["sunny","rainy","snowy"], senior:true},
+const FISH=[
+  {name:"Alaska Blackfish",price:"88",time:"06:00–22:00",loc:"Lake",bait:["bug"],seasons:["winter"],weather:["sunny"],senior:true},
+  {name:"Alligator Gar",price:"163",time:"08:00–20:00",loc:"Lake",bait:["bug"],seasons:["autumn"],weather:["rainy"],senior:false},
+  {name:"Anchovy",price:"115",time:"12:00–24:00",loc:"Ocean",bait:["meat"],seasons:["spring"],weather:["rainy"],senior:false},
+  {name:"Anglerfish",price:"207",time:"20:00–24:00",loc:"Luminwave",bait:["meat"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Arapaima (King)",price:"782",time:"12:00–24:00 / 00:00–02:00",loc:"River",bait:["veggie","meat"],seasons:["summer","autumn"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Archerfish",price:"98",time:"06:00–20:00",loc:"River",bait:["bug","veggie"],seasons:["summer","autumn"],weather:["sunny","rainy"],senior:true},
+  {name:"Arowana",price:"101",time:"08:00–24:00",loc:"River",bait:["veggie"],seasons:["autumn"],weather:["rainy"],senior:false},
+  {name:"Baikal Sculpin",price:"238",time:"10:00–24:00",loc:"Lake",bait:["veggie"],seasons:["winter"],weather:["sunny"],senior:false},
+  {name:"Barracuda",price:"210",time:"16:00–24:00",loc:"Ocean",bait:["bug"],seasons:["winter"],weather:["sunny"],senior:false},
+  {name:"Bass",price:"103",time:"06:00–08:00 / 18:00–20:00",loc:"Coral Sea",bait:["meat"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Betta",price:"101",time:"10:00–22:00",loc:"Lake",bait:["bug"],seasons:["summer"],weather:["sunny"],senior:false},
+  {name:"Bighead Carp",price:"65",time:"06:00–22:00",loc:"Lake",bait:["veggie","meat"],seasons:["spring","summer"],weather:["sunny","rainy"],senior:true},
+  {name:"Bitterling",price:"58",time:"06:00–02:00",loc:"Lake",bait:["any"],seasons:["autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Black Scraper",price:"106",time:"06:00–12:00 / 16:00–22:00",loc:"Ocean",bait:["bug","meat"],seasons:["spring","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Blue Angelfish",price:"98",time:"06:00–20:00",loc:"Ocean",bait:["bug","veggie"],seasons:["spring","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Blue Tang",price:"121",time:"08:00–18:00",loc:"Coral Sea",bait:["veggie"],seasons:["spring","summer","autumn"],weather:["sunny","rainy"],senior:true},
+  {name:"Boxfish",price:"70",time:"08:00–22:00",loc:"Ocean",bait:["veggie","meat"],seasons:["spring","summer"],weather:["sunny","rainy"],senior:true},
+  {name:"Brown Tiger Prawn",price:"—",time:"06:00–02:00",loc:"Ocean",bait:["any"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Butterflyfish",price:"121",time:"06:00–20:00",loc:"Ocean",bait:["bug","veggie"],seasons:["autumn","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Carp",price:"94",time:"06:00–24:00 / 00:00–02:00",loc:"River",bait:["bug"],seasons:["spring"],weather:["sunny"],senior:false},
+  {name:"Cichlid",price:"75",time:"08:00–20:00",loc:"Lake",bait:["bug","veggie"],seasons:["autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Chinese Hooksnout Carp",price:"73",time:"06:00–24:00 / 00:00–02:00",loc:"River",bait:["bug","veggie","meat"],seasons:["summer","autumn"],weather:["sunny","rainy"],senior:true},
+  {name:"Chinese Perch",price:"106",time:"10:00–00:00",loc:"Lake",bait:["veggie"],seasons:["autumn"],weather:["sunny"],senior:true},
+  {name:"Cleaner Fish",price:"65",time:"08:00–24:00",loc:"Lake",bait:["bug","veggie"],seasons:["spring","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Clown Featherback",price:"129",time:"06:00–12:00 / 18:00–00:00",loc:"River",bait:["bug","meat"],seasons:["summer","autumn"],weather:["sunny","rainy"],senior:true},
+  {name:"Clownfish",price:"50",time:"06:00–02:00",loc:"Ocean",bait:["any"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Comet Glowfish",price:"143",time:"06:00–24:00 / 00:00–02:00",loc:"Spore Cascade",bait:["veggie"],seasons:["summer"],weather:["sunny","rainy"],senior:false},
+  {name:"Common Rudd",price:"163",time:"12:00–24:00",loc:"River",bait:["meat"],seasons:["spring"],weather:["rainy"],senior:false},
+  {name:"Crucian Carp",price:"108",time:"10:00–24:00",loc:"Lake",bait:["meat"],seasons:["spring"],weather:["rainy"],senior:false},
+  {name:"Daisy's Ricefish",price:"143",time:"06:00–24:00 / 00:00–02:00",loc:"Spiritshade River",bait:["bug"],seasons:["spring"],weather:["sunny","rainy"],senior:false},
+  {name:"Discus",price:"70",time:"06:00–12:00 / 16:00–00:00",loc:"Ocean",bait:["bug","meat"],seasons:["autumn","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Dolphinfish",price:"119",time:"08:00–18:00",loc:"Celestewave",bait:["meat"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Electric Eel",price:"129",time:"06:00–18:00",loc:"River",bait:["bug","veggie"],seasons:["spring","summer"],weather:["sunny","rainy"],senior:false},
+  {name:"Emperor Angelfish",price:"152",time:"08:00–22:00",loc:"Ocean",bait:["meat"],seasons:["summer"],weather:["rainy"],senior:false},
+  {name:"Flathead Catfish",price:"152",time:"10:00–22:00",loc:"River",bait:["veggie"],seasons:["spring"],weather:["rainy"],senior:false},
+  {name:"Flounder",price:"121",time:"08:00–18:00",loc:"Celestewave",bait:["meat"],seasons:["spring","summer","autumn"],weather:["sunny","rainy"],senior:false},
+  {name:"Four-Eyed Sleeper",price:"92",time:"10:00–02:00",loc:"River",bait:["veggie","meat"],seasons:["spring","summer"],weather:["sunny","rainy"],senior:false},
+  {name:"Foureye Butterflyfish",price:"163",time:"12:00–02:00",loc:"Ocean",bait:["bug"],seasons:["summer"],weather:["sunny"],senior:true},
+  {name:"Fringetail Glowfish",price:"124",time:"06:00–24:00 / 00:00–02:00",loc:"Spore Cascade",bait:["veggie"],seasons:["spring"],weather:["sunny","rainy"],senior:false},
+  {name:"Giant Barb",price:"100",time:"06:00–02:00",loc:"River",bait:["any"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Giant River Prawn",price:"50",time:"06:00–24:00 / 00:00–02:00",loc:"River / Lake",bait:["bug","veggie","meat"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Glass Bloodfin Tetra",price:"121",time:"06:00–20:00",loc:"River",bait:["bug","veggie"],seasons:["autumn","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Glassfish",price:"143",time:"06:00–24:00 / 00:00–02:00",loc:"Spiritshade River",bait:["meat"],seasons:["autumn"],weather:["sunny","rainy"],senior:true},
+  {name:"Glowfish (King)",price:"1607",time:"00:00–02:00",loc:"Spore Cascade",bait:["bug"],seasons:["autumn"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Grass Carp",price:"108",time:"10:00–24:00",loc:"Lake",bait:["meat"],seasons:["summer"],weather:["rainy"],senior:false},
+  {name:"Greasyback Shrimp",price:"—",time:"06:00–02:00",loc:"Ocean",bait:["any"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Green Sunfish",price:"70",time:"12:00–02:00",loc:"Lake",bait:["bug","meat"],seasons:["spring","summer"],weather:["sunny","rainy"],senior:true},
+  {name:"Green Swordtail",price:"57",time:"06:00–02:00",loc:"Moonlit Forest: Darkwater Shore",bait:["any"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Guppy",price:"115",time:"08:00–20:00",loc:"River",bait:["veggie"],seasons:["summer"],weather:["rainy"],senior:false},
+  {name:"Holland's Carp",price:"75",time:"10:00–00:00",loc:"River",bait:["bug"],seasons:["autumn"],weather:["sunny"],senior:false},
+  {name:"Humphead Wrasse",price:"138",time:"08:00–18:00",loc:"Coral Sea",bait:["meat"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Ide",price:"101",time:"06:00–24:00 / 00:00–02:00",loc:"Lake",bait:["any"],seasons:["spring","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Ink Phoenixfish",price:"124",time:"06:00–24:00 / 00:00–02:00",loc:"Spiritshade River",bait:["veggie"],seasons:["summer"],weather:["sunny","rainy"],senior:false},
+  {name:"Kissing Gourami",price:"140",time:"10:00–00:00",loc:"Lake",bait:["veggie","meat"],seasons:["autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Koi",price:"101",time:"12:00–24:00",loc:"Lake",bait:["veggie"],seasons:["spring"],weather:["sunny"],senior:false},
+  {name:"Lake Trout",price:"127",time:"08:00–18:00 / 00:00–02:00",loc:"Lake",bait:["any"],seasons:["winter"],weather:["snowy"],senior:false},
+  {name:"Leaffish",price:"121",time:"12:00–02:00",loc:"River",bait:["veggie","meat"],seasons:["autumn","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Lionfish",price:"176",time:"10:00–20:00",loc:"Ocean",bait:["veggie"],seasons:["summer"],weather:["rainy"],senior:false},
+  {name:"Long-barbelled Dragonfish (King)",price:"1051",time:"20:00–24:00 / 00:00–02:00",loc:"Celestewave",bait:["meat"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Lungfish",price:"237",time:"10:00–20:00",loc:"River",bait:["veggie"],seasons:["winter"],weather:["sunny"],senior:false},
+  {name:"Mackerel",price:"135",time:"12:00–20:00",loc:"Ocean",bait:["veggie"],seasons:["autumn"],weather:["rainy"],senior:false},
+  {name:"Magnificent Killifish",price:"106",time:"06:00–00:00",loc:"River",bait:["bug","meat"],seasons:["autumn","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Mandarinfish",price:"103",time:"20:00–00:00",loc:"Celestewave",bait:["veggie"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Medaka",price:"108",time:"06:00–20:00",loc:"Lake",bait:["bug"],seasons:["spring"],weather:["rainy"],senior:false},
+  {name:"Megamouth Shark (King)",price:"1051",time:"20:00–24:00 / 00:00–02:00",loc:"Luminwave",bait:["meat"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Mola Mola",price:"159",time:"08:00–18:00",loc:"Luminwave",bait:["meat"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Moorish Idol",price:"75",time:"06:00–18:00",loc:"Ocean",bait:["bug","meat"],seasons:["summer","autumn"],weather:["sunny","rainy"],senior:true},
+  {name:"Mototo Stingray",price:"—",time:"06:00–02:00",loc:"River / Lake",bait:["any"],seasons:["autumn","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Mud Carp",price:"163",time:"10:00–20:00",loc:"Lake",bait:["meat"],seasons:["autumn"],weather:["rainy"],senior:false},
+  {name:"Noodlefish",price:"109",time:"14:00–24:00",loc:"Ocean",bait:["bug"],seasons:["spring"],weather:["sunny"],senior:false},
+  {name:"Orangespine Unicornfish",price:"98",time:"12:00–02:00",loc:"Ocean",bait:["veggie","meat"],seasons:["autumn","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Paddlefish (King)",price:"733",time:"06:00–22:00",loc:"River",bait:["bug","veggie"],seasons:["spring","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Pale Chub",price:"82",time:"06:00–24:00 / 00:00–02:00",loc:"River",bait:["any"],seasons:["spring","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Paradise Fish",price:"118",time:"18:00–24:00 / 00:00–02:00",loc:"Lake",bait:["veggie"],seasons:["summer"],weather:["rainy"],senior:false},
+  {name:"Payara",price:"129",time:"06:00–12:00 / 18:00–00:00",loc:"River",bait:["bug","meat"],seasons:["spring","summer"],weather:["sunny","rainy"],senior:false},
+  {name:"Pearl Glowfish",price:"57",time:"06:00–02:00",loc:"Moonlit Forest: Dreamfall Garden",bait:["any"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Pope's Goby",price:"131",time:"08:00–24:00",loc:"River",bait:["veggie","meat"],seasons:["spring","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Potato Grouper",price:"176",time:"06:00–16:00",loc:"Ocean",bait:["veggie"],seasons:["spring"],weather:["rainy"],senior:false},
+  {name:"Pumpkinseed",price:"70",time:"10:00–00:00",loc:"Lake",bait:["veggie","meat"],seasons:["summer","autumn"],weather:["sunny","rainy"],senior:true},
+  {name:"Rainbow Trout",price:"137",time:"12:00–22:00",loc:"Ocean",bait:["meat"],seasons:["winter"],weather:["snowy"],senior:false},
+  {name:"Red Carp",price:"82",time:"06:00–24:00 / 00:00–02:00",loc:"River",bait:["bug","veggie","meat"],seasons:["spring","summer"],weather:["sunny","rainy"],senior:false},
+  {name:"Red Porgy",price:"143",time:"10:00–22:00",loc:"Ocean",bait:["meat"],seasons:["autumn"],weather:["sunny"],senior:true},
+  {name:"Redfish",price:"75",time:"06:00–12:00 / 18:00–00:00",loc:"Ocean",bait:["bug","meat"],seasons:["summer","autumn"],weather:["sunny","rainy"],senior:true},
+  {name:"Redtail Catfish",price:"121",time:"06:00–14:00 / 18:00–24:00",loc:"River",bait:["bug","meat"],seasons:["spring","winter"],weather:["sunny","rainy","snowy"],senior:true},
+  {name:"Ribbon Eel",price:"188",time:"20:00–02:00",loc:"Celestewave",bait:["meat"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Royal Gramma",price:"98",time:"10:00–24:00",loc:"Ocean",bait:["veggie","meat"],seasons:["spring","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Royal Twig Catfish",price:"206",time:"08:00–22:00",loc:"River",bait:["bug"],seasons:["winter"],weather:["snowy"],senior:false},
+  {name:"Sardine",price:"75",time:"08:00–18:00",loc:"Coral Sea",bait:["veggie"],seasons:["spring","summer","autumn"],weather:["sunny","rainy"],senior:false},
+  {name:"Siberian Taimen",price:"163",time:"10:00–24:00",loc:"River",bait:["meat"],seasons:["winter"],weather:["sunny"],senior:false},
+  {name:"Silver Carp",price:"70",time:"06:00–02:00",loc:"Lake",bait:["bug","veggie"],seasons:["summer","autumn"],weather:["sunny","rainy"],senior:true},
+  {name:"Snakehead",price:"163",time:"06:00–18:00",loc:"River",bait:["meat"],seasons:["summer"],weather:["rainy"],senior:false},
+  {name:"Spinefoot",price:"139",time:"06:00–14:00 / 00:00–02:00",loc:"Ocean",bait:["bug","meat"],seasons:["spring","summer"],weather:["sunny","rainy"],senior:true},
+  {name:"Swordfish (King)",price:"826",time:"06:00–18:00",loc:"Coral Sea",bait:["meat"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Tiger Puffer",price:"114",time:"14:00–00:00",loc:"Ocean",bait:["veggie","meat"],seasons:["summer","autumn"],weather:["sunny","rainy"],senior:false},
+  {name:"Tilapia",price:"101",time:"10:00–22:00",loc:"River",bait:["bug"],seasons:["summer"],weather:["sunny"],senior:false},
+  {name:"Topmouth Culter",price:"116",time:"06:00–02:00",loc:"Lake",bait:["any"],seasons:["summer","autumn"],weather:["sunny","rainy"],senior:true},
+  {name:"Trevally",price:"234",time:"08:00–16:00",loc:"Ocean",bait:["bug"],seasons:["autumn"],weather:["rainy"],senior:true},
+  {name:"Tuna",price:"121",time:"08:00–18:00",loc:"Luminwave",bait:["meat"],seasons:["spring","summer","autumn"],weather:["sunny","rainy"],senior:true},
+  {name:"Upside-Down Catfish",price:"175",time:"10:00–24:00 / 00:00–02:00",loc:"River",bait:["meat"],seasons:["autumn"],weather:["rainy"],senior:false},
+  {name:"Velora Cichlid",price:"58",time:"06:00–02:00",loc:"Lake",bait:["any"],seasons:["spring","summer"],weather:["sunny","rainy"],senior:true},
+  {name:"Viperfish",price:"207",time:"20:00–24:00",loc:"Luminwave",bait:["meat"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Wheatfish",price:"140",time:"06:00–20:00",loc:"Lake",bait:["veggie","meat"],seasons:["spring","winter"],weather:["sunny","rainy","snowy"],senior:false},
+  {name:"Whitefish",price:"218",time:"10:00–20:00",loc:"Ocean",bait:["veggie"],seasons:["winter"],weather:["snowy"],senior:false},
+  {name:"Yellowtail Damselfish",price:"106",time:"08:00–20:00",loc:"Ocean",bait:["bug","veggie"],seasons:["spring","summer"],weather:["sunny","rainy"],senior:true},
+  {name:"Zander",price:"86",time:"06:00–02:00",loc:"River",bait:["any"],seasons:["spring","summer","autumn","winter"],weather:["sunny","rainy","snowy"],senior:true},
 ];
 
-// ══════════════════════════════════════════════════════
-// BIOME CONFIG
-// ══════════════════════════════════════════════════════
-const BIOMES = [
-  {id:"Lake",                             icon:"🏞️", note:null},
-  {id:"River",                            icon:"🌊", note:null},
-  {id:"River / Lake",                     icon:"🔀", note:"Both zones"},
-  {id:"Ocean",                            icon:"🌍", note:null},
-  {id:"Coral Sea",                        icon:"🪸", note:"Parrot Ship"},
-  {id:"Celestewave",                      icon:"🌙", note:"Parrot Ship"},
-  {id:"Luminwave",                        icon:"⭐", note:"Parrot Ship"},
-  {id:"Moonlit Forest: Darkwater Shore",  icon:"🌲", note:"Explorer Profession"},
-  {id:"Moonlit Forest: Dreamfall Garden", icon:"🌿", note:"Explorer Profession"},
-  {id:"Spiritshade River",                icon:"✨", note:"Special Zone"},
-  {id:"Spore Cascade",                    icon:"🍄", note:"Special Zone"},
+const BIOMES=[
+{id:“Lake”,icon:“🏞️”},
+{id:“River”,icon:“🌊”},
+{id:“River / Lake”,icon:“🔀”,note:“Both zones”},
+{id:“Ocean”,icon:“🌍”},
+{id:“Coral Sea”,icon:“🪸”,note:“Parrot Ship”},
+{id:“Celestewave”,icon:“🌙”,note:“Parrot Ship”},
+{id:“Luminwave”,icon:“⭐”,note:“Parrot Ship”},
+{id:“Moonlit Forest: Darkwater Shore”,icon:“🌲”,note:“Explorer Profession”},
+{id:“Moonlit Forest: Dreamfall Garden”,icon:“🌿”,note:“Explorer Profession”},
+{id:“Spiritshade River”,icon:“✨”,note:“Special Zone”},
+{id:“Spore Cascade”,icon:“🍄”,note:“Special Zone”},
 ];
 
-// ══════════════════════════════════════════════════════
-// OPTIMAL PATH DATA — computed from spreadsheet
-// Grouped by zone within each season phase
-// ══════════════════════════════════════════════════════
-const PATH = [
-  {
-    season:"summer", icon:"☀️", cls:"sb-summer",
-    title:"Summer — Phase 1", newCount:54,
-    desc:"54 species first available · Highest density season · Deep sea accessible immediately",
-    callout:{type:"info", text:"<b>Priority order:</b> Freshwater universals → Summer-specific freshwater → Ocean sweep → Deep sea (Parrot Ship) → Special zones. Watch weather — <span class='warn'>rainy days</span> unlock 10 exclusive summer species."},
-    zones:[
-      {name:"River — All-Season & Summer Universals",
-       fish:["Giant Barb","Giant River Prawn","Zander","Red Carp","Chinese Hooksnout Carp","Archerfish","Clown Featherback","Arapaima (King)"],
-       note:"These fish have wide windows and need no weather planning. Clear the backlog first."},
-      {name:"River — Summer Sunny",
-       fish:["Tilapia","Electric Eel","Payara","Four-Eyed Sleeper"],
-       note:"Tilapia: Bug Bait 10:00–22:00. Payara: two windows daily (06:00–12:00 / 18:00–00:00)."},
-      {name:"River — Summer Rainy",
-       fish:["Guppy","Snakehead"],
-       note:"Hold for rainy weather. Snakehead 06:00–18:00, Guppy 08:00–20:00. Meat + Veggie."},
-      {name:"Lake — All-Season & Summer",
-       fish:["Bighead Carp","Velora Cichlid","Silver Carp","Topmouth Culter","Pumpkinseed","Green Sunfish","Betta"],
-       note:"Betta: Bug Bait + Sunny only. All others: wide windows, various bait."},
-      {name:"Lake — Summer Rainy",
-       fish:["Grass Carp","Paradise Fish"],
-       note:"Paradise Fish window is 18:00–02:00 — plan an evening rainy session."},
-      {name:"Ocean — All-Season",
-       fish:["Brown Tiger Prawn","Clownfish","Greasyback Shrimp","Moorish Idol","Redfish","Tiger Puffer","Boxfish","Yellowtail Damselfish","Spinefoot"],
-       note:"Shrimp and Prawns: any bait, any time. Batch morning and evening ocean runs."},
-      {name:"Ocean — Summer Sunny",
-       fish:["Foureye Butterflyfish"],
-       note:"Bug Bait only, 12:00–02:00, Summer Sunny. One of the harder ocean schedules."},
-      {name:"Ocean — Summer Rainy",
-       fish:["Emperor Angelfish","Lionfish"],
-       note:"Both require Rainy weather. Lionfish: Veggie 10:00–20:00. Emperor: Meat 08:00–22:00."},
-      {name:"Coral Sea (Parrot Ship — Daytime)",
-       fish:["Humphead Wrasse","Blue Tang","Sardine","Swordfish (King)","Bass"],
-       note:"Bring Veggie + Meat Bait. Bass windows are brief: 06:00–08:00 and 18:00–20:00. Plan arrival."},
-      {name:"Celestewave (Parrot Ship — Day + Night)",
-       fish:["Dolphinfish","Flounder","Mandarinfish","Ribbon Eel","Long-barbelled Dragonfish (King)"],
-       note:"Dolphinfish + Flounder: daytime 08:00–18:00. Mandarinfish 20:00–00:00, Ribbon Eel + Dragon 20:00–02:00. Two trips needed."},
-      {name:"Luminwave (Parrot Ship — Day + Night)",
-       fish:["Mola Mola","Tuna","Viperfish","Anglerfish","Megamouth Shark (King)"],
-       note:"Mola Mola + Tuna: 08:00–18:00 daytime. Night fish: 20:00–02:00. Noble Rod minimum — Noble required for Tuna."},
-      {name:"Spiritshade River — Summer",
-       fish:["Ink Phoenixfish"],
-       note:"Available all day in Summer (Sunny/Rainy). Veggie Bait."},
-      {name:"Spore Cascade — Summer",
-       fish:["Comet Glowfish"],
-       note:"Available all day in Summer (Sunny/Rainy). Veggie Bait."},
-      {name:"Moonlit Forest — All Season",
-       fish:["Green Swordtail","Pearl Glowfish"],
-       note:"Unlock Explorer Profession first. Darkwater Shore: Green Swordtail. Dreamfall Garden: Pearl Glowfish. Pearl Glowfish is RNG — use bait refresh if shadows absent."},
-    ]
-  },
-  {
-    season:"autumn", icon:"🍂", cls:"sb-autumn",
-    title:"Autumn — Phase 2", newCount:21,
-    desc:"21 new species · Heavy Rainy weather dependency · Begin Autumn/Winter series",
-    callout:{type:"warn", text:"<span class='warn'>9 of 21 autumn fish require Rainy weather.</span> Schedule dedicated rainy-day sessions. Trevally (08:00–16:00), Mackerel (12:00–20:00), and Arowana (08:00–24:00) can all be caught in the same rainy afternoon window."},
-    zones:[
-      {name:"Lake — Autumn Only",
-       fish:["Alligator Gar","Chinese Perch","Mud Carp"],
-       note:"Alligator Gar + Mud Carp: Rainy. Chinese Perch: Sunny only, 10:00–00:00, Veggie Bait."},
-      {name:"Lake — Autumn/Winter (begin now)",
-       fish:["Bitterling","Cichlid","Kissing Gourami"],
-       note:"All three: any weather, wide windows. Start these immediately in Autumn."},
-      {name:"River — Autumn Only",
-       fish:["Arowana","Holland's Carp","Upside-Down Catfish"],
-       note:"Arowana: Rainy, Veggie. Holland's Carp: Sunny, Bug, 10:00–00:00. Upside-Down: Rainy, Meat, late window."},
-      {name:"River — Autumn/Winter (begin now)",
-       fish:["Magnificent Killifish","Leaffish","Glass Bloodfin Tetra"],
-       note:"All available Autumn through Winter. Wide windows, any weather."},
-      {name:"River / Lake — Autumn/Winter",
-       fish:["Mototo Stingray"],
-       note:"Any bait, any weather, 06:00–02:00. Easy to slot into any session."},
-      {name:"Ocean — Autumn Only",
-       fish:["Red Porgy","Mackerel","Trevally"],
-       note:"Red Porgy: Sunny, Meat. Mackerel: Rainy, Veggie. Trevally: Rainy, Bug, 08:00–16:00."},
-      {name:"Ocean — Autumn/Winter (begin now)",
-       fish:["Butterflyfish","Discus","Orangespine Unicornfish"],
-       note:"All available through Winter. Discus has two daily windows (06:00–12:00 / 16:00–00:00)."},
-      {name:"Spiritshade River — Autumn",
-       fish:["Glassfish"],
-       note:"Sunny or Rainy, all day window. Meat Bait. Senior Angler required."},
-      {name:"Spore Cascade — Autumn",
-       fish:["Glowfish (King)"],
-       note:"Narrow window: 00:00–02:00 only. Any Autumn weather. Bug Bait. Plan a dedicated midnight run."},
-    ]
-  },
-  {
-    season:"winter", icon:"❄️", cls:"sb-winter",
-    title:"Winter — Phase 3", newCount:19,
-    desc:"19 new species · 5 require Snowy weather · Spring/Winter series begins",
-    callout:{type:"warn", text:"<span class='warn'>5 fish require Snowy weather</span> (Lake Trout, Rainbow Trout, Royal Twig Catfish, Whitefish) — these cannot be caught in Sunny or Rainy conditions. Monitor the forecast and schedule a dedicated snowy session."},
-    zones:[
-      {name:"Lake — Winter Only (Sunny)",
-       fish:["Alaska Blackfish","Baikal Sculpin"],
-       note:"Both require Sunny weather. Alaska Blackfish: Bug Bait, 06:00–22:00. Baikal: Veggie."},
-      {name:"Lake — Winter Only (Snowy)",
-       fish:["Lake Trout"],
-       note:"Snowy weather required, 08:00–18:00 or 00:00–02:00. No bait listed in data — use any bait."},
-      {name:"Lake — Spring/Winter (begin now)",
-       fish:["Ide","Cleaner Fish","Wheatfish"],
-       note:"All available now through Spring. Any weather. Wide windows."},
-      {name:"River — Winter Only",
-       fish:["Lungfish","Siberian Taimen","Royal Twig Catfish"],
-       note:"Lungfish + Siberian: Sunny. Royal Twig: Snowy, Bug Bait, 08:00–22:00."},
-      {name:"River — Spring/Winter (begin now)",
-       fish:["Pale Chub","Redtail Catfish","Pope's Goby","Paddlefish (King)"],
-       note:"All available through Spring. Paddlefish (King) is a king variant — bring endgame rod."},
-      {name:"Ocean — Winter Only",
-       fish:["Barracuda","Rainbow Trout","Whitefish"],
-       note:"Barracuda: Sunny, Bug, 16:00–24:00. Rainbow Trout + Whitefish: Snowy weather only."},
-      {name:"Ocean — Spring/Winter (begin now)",
-       fish:["Black Scraper","Blue Angelfish","Royal Gramma"],
-       note:"All available through Spring. Any weather. Wide windows. Easy to batch."},
-    ]
-  },
-  {
-    season:"spring", icon:"🌸", cls:"sb-spring",
-    title:"Spring — Phase 4 (Final)", newCount:11,
-    desc:"11 final species · 8 require Rainy weather · Complete the collection",
-    callout:{type:"info", text:"Only 11 fish remain Spring-exclusive. <span class='hl'>8 require Rainy weather</span> — watch the forecast. Koi, Carp, and Noodlefish need Sunny. The Spiritshade River (Daisy's Ricefish) and Spore Cascade (Fringetail Glowfish) wrap up the special zones."},
-    zones:[
-      {name:"Lake — Spring Only",
-       fish:["Koi","Medaka","Crucian Carp"],
-       note:"Koi: Sunny, Veggie, 12:00–24:00. Medaka: Rainy, Bug. Crucian Carp: Rainy, Meat."},
-      {name:"River — Spring Only",
-       fish:["Carp","Common Rudd","Flathead Catfish"],
-       note:"Carp: Sunny, Bug, wide window. Common Rudd + Flathead: Rainy weather only."},
-      {name:"Ocean — Spring Only",
-       fish:["Anchovy","Noodlefish","Potato Grouper"],
-       note:"Anchovy: Rainy, Meat, 12:00–24:00. Noodlefish: Sunny, Bug, 14:00–24:00. Potato Grouper: Rainy, Veggie, 06:00–16:00."},
-      {name:"Spiritshade River — Spring",
-       fish:["Daisy's Ricefish"],
-       note:"Sunny or Rainy, all day. Bug Bait. Wraps up Spiritshade River zone."},
-      {name:"Spore Cascade — Spring",
-       fish:["Fringetail Glowfish"],
-       note:"Sunny or Rainy, all day. Veggie Bait. Final Spore Cascade species — collection complete."},
-    ]
-  }
+const PATH=[
+{season:“summer”,icon:“☀️”,cls:“s-su”,title:“Summer — Phase 1”,newCount:54,desc:“54 species first available · Highest density season”,
+callout:{type:“info”,text:”<b>Priority:</b> Freshwater universals → Summer freshwater → Ocean → Deep sea (Parrot Ship) → Special zones. <span class='warn'>10 Summer fish require Rainy weather</span> — batch on rainy days.”},
+zones:[
+{name:“River — All-Season & Summer”,fish:[“Giant Barb”,“Giant River Prawn”,“Zander”,“Red Carp”,“Chinese Hooksnout Carp”,“Archerfish”,“Clown Featherback”,“Arapaima (King)”],note:“Wide windows, no weather dependency. Clear these first.”},
+{name:“River — Summer Sunny”,fish:[“Tilapia”,“Electric Eel”,“Payara”,“Four-Eyed Sleeper”],note:“Payara: two windows daily (06:00–12:00 / 18:00–00:00).”},
+{name:“River — Summer Rainy”,fish:[“Guppy”,“Snakehead”],note:“Hold for rainy weather. Snakehead 06:00–18:00, Guppy 08:00–20:00.”},
+{name:“Lake — Summer”,fish:[“Bighead Carp”,“Velora Cichlid”,“Silver Carp”,“Topmouth Culter”,“Pumpkinseed”,“Green Sunfish”,“Betta”],note:“Betta requires Bug Bait + Sunny. All others: wide windows.”},
+{name:“Lake — Summer Rainy”,fish:[“Grass Carp”,“Paradise Fish”],note:“Paradise Fish: evening window 18:00–02:00. Plan a rainy evening session.”},
+{name:“Ocean — All-Season & Summer”,fish:[“Brown Tiger Prawn”,“Clownfish”,“Greasyback Shrimp”,“Moorish Idol”,“Redfish”,“Tiger Puffer”,“Boxfish”,“Yellowtail Damselfish”,“Spinefoot”],note:“Shrimp/Prawns: any bait, wide windows. Batch morning and evening runs.”},
+{name:“Ocean — Summer Sunny”,fish:[“Foureye Butterflyfish”],note:“Bug Bait only, 12:00–02:00, Summer Sunny only.”},
+{name:“Ocean — Summer Rainy”,fish:[“Emperor Angelfish”,“Lionfish”],note:“Lionfish: Veggie 10:00–20:00. Emperor: Meat 08:00–22:00. Both Rainy only.”},
+{name:“Coral Sea — Parrot Ship”,fish:[“Humphead Wrasse”,“Blue Tang”,“Sardine”,“Swordfish (King)”,“Bass”],note:“Bring Veggie + Meat. Bass windows are brief: 06:00–08:00 and 18:00–20:00 — plan arrival.”},
+{name:“Celestewave — Day & Night”,fish:[“Dolphinfish”,“Flounder”,“Mandarinfish”,“Ribbon Eel”,“Long-barbelled Dragonfish (King)”],note:“Day: Dolphinfish + Flounder 08:00–18:00. Night: Mandarinfish 20:00–00:00, Ribbon Eel + Dragon 20:00–02:00. Two trips.”},
+{name:“Luminwave — Day & Night”,fish:[“Mola Mola”,“Tuna”,“Viperfish”,“Anglerfish”,“Megamouth Shark (King)”],note:“Day: Mola Mola + Tuna 08:00–18:00. Night fish: 20:00–02:00. Noble Rod minimum.”},
+{name:“Spiritshade River — Summer”,fish:[“Ink Phoenixfish”],note:“All day, Sunny or Rainy. Veggie Bait.”},
+{name:“Spore Cascade — Summer”,fish:[“Comet Glowfish”],note:“All day, Sunny or Rainy. Veggie Bait.”},
+{name:“Moonlit Forest — All Season”,fish:[“Green Swordtail”,“Pearl Glowfish”],note:“Unlock Explorer Profession first. Pearl Glowfish RNG — refresh spawns with bait if absent.”},
+]},
+{season:“autumn”,icon:“🍂”,cls:“s-au”,title:“Autumn — Phase 2”,newCount:21,desc:“21 new species · 9 require Rainy weather”,
+callout:{type:“warn”,text:”<span class='warn'>9 of 21 autumn fish require Rainy weather.</span> Trevally (08:00–16:00), Mackerel (12:00–20:00), and Arowana (08:00–24:00) can all be batched in one rainy afternoon.”},
+zones:[
+{name:“Lake — Autumn Only”,fish:[“Alligator Gar”,“Chinese Perch”,“Mud Carp”],note:“Alligator Gar + Mud Carp: Rainy. Chinese Perch: Sunny, Veggie, 10:00–00:00.”},
+{name:“Lake — Autumn/Winter”,fish:[“Bitterling”,“Cichlid”,“Kissing Gourami”],note:“Any weather, wide windows. Start immediately — active through Winter.”},
+{name:“River — Autumn Only”,fish:[“Arowana”,“Holland’s Carp”,“Upside-Down Catfish”],note:“Arowana: Rainy, Veggie. Holland’s: Sunny, Bug, 10:00–00:00. Upside-Down: Rainy, Meat.”},
+{name:“River — Autumn/Winter”,fish:[“Magnificent Killifish”,“Leaffish”,“Glass Bloodfin Tetra”],note:“Any weather, wide windows. Active through Winter.”},
+{name:“River / Lake — Autumn/Winter”,fish:[“Mototo Stingray”],note:“Any bait, any weather, 06:00–02:00. Easy to slot into any session.”},
+{name:“Ocean — Autumn Only”,fish:[“Red Porgy”,“Mackerel”,“Trevally”],note:“Red Porgy: Sunny, Meat. Mackerel: Rainy, Veggie. Trevally: Rainy, Bug, 08:00–16:00.”},
+{name:“Ocean — Autumn/Winter”,fish:[“Butterflyfish”,“Discus”,“Orangespine Unicornfish”],note:“Active through Winter. Discus: two windows (06:00–12:00 / 16:00–00:00).”},
+{name:“Spiritshade River — Autumn”,fish:[“Glassfish”],note:“All day, Sunny or Rainy. Meat Bait. Senior Angler required.”},
+{name:“Spore Cascade — Autumn”,fish:[“Glowfish (King)”],note:“00:00–02:00 ONLY. Any Autumn weather. Bug Bait. Dedicated midnight session required.”},
+]},
+{season:“winter”,icon:“❄️”,cls:“s-wi”,title:“Winter — Phase 3”,newCount:19,desc:“19 new species · 5 require Snowy weather”,
+callout:{type:“warn”,text:”<span class='warn'>5 fish are Snowy-weather-only:</span> Lake Trout, Rainbow Trout, Royal Twig Catfish, Whitefish. Monitor forecast and schedule a dedicated snowy session.”},
+zones:[
+{name:“Lake — Winter Sunny”,fish:[“Alaska Blackfish”,“Baikal Sculpin”],note:“Alaska Blackfish: Bug, 06:00–22:00. Baikal Sculpin: Veggie, 10:00–24:00.”},
+{name:“Lake — Winter Snowy”,fish:[“Lake Trout”],note:“Snowy only. 08:00–18:00 or 00:00–02:00. No specific bait — any works.”},
+{name:“Lake — Spring/Winter”,fish:[“Ide”,“Cleaner Fish”,“Wheatfish”],note:“Any weather. Active through Spring.”},
+{name:“River — Winter Only”,fish:[“Lungfish”,“Siberian Taimen”,“Royal Twig Catfish”],note:“Lungfish + Taimen: Sunny. Royal Twig: Snowy, Bug, 08:00–22:00.”},
+{name:“River — Spring/Winter”,fish:[“Pale Chub”,“Redtail Catfish”,“Pope’s Goby”,“Paddlefish (King)”],note:“Any weather. Active through Spring. Paddlefish is a King Variant — bring endgame rod.”},
+{name:“Ocean — Winter Only”,fish:[“Barracuda”,“Rainbow Trout”,“Whitefish”],note:“Barracuda: Sunny, Bug, 16:00–24:00. Rainbow Trout + Whitefish: Snowy only.”},
+{name:“Ocean — Spring/Winter”,fish:[“Black Scraper”,“Blue Angelfish”,“Royal Gramma”],note:“Any weather. Active through Spring. Easy to batch.”},
+]},
+{season:“spring”,icon:“🌸”,cls:“s-sp”,title:“Spring — Phase 4 (Final)”,newCount:11,desc:“11 final species · Collection complete”,
+callout:{type:“info”,text:“Only 11 Spring-exclusives remain. <span class='hl'>Koi, Carp, Noodlefish need Sunny.</span> All others need Rainy. Spiritshade + Spore Cascade close out the special zones.”},
+zones:[
+{name:“Lake — Spring Only”,fish:[“Koi”,“Medaka”,“Crucian Carp”],note:“Koi: Sunny, Veggie, 12:00–24:00. Medaka: Rainy, Bug. Crucian Carp: Rainy, Meat.”},
+{name:“River — Spring Only”,fish:[“Carp”,“Common Rudd”,“Flathead Catfish”],note:“Carp: Sunny, Bug, wide window. Common Rudd + Flathead: Rainy only.”},
+{name:“Ocean — Spring Only”,fish:[“Anchovy”,“Noodlefish”,“Potato Grouper”],note:“Anchovy: Rainy, Meat. Noodlefish: Sunny, Bug, 14:00–24:00. Potato Grouper: Rainy, Veggie.”},
+{name:“Spiritshade River — Spring”,fish:[“Daisy’s Ricefish”],note:“All day, Sunny or Rainy. Bug Bait. Wraps up Spiritshade River.”},
+{name:“Spore Cascade — Spring”,fish:[“Fringetail Glowfish”],note:“All day, Sunny or Rainy. Veggie Bait. Final species — collection complete.”},
+]},
 ];
 
-// ══════════════════════════════════════════════════════
-// RENDER STATE
-// ══════════════════════════════════════════════════════
-let filters = {bait:'all', season:'all', weather:'all', rank:'all'};
-const isKing = n => n.includes('(King)');
+const isKing=n=>n.includes(’(King)’);
+const bTag=b=>({bug:`<span class="t t-bug">Bug</span>`,veggie:`<span class="t t-veggie">Veggie</span>`,meat:`<span class="t t-meat">Meat</span>`,any:`<span class="t t-any">Any</span>`})[b]||’’;
+const sTag=s=>({spring:`<span class="t t-sp">Spr</span>`,summer:`<span class="t t-su">Sum</span>`,autumn:`<span class="t t-au">Aut</span>`,winter:`<span class="t t-wi">Win</span>`})[s]||’’;
+const wTag=w=>({sunny:`<span class="t t-sun">☀</span>`,rainy:`<span class="t t-rain">🌧</span>`,snowy:`<span class="t t-snow">❄</span>`})[w]||’’;
 
-// Tag helpers
-const bt = b => ({bug:`<span class="t t-bug">Bug</span>`,veggie:`<span class="t t-veggie">Veggie</span>`,meat:`<span class="t t-meat">Meat</span>`,any:`<span class="t t-any">Any</span>`})[b]||'';
-const st = s => ({spring:`<span class="t t-sp">Spring</span>`,summer:`<span class="t t-su">Summer</span>`,autumn:`<span class="t t-au">Autumn</span>`,winter:`<span class="t t-wi">Winter</span>`})[s]||'';
-const wt = w => ({sunny:`<span class="t t-sun">☀️ Sunny</span>`,rainy:`<span class="t t-rain">🌧 Rainy</span>`,snowy:`<span class="t t-snow">❄️ Snowy</span>`})[w]||'';
+let F={biome:‘all’,season:‘all’,weather:‘all’,bait:‘all’,rank:‘all’};
 
 function buildCatalog(){
-  const seniorCount = FISH.filter(f=>f.senior).length;
-  document.getElementById('seniorCount').textContent = seniorCount;
-
-  const html = BIOMES.map(b=>{
-    const fish = FISH.filter(f=>f.loc===b.id);
-    if(!fish.length) return '';
-    const noteHtml = b.note ? `<span class="biome-note">${b.note}</span>` : '';
-    const rows = fish.map(f=>{
-      const king = isKing(f.name);
-      const sLabel = king ? `<span class="t" style="background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.3);color:var(--gold)">King</span>` : '';
-      const seniorDot = f.senior ? `<span class="senior-dot" title="Senior Angler Required"></span>` : '';
-      const allSeason = f.seasons.length===4;
-      const allWeather = f.weather.length===3;
-      return `<tr class="fish-row"
-        data-name="${f.name.toLowerCase()}"
-        data-bait="${f.bait.join(',')}"
-        data-seasons="${f.seasons.join(',')}"
-        data-weather="${f.weather.join(',')}"
-        data-senior="${f.senior}"
-        data-king="${king}">
-        <td class="fn${king?' king':''}">${f.name}${seniorDot}</td>
-        <td>${f.bait.map(bt).join(' ')}</td>
-        <td class="tc">${f.time}</td>
-        <td>${allSeason ? '<span class="t t-all">All Seasons</span>' : f.seasons.map(st).join(' ')}</td>
-        <td>${allWeather ? '<span class="t t-all">Any</span>' : f.weather.map(wt).join(' ')}</td>
-        <td class="pr">${f.price==='—' ? '<span style="color:var(--dim)">—</span>' : f.price}</td>
-        ${sLabel ? `<td>${sLabel}</td>` : '<td></td>'}
-      </tr>`;
-    }).join('');
-    return `<div class="biome-sec" data-biome="${b.id}">
-      <div class="biome-label">
-        <div class="biome-icon">${b.icon}</div>
-        <div class="biome-title">${b.id}</div>
-        ${noteHtml}
-        <div class="biome-badge">${fish.length} species</div>
-      </div>
-      <div class="tw"><table>
-        <thead><tr><th>Species</th><th>Bait</th><th>Active Hours</th><th>Season</th><th>Weather</th><th>Price</th><th></th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table></div>
-    </div>`;
-  }).join('');
-  document.getElementById('catalogContent').innerHTML = html;
+const total=FISH.length;
+document.getElementById(‘totalCount’).textContent=total;
+document.getElementById(‘seniorCount’).textContent=FISH.filter(f=>f.senior).length;
+document.getElementById(‘pathDesc’).textContent=`Computed from Summer Day 1 · ${total} species across 4 seasons · Zones grouped by location`;
+document.getElementById(‘catalogContent’).innerHTML=BIOMES.map(b=>{
+const fish=FISH.filter(f=>f.loc===b.id);
+if(!fish.length) return ‘’;
+const noteHtml=b.note?`<span class="bnote">${b.note}</span>`:’’;
+const rows=fish.map(f=>{
+const king=isKing(f.name);
+const allS=f.seasons.length===4,allW=f.weather.length===3;
+const kingTag=king?`<span class="t" style="background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.22);color:var(--gold);margin-left:3px;font-size:8.5px">King</span>`:’’;
+const senDot=f.senior?`<span class="sdot" title="Senior Angler Required"></span>`:’’;
+return `<tr class="fish-row" data-name="${f.name.toLowerCase()}" data-loc="${f.loc}" data-bait="${f.bait.join(',')}" data-seasons="${f.seasons.join(',')}" data-weather="${f.weather.join(',')}" data-senior="${f.senior}" data-king="${king}"> <td class="fn${king?' king':''}">${f.name}${senDot}${kingTag}</td> <td>${f.bait.map(bTag).join('')}</td> <td class="tc">${f.time}</td> <td>${allS?`<span class="t t-all">All</span>`:f.seasons.map(sTag).join('')}</td> <td>${allW?`<span class="t t-all">Any</span>`:f.weather.map(wTag).join('')}</td> <td class="pr">${f.price==='—'?`<span style="color:var(--dim)">—</span>`:f.price}</td> </tr>`;
+}).join(’’);
+return `<div class="biome-sec" data-biome-id="${b.id}"> <div class="biome-hd"><div class="bicon">${b.icon}</div><div class="btitle">${b.id}</div>${noteHtml}<div class="bcount" data-vis-count>${fish.length} species</div></div> <div class="tw"><table> <thead><tr><th>Species</th><th>Bait</th><th>Active Hours</th><th>Season</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead> <tbody>${rows}</tbody> </table></div> </div>`;
+}).join(’’);
 }
 
-function setF(type, val, el){
-  document.querySelectorAll(`#${type}Chips .chip`).forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  filters[type] = val;
-  filterFish();
+function setF(type,val,el){
+document.querySelectorAll(`#${type}Chips .chip`).forEach(c=>c.classList.remove(‘on’));
+el.classList.add(‘on’);
+F[type]=val;
+doFilter();
 }
 
-function filterFish(){
-  const q = document.getElementById('fishSearch').value.toLowerCase().trim();
-  const {bait,season,weather,rank} = filters;
-  const ALL_S = ['spring','summer','autumn','winter'];
-  let total = 0;
-  document.querySelectorAll('.fish-row').forEach(row=>{
-    const name     = row.dataset.name;
-    const baits    = row.dataset.bait.split(',');
-    const seasons  = row.dataset.seasons.split(',');
-    const weathers = row.dataset.weather.split(',');
-    const sen      = row.dataset.senior === 'true';
-    const king     = row.dataset.king === 'true';
-    const isAllS   = ALL_S.every(s=>seasons.includes(s));
-    const isAllW   = weathers.length === 3 || weathers.includes('snowy');
+function clearAll(){
+F={biome:‘all’,season:‘all’,weather:‘all’,bait:‘all’,rank:‘all’};
+document.getElementById(‘fishSearch’).value=’’;
+[‘biome’,‘season’,‘weather’,‘bait’,‘rank’].forEach(t=>{
+const chips=document.querySelectorAll(`#${t}Chips .chip`);
+chips.forEach(c=>c.classList.remove(‘on’));
+chips[0].classList.add(‘on’);
+});
+doFilter();
+}
 
-    const okSearch  = !q || name.includes(q);
-    const okBait    = bait==='all' || (bait==='any'&&baits.includes('any')) || baits.includes(bait);
-    const okSeason  = season==='all' || isAllS || seasons.includes(season);
-    const okWeather = weather==='all' || weathers.includes(weather);
-    const okRank    = rank==='all' || (rank==='senior'&&sen) || (rank==='king'&&king);
-
-    const show = okSearch && okBait && okSeason && okWeather && okRank;
-    row.classList.toggle('hidden', !show);
-    if(show) total++;
-  });
-  document.querySelectorAll('.biome-sec').forEach(s=>{
-    const vis = s.querySelectorAll('.fish-row:not(.hidden)').length;
-    s.style.display = vis===0 ? 'none' : '';
-  });
-  document.getElementById('catalogEmpty').classList.toggle('show', total===0);
+function doFilter(){
+const q=document.getElementById(‘fishSearch’).value.toLowerCase().trim();
+const {biome,season,weather,bait,rank}=F;
+const ALL4=[‘spring’,‘summer’,‘autumn’,‘winter’];
+let visible=0;
+document.querySelectorAll(’.fish-row’).forEach(row=>{
+const loc=row.dataset.loc,baits=row.dataset.bait.split(’,’),seasons=row.dataset.seasons.split(’,’),wths=row.dataset.weather.split(’,’);
+const allS=ALL4.every(s=>seasons.includes(s)),allW=wths.length===3;
+const okBiome=biome===‘all’||loc===biome||(loc===‘River / Lake’&&(biome===‘River’||biome===‘Lake’))||loc.startsWith(biome);
+const okSearch=!q||row.dataset.name.includes(q);
+const okBait=bait===‘all’||(bait===‘any’&&baits.includes(‘any’))||baits.includes(bait);
+const okSeason=season===‘all’||allS||seasons.includes(season);
+const okWeather=weather===‘all’||allW||wths.includes(weather);
+const okRank=rank===‘all’||(rank===‘senior’&&row.dataset.senior===‘true’)||(rank===‘king’&&row.dataset.king===‘true’);
+const show=okBiome&&okSearch&&okBait&&okSeason&&okWeather&&okRank;
+row.classList.toggle(‘hidden’,!show);
+if(show) visible++;
+});
+document.querySelectorAll(’.biome-sec’).forEach(sec=>{
+const v=sec.querySelectorAll(’.fish-row:not(.hidden)’).length,t=sec.querySelectorAll(’.fish-row’).length;
+sec.style.display=v===0?‘none’:’’;
+const badge=sec.querySelector(’[data-vis-count]’);
+if(badge) badge.textContent=v===t?`${t} species`:`${v} / ${t}`;
+});
+const total=FISH.length;
+document.getElementById(‘matchCount’).textContent=visible;
+document.getElementById(‘matchOf’).textContent=visible===total?‘species’:`of ${total}`;
+document.getElementById(‘catalogEmpty’).classList.toggle(‘show’,visible===0);
+const dirty=Object.values(F).some(v=>v!==‘all’)||q!==’’;
+document.getElementById(‘clearBtn’).classList.toggle(‘show’,dirty);
+const PLABELS={biome:{all:null},season:{all:null,summer:‘☀️ Summer’,autumn:‘🍂 Autumn’,winter:‘❄️ Winter’,spring:‘🌸 Spring’},weather:{all:null,sunny:‘Sunny’,rainy:‘Rainy’,snowy:‘Snowy’},bait:{all:null,bug:‘Bug Bait’,veggie:‘Veggie Bait’,meat:‘Meat Bait’,any:‘Omni’},rank:{all:null,senior:‘★ Senior Angler’,king:‘👑 King Variants’}};
+const pills=[];
+if(F.biome!==‘all’) pills.push({key:‘biome’,label:`🗺 ${F.biome}`});
+[‘season’,‘weather’,‘bait’,‘rank’].forEach(t=>{if(F[t]!==‘all’&&PLABELS[t][F[t]]) pills.push({key:t,label:PLABELS[t][F[t]]})});
+if(q) pills.push({key:‘search’,label:`"${q}"`});
+const pe=document.getElementById(‘activePills’);
+pe.classList.toggle(‘show’,pills.length>0);
+pe.innerHTML=pills.map(p=>{
+const oc=p.key===‘search’?`document.getElementById('fishSearch').value='';doFilter()`:`setF('${p.key}','all',document.querySelector('#${p.key}Chips .chip'))`;
+return `<div class="apill" onclick="${oc}"><span>${p.label}</span><span class="x">×</span></div>`;
+}).join(’’);
 }
 
 function buildPath(){
-  const fishMap = {};
-  FISH.forEach(f => fishMap[f.name] = f);
-
-  const html = PATH.map(p=>{
-    const zonesHtml = p.zones.map(z=>{
-      const fishPills = z.fish.map(fname=>{
-        const f = fishMap[fname];
-        if(!f) return `<span class="sfl-item"><span class="sfl-name">${fname}</span></span>`;
-        const king = isKing(fname);
-        const baits = f.bait.map(bt).join(' ');
-        const sen = f.senior ? `<span class="senior-dot" title="Senior Angler Required"></span>` : '';
-        return `<span class="sfl-item">
-          <span class="sfl-name${king?' king-item':''}">${fname}${sen}</span>
-          <span class="sfl-detail">${f.time}</span>
-          ${baits}
-        </span>`;
-      }).join('');
-      return `<div class="strat-zone">
-        <div class="strat-zone-head">${z.name}</div>
-        <div class="strat-fish-list">${fishPills}</div>
-        ${z.note ? `<div style="font-size:11px;color:var(--dim);font-family:var(--mono);margin-top:8px;padding-left:2px">${z.note}</div>` : ''}
-      </div>`;
-    }).join('');
-
-    const callType = p.callout.type === 'warn' ? 'callout callout-warn' : 'callout';
-    const callIcon = p.callout.type === 'warn' ? '⚠️' : '📌';
-
-    return `<div class="season-block">
-      <div class="season-header">
-        <div class="season-badge ${p.cls}">${p.icon}</div>
-        <div style="flex:1">
-          <div class="season-title">${p.title}</div>
-          <div class="season-sub">${p.desc}</div>
-        </div>
-        <div class="new-count">+${p.newCount} species</div>
-      </div>
-      <div class="${callType}">
-        <div class="callout-icon">${callIcon}</div>
-        <div>${p.callout.text}</div>
-      </div>
-      ${zonesHtml}
-    </div>`;
-  }).join('');
-  document.getElementById('pathContent').innerHTML = html;
+const fm=Object.fromEntries(FISH.map(f=>[f.name,f]));
+document.getElementById(‘pathContent’).innerHTML=PATH.map(p=>{
+const zones=p.zones.map(z=>{
+const pills=z.fish.map(name=>{
+const f=fm[name];
+if(!f) return `<span class="fpill"><span class="fpname">${name}</span></span>`;
+const king=isKing(name);
+return `<span class="fpill"><span class="fpname${king?' king':''}">${name}${f.senior?`<span class="sdot"></span>`:''}</span><span class="fptime">${f.time}</span>${f.bait.map(bTag).join('')}</span>`;
+}).join(’’);
+return `<div class="zone-block"><div class="zone-head">${z.name}</div><div class="fish-pills">${pills}</div><div class="zone-note">${z.note}</div></div>`;
+}).join(’’);
+const cType=p.callout.type===‘warn’?‘callout callout-warn’:‘callout’;
+return `<div class="season-block"><div class="season-hdr"><div class="sico ${p.cls}">${p.icon}</div><div style="flex:1"><div class="stitle">${p.title}</div><div class="ssub">${p.desc}</div></div><div class="snew">+${p.newCount}</div></div><div class="${cType}"><div class="callout-icon">${p.callout.type==='warn'?'⚠️':'📌'}</div><div>${p.callout.text}</div></div>${zones}</div>`;
+}).join(’’);
 }
 
-function show(tabId, btn){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+tabId).classList.add('active');
-  btn.classList.add('active');
+function show(tabId,btn){
+document.querySelectorAll(’.tab’).forEach(t=>t.classList.remove(‘active’));
+document.querySelectorAll(’.nb’).forEach(b=>b.classList.remove(‘active’));
+document.getElementById(‘tab-’+tabId).classList.add(‘active’);
+btn.classList.add(‘active’);
 }
 
-document.addEventListener('DOMContentLoaded',()=>{
-  buildCatalog();
-  buildPath();
-});
+document.addEventListener(‘DOMContentLoaded’,()=>{buildCatalog();buildPath();doFilter()});
 </script>
 
 </body>
-</ht
+</html>
