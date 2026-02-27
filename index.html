@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starsand Island — Fishing Compendium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Syne:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070c13;--surf:#0c1520;--raised:#152334;
+  --bdr:rgba(255,255,255,.065);
+  --acc:#00d2e6;--acc2:#00ffb3;--gold:#f5c842;--coral:#ff6b6b;
+  --rain:#7ec8f8;--snow:#c8e8ff;
+  --txt:#adc8d4;--hi:#e4f2f8;--dim:#3f5f72;
+  --mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Syne',sans-serif;font-size:14px;line-height:1.6;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.7}
+.ambient{position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 60% 40% at 10% 95%,rgba(0,180,210,.055) 0%,transparent 70%),radial-gradient(ellipse 45% 35% at 90% 5%,rgba(0,255,179,.035) 0%,transparent 70%)}
+.app{position:relative;z-index:1}
+
+/* HEADER */
+header{padding:44px 48px 30px;max-width:1280px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.eye{font-family:var(–mono);font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:var(–acc);margin-bottom:9px;display:flex;align-items:center;gap:8px;opacity:.8}
+.eye::before{content:’’;width:20px;height:1px;background:var(–acc)}
+h1{font-family:‘Cinzel’,serif;font-size:clamp(1.5rem,4vw,2.8rem);font-weight:600;color:var(–hi);letter-spacing:3px;line-height:1}
+h1 em{display:block;font-style:normal;font-size:.36em;font-weight:400;color:var(–acc);letter-spacing:5px;margin-top:7px;font-family:var(–mono)}
+.hstats{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;padding-bottom:3px}
+.hs{font-family:var(–mono);font-size:10px;color:var(–dim);border:1px solid var(–bdr);padding:4px 11px;border-radius:3px;white-space:nowrap}
+.hs b{color:var(–hi);font-size:11px}
+
+/* NAV */
+.nav-wrap{position:sticky;top:0;z-index:60;background:rgba(7,12,19,.94);backdrop-filter:blur(22px) saturate(1.5);border-bottom:1px solid var(–bdr)}
+nav{max-width:1280px;margin:0 auto;padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+.nb{flex-shrink:0;background:none;border:none;border-bottom:2px solid transparent;padding:15px 20px;font-family:var(–mono);font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(–dim);cursor:pointer;transition:color .18s,border-color .18s;white-space:nowrap}
+.nb:hover{color:var(–txt)}
+.nb.active{color:var(–acc);border-bottom-color:var(–acc)}
+
+/* MAIN */
+main{max-width:1280px;margin:0 auto;padding:28px 48px 96px}
+.tab{display:none}
+.tab.active{display:block;animation:rv .2s ease}
+@keyframes rv{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* SEASON BLOCK */
+.season-block{margin-bottom:60px}
+.season-hdr{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(–bdr)}
+.sico{width:42px;height:42px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.s-su{background:rgba(255,170,50,.11);border:1px solid rgba(255,170,50,.28)}
+.s-au{background:rgba(220,120,60,.11);border:1px solid rgba(220,120,60,.28)}
+.s-wi{background:rgba(120,190,255,.11);border:1px solid rgba(120,190,255,.28)}
+.s-sp{background:rgba(130,200,100,.11);border:1px solid rgba(130,200,100,.28)}
+.stitle{font-family:‘Cinzel’,serif;font-size:1.15rem;color:var(–hi);letter-spacing:.5px}
+.ssub{font-family:var(–mono);font-size:9.5px;color:var(–dim);margin-top:3px}
+.scount{font-family:var(–mono);font-size:9.5px;background:rgba(0,210,230,.09);border:1px solid rgba(0,210,230,.2);color:var(–acc);padding:3px 10px;border-radius:2px;margin-left:auto}
+
+/* LOCATION GROUP */
+.loc-block{margin-bottom:22px}
+.loc-hd{display:flex;align-items:center;gap:8px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px dashed rgba(0,210,230,.15)}
+.loc-icon{width:22px;height:22px;background:var(–raised);border:1px solid var(–bdr);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0}
+.loc-name{font-family:var(–mono);font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:var(–acc)}
+.loc-note{font-family:var(–mono);font-size:8.5px;color:var(–dim);border:1px solid var(–bdr);padding:1px 7px;border-radius:2px}
+.loc-count{font-family:var(–mono);font-size:8.5px;color:var(–dim);margin-left:auto}
+
+/* TABLE */
+.tw{overflow-x:auto;border-radius:4px;border:1px solid var(–bdr)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+thead tr{background:var(–surf)}
+th{font-family:var(–mono);font-size:8px;letter-spacing:1.8px;text-transform:uppercase;color:var(–dim);padding:8px 12px;text-align:left;font-weight:400;white-space:nowrap;border-bottom:1px solid var(–bdr)}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.038);transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(0,210,230,.025)}
+td{padding:7px 12px;color:var(–txt);vertical-align:middle}
+.fn{font-size:12.5px;font-weight:600;color:var(–hi);white-space:nowrap}
+.fn.king{color:var(–gold)}
+.tc{font-family:var(–mono);font-size:10.5px;color:var(–dim);white-space:nowrap}
+.pr{font-family:var(–mono);font-size:10.5px;color:var(–acc2);text-align:right}
+.sdot{display:inline-block;width:5px;height:5px;background:var(–gold);border-radius:50%;margin-left:4px;vertical-align:middle;position:relative;top:-1px}
+
+/* TAGS */
+.t{display:inline-flex;align-items:center;padding:1px 6px;border-radius:2px;font-family:var(–mono);font-size:9px;white-space:nowrap;margin:1px}
+.t-bug   {background:rgba(134,200,100,.09);border:1px solid rgba(134,200,100,.22);color:#8BC34A}
+.t-veggie{background:rgba(0,188,140,.09);  border:1px solid rgba(0,188,140,.22); color:#00bfa5}
+.t-meat  {background:rgba(245,120,60,.09); border:1px solid rgba(245,120,60,.22);color:#FF8C42}
+.t-any   {background:rgba(0,210,230,.07);  border:1px solid rgba(0,210,230,.18); color:var(–acc)}
+.t-sun   {background:rgba(255,235,80,.07); border:1px solid rgba(255,235,80,.18); color:#f5e642}
+.t-rain  {background:rgba(126,200,248,.09);border:1px solid rgba(126,200,248,.22);color:var(–rain)}
+.t-snow  {background:rgba(200,232,255,.09);border:1px solid rgba(200,232,255,.22);color:var(–snow)}
+.t-all   {background:rgba(255,255,255,.03);border:1px solid var(–bdr);color:var(–dim)}
+.t-king  {background:rgba(245,200,66,.08); border:1px solid rgba(245,200,66,.22); color:var(–gold);font-size:8.5px}
+
+/* CALLOUT */
+.callout{display:flex;gap:11px;padding:12px 14px;background:rgba(0,210,230,.04);border:1px solid rgba(0,210,230,.17);border-radius:4px;margin:12px 0 20px;font-size:12.5px;color:var(–txt);line-height:1.6}
+.callout-warn{background:rgba(245,200,66,.04);border-color:rgba(245,200,66,.2)}
+.ci{font-size:.95rem;flex-shrink:0;margin-top:2px}
+.callout b{color:var(–hi)}
+.callout .hl{color:var(–acc2);font-weight:600}
+.callout .w{color:var(–gold);font-weight:600}
+
+/* CATCH PATH */
+.path-season{margin-bottom:52px}
+.ph{display:flex;align-items:center;gap:13px;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid var(–bdr)}
+.ph .sico{width:38px;height:38px;font-size:1.2rem}
+.ptitle{font-family:‘Cinzel’,serif;font-size:1rem;color:var(–hi);letter-spacing:.5px}
+.psub{font-family:var(–mono);font-size:9.5px;color:var(–dim);margin-top:3px}
+.pnew{font-family:var(–mono);font-size:9.5px;background:rgba(0,210,230,.09);border:1px solid rgba(0,210,230,.2);color:var(–acc);padding:3px 9px;border-radius:2px;margin-left:auto}
+.zone{margin-bottom:16px}
+.zh{font-family:var(–mono);font-size:8.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(–acc);margin-bottom:7px;padding-bottom:5px;border-bottom:1px dashed rgba(0,210,230,.12)}
+.fp{display:flex;flex-wrap:wrap;gap:5px}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;background:var(–surf);border:1px solid var(–bdr);border-radius:3px;font-size:11.5px}
+.pn{color:var(–hi);font-weight:600}
+.pn.king{color:var(–gold)}
+.pt{font-family:var(–mono);font-size:9px;color:var(–dim)}
+.znote{font-size:10.5px;color:var(–dim);font-family:var(–mono);margin-top:6px;line-height:1.55}
+
+/* GEAR */
+.gs{margin-bottom:36px}
+.gh{font-family:var(–mono);font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(–acc);margin-bottom:12px;padding-bottom:7px;border-bottom:1px solid var(–bdr)}
+.tier{font-family:var(–mono);font-size:9.5px;color:var(–acc2)}
+.bg{display:grid;grid-template-columns:repeat(auto-fill,minmax(218px,1fr));gap:8px}
+.bc{background:var(–surf);border:1px solid var(–bdr);border-radius:4px;padding:12px 14px}
+.bt{font-size:12px;font-weight:600;color:var(–hi);margin-bottom:5px;display:flex;align-items:center;gap:7px}
+.bb{font-size:11px;color:var(–dim);line-height:1.65}
+
+@media(max-width:720px){
+header,nav,main{padding-left:16px;padding-right:16px}
+.bg{grid-template-columns:1fr}
+th,td{padding:6px 9px;font-size:11.5px}
+}
+</style>
+
+</head>
+<body>
+<div class="ambient"></div>
+<div class="app">
+
+<header>
+  <div>
+    <div class="eye">Aquatic Field Reference</div>
+    <h1>Starsand Island<em>Fishing Compendium</em></h1>
+  </div>
+  <div class="hstats">
+    <div class="hs"><b>105</b> Species</div>
+    <div class="hs"><b>11</b> Biomes</div>
+    <div class="hs"><b>4</b> Seasons</div>
+    <div class="hs"><b>6</b> King Variants</div>
+    <div class="hs"><span style="color:var(--gold)">●</span> = Senior Angler required</div>
+  </div>
+</header>
+
+<div class="nav-wrap">
+  <nav>
+    <button class="nb active" onclick="show('catalog',this)">Fish Catalog</button>
+    <button class="nb" onclick="show('path',this)">Catch Path</button>
+    <button class="nb" onclick="show('gear',this)">Gear &amp; Info</button>
+  </nav>
+</div>
+
+<main>
+
+<!-- ═══════ CATALOG ═══════ -->
+
+<div id="tab-catalog" class="tab active">
+
+  <!-- SUMMER -->
+
+  <div class="season-block">
+    <div class="season-hdr">
+      <div class="sico s-su">☀️</div>
+      <div><div class="stitle">Summer</div><div class="ssub">Fish available in Summer — including all-season species</div></div>
+      <div class="scount">54 species</div>
+    </div>
+
+```
+<!-- Lake -->
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🏞️</div><div class="loc-name">Lake</div><div class="loc-count">9 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Betta</td><td><span class="t t-bug">Bug</span></td><td class="tc">10:00–22:00</td><td><span class="t t-sun">Sunny</span></td><td class="pr">101</td></tr>
+      <tr><td class="fn">Bighead Carp<span class="sdot"></span></td><td><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">06:00–22:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">65</td></tr>
+      <tr><td class="fn">Grass Carp</td><td><span class="t t-meat">Meat</span></td><td class="tc">10:00–24:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">108</td></tr>
+      <tr><td class="fn">Green Sunfish<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></td><td class="tc">12:00–02:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">70</td></tr>
+      <tr><td class="fn">Paradise Fish</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">18:00–02:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">118</td></tr>
+      <tr><td class="fn">Pumpkinseed<span class="sdot"></span></td><td><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">10:00–00:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">70</td></tr>
+      <tr><td class="fn">Silver Carp<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">70</td></tr>
+      <tr><td class="fn">Topmouth Culter<span class="sdot"></span></td><td><span class="t t-any">Any</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">116</td></tr>
+      <tr><td class="fn">Velora Cichlid<span class="sdot"></span></td><td><span class="t t-any">Any</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">58</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- River -->
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🌊</div><div class="loc-name">River</div><div class="loc-count">10 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Arapaima <span class="t t-king">King</span></td><td><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">12:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">782</td></tr>
+      <tr><td class="fn">Archerfish<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></td><td class="tc">06:00–20:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">98</td></tr>
+      <tr><td class="fn">Chinese Hooksnout Carp<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">73</td></tr>
+      <tr><td class="fn">Clown Featherback<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></td><td class="tc">06:00–12:00 / 18:00–00:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">129</td></tr>
+      <tr><td class="fn">Electric Eel</td><td><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></td><td class="tc">06:00–18:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">129</td></tr>
+      <tr><td class="fn">Four-Eyed Sleeper</td><td><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">10:00–02:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">92</td></tr>
+      <tr><td class="fn">Giant Barb<span class="sdot"></span></td><td><span class="t t-any">Any</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">100</td></tr>
+      <tr><td class="fn">Guppy</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">08:00–20:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">115</td></tr>
+      <tr><td class="fn">Red Carp</td><td><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">82</td></tr>
+      <tr><td class="fn">Snakehead</td><td><span class="t t-meat">Meat</span></td><td class="tc">06:00–18:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">163</td></tr>
+      <tr><td class="fn">Tilapia</td><td><span class="t t-bug">Bug</span></td><td class="tc">10:00–22:00</td><td><span class="t t-sun">Sunny</span></td><td class="pr">101</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- River / Lake -->
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🔀</div><div class="loc-name">River / Lake</div><div class="loc-note">Both zones</div><div class="loc-count">1 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Giant River Prawn</td><td><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">50</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- Ocean -->
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🌍</div><div class="loc-name">Ocean</div><div class="loc-count">11 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Boxfish<span class="sdot"></span></td><td><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">08:00–22:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">70</td></tr>
+      <tr><td class="fn">Brown Tiger Prawn</td><td><span class="t t-any">Any</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">—</td></tr>
+      <tr><td class="fn">Clownfish<span class="sdot"></span></td><td><span class="t t-any">Any</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">50</td></tr>
+      <tr><td class="fn">Emperor Angelfish</td><td><span class="t t-meat">Meat</span></td><td class="tc">08:00–22:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">152</td></tr>
+      <tr><td class="fn">Foureye Butterflyfish<span class="sdot"></span></td><td><span class="t t-bug">Bug</span></td><td class="tc">12:00–02:00</td><td><span class="t t-sun">Sunny</span></td><td class="pr">163</td></tr>
+      <tr><td class="fn">Greasyback Shrimp</td><td><span class="t t-any">Any</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">—</td></tr>
+      <tr><td class="fn">Lionfish</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">10:00–20:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">176</td></tr>
+      <tr><td class="fn">Moorish Idol<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></td><td class="tc">06:00–18:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">75</td></tr>
+      <tr><td class="fn">Redfish<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></td><td class="tc">06:00–12:00 / 18:00–00:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">75</td></tr>
+      <tr><td class="fn">Spinefoot<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></td><td class="tc">06:00–14:00 / 00:00–02:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">139</td></tr>
+      <tr><td class="fn">Tiger Puffer</td><td><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">14:00–00:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">114</td></tr>
+      <tr><td class="fn">Yellowtail Damselfish<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></td><td class="tc">08:00–20:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">106</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- Coral Sea -->
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🪸</div><div class="loc-name">Coral Sea</div><div class="loc-note">Parrot Ship</div><div class="loc-count">4 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Bass</td><td><span class="t t-meat">Meat</span></td><td class="tc">06:00–08:00 / 18:00–20:00</td><td><span class="t t-all">Any</span></td><td class="pr">103</td></tr>
+      <tr><td class="fn">Blue Tang<span class="sdot"></span></td><td><span class="t t-veggie">Veggie</span></td><td class="tc">08:00–18:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">121</td></tr>
+      <tr><td class="fn">Sardine</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">08:00–18:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">75</td></tr>
+      <tr><td class="fn">Swordfish <span class="t t-king">King</span></td><td><span class="t t-meat">Meat</span></td><td class="tc">06:00–18:00</td><td><span class="t t-all">Any</span></td><td class="pr">826</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- Celestewave -->
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🌙</div><div class="loc-name">Celestewave</div><div class="loc-note">Parrot Ship</div><div class="loc-count">5 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Dolphinfish<span class="sdot"></span></td><td><span class="t t-meat">Meat</span></td><td class="tc">08:00–18:00</td><td><span class="t t-all">Any</span></td><td class="pr">119</td></tr>
+      <tr><td class="fn">Flounder</td><td><span class="t t-meat">Meat</span></td><td class="tc">08:00–18:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">121</td></tr>
+      <tr><td class="fn">Long-barbelled Dragonfish <span class="t t-king">King</span></td><td><span class="t t-meat">Meat</span></td><td class="tc">20:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">1051</td></tr>
+      <tr><td class="fn">Mandarinfish<span class="sdot"></span></td><td><span class="t t-veggie">Veggie</span></td><td class="tc">20:00–00:00</td><td><span class="t t-all">Any</span></td><td class="pr">103</td></tr>
+      <tr><td class="fn">Ribbon Eel</td><td><span class="t t-meat">Meat</span></td><td class="tc">20:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">188</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- Luminwave -->
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">⭐</div><div class="loc-name">Luminwave</div><div class="loc-note">Parrot Ship</div><div class="loc-count">5 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Anglerfish</td><td><span class="t t-meat">Meat</span></td><td class="tc">20:00–24:00</td><td><span class="t t-all">Any</span></td><td class="pr">207</td></tr>
+      <tr><td class="fn">Megamouth Shark <span class="t t-king">King</span></td><td><span class="t t-meat">Meat</span></td><td class="tc">20:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">1051</td></tr>
+      <tr><td class="fn">Mola Mola</td><td><span class="t t-meat">Meat</span></td><td class="tc">08:00–18:00</td><td><span class="t t-all">Any</span></td><td class="pr">159</td></tr>
+      <tr><td class="fn">Tuna<span class="sdot"></span></td><td><span class="t t-meat">Meat</span></td><td class="tc">08:00–18:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">121</td></tr>
+      <tr><td class="fn">Viperfish</td><td><span class="t t-meat">Meat</span></td><td class="tc">20:00–24:00</td><td><span class="t t-all">Any</span></td><td class="pr">207</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- Special zones -->
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">✨</div><div class="loc-name">Spiritshade River</div><div class="loc-note">Special Zone</div><div class="loc-count">1 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Ink Phoenixfish</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">124</td></tr>
+    </tbody>
+  </table></div>
+</div>
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🍄</div><div class="loc-name">Spore Cascade</div><div class="loc-note">Special Zone</div><div class="loc-count">1 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Comet Glowfish</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">143</td></tr>
+    </tbody>
+  </table></div>
+</div>
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🌲</div><div class="loc-name">Moonlit Forest</div><div class="loc-note">Explorer Profession</div><div class="loc-count">2 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Zone</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Green Swordtail<span class="sdot"></span></td><td><span class="t t-any">Any</span></td><td class="tc">06:00–02:00</td><td style="font-family:var(--mono);font-size:10px;color:var(--dim)">Darkwater Shore</td><td class="pr">57</td></tr>
+      <tr><td class="fn">Pearl Glowfish<span class="sdot"></span></td><td><span class="t t-any">Any</span></td><td class="tc">06:00–02:00</td><td style="font-family:var(--mono);font-size:10px;color:var(--dim)">Dreamfall Garden</td><td class="pr">57</td></tr>
+    </tbody>
+  </table></div>
+</div>
+```
+
+  </div><!-- /summer -->
+
+  <!-- AUTUMN -->
+
+  <div class="season-block">
+    <div class="season-hdr">
+      <div class="sico s-au">🍂</div>
+      <div><div class="stitle">Autumn</div><div class="ssub">New species first available in Autumn</div></div>
+      <div class="scount">21 species</div>
+    </div>
+
+```
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🏞️</div><div class="loc-name">Lake</div><div class="loc-count">6 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Alligator Gar</td><td><span class="t t-bug">Bug</span></td><td class="tc">08:00–20:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">163</td></tr>
+      <tr><td class="fn">Bitterling</td><td><span class="t t-any">Any</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">58</td></tr>
+      <tr><td class="fn">Chinese Perch<span class="sdot"></span></td><td><span class="t t-veggie">Veggie</span></td><td class="tc">10:00–00:00</td><td><span class="t t-sun">Sunny</span></td><td class="pr">106</td></tr>
+      <tr><td class="fn">Cichlid</td><td><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></td><td class="tc">08:00–20:00</td><td><span class="t t-all">Any</span></td><td class="pr">75</td></tr>
+      <tr><td class="fn">Kissing Gourami</td><td><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">10:00–00:00</td><td><span class="t t-all">Any</span></td><td class="pr">140</td></tr>
+      <tr><td class="fn">Mud Carp</td><td><span class="t t-meat">Meat</span></td><td class="tc">10:00–20:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">163</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🌊</div><div class="loc-name">River</div><div class="loc-count">5 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Arowana</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">08:00–24:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">101</td></tr>
+      <tr><td class="fn">Glass Bloodfin Tetra<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></td><td class="tc">06:00–20:00</td><td><span class="t t-all">Any</span></td><td class="pr">121</td></tr>
+      <tr><td class="fn">Holland's Carp</td><td><span class="t t-bug">Bug</span></td><td class="tc">10:00–00:00</td><td><span class="t t-sun">Sunny</span></td><td class="pr">75</td></tr>
+      <tr><td class="fn">Leaffish<span class="sdot"></span></td><td><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">12:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">121</td></tr>
+      <tr><td class="fn">Magnificent Killifish<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></td><td class="tc">06:00–00:00</td><td><span class="t t-all">Any</span></td><td class="pr">106</td></tr>
+      <tr><td class="fn">Upside-Down Catfish</td><td><span class="t t-meat">Meat</span></td><td class="tc">10:00–02:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">175</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🔀</div><div class="loc-name">River / Lake</div><div class="loc-note">Both zones</div><div class="loc-count">1 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Mototo Stingray<span class="sdot"></span></td><td><span class="t t-any">Any</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">—</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🌍</div><div class="loc-name">Ocean</div><div class="loc-count">6 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Butterflyfish<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></td><td class="tc">06:00–20:00</td><td><span class="t t-all">Any</span></td><td class="pr">121</td></tr>
+      <tr><td class="fn">Discus<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></td><td class="tc">06:00–12:00 / 16:00–00:00</td><td><span class="t t-all">Any</span></td><td class="pr">70</td></tr>
+      <tr><td class="fn">Mackerel</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">12:00–20:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">135</td></tr>
+      <tr><td class="fn">Orangespine Unicornfish<span class="sdot"></span></td><td><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">12:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">98</td></tr>
+      <tr><td class="fn">Red Porgy<span class="sdot"></span></td><td><span class="t t-meat">Meat</span></td><td class="tc">10:00–22:00</td><td><span class="t t-sun">Sunny</span></td><td class="pr">143</td></tr>
+      <tr><td class="fn">Trevally<span class="sdot"></span></td><td><span class="t t-bug">Bug</span></td><td class="tc">08:00–16:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">234</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">✨</div><div class="loc-name">Spiritshade River</div><div class="loc-note">Special Zone</div><div class="loc-count">1 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Glassfish<span class="sdot"></span></td><td><span class="t t-meat">Meat</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">143</td></tr>
+    </tbody>
+  </table></div>
+</div>
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🍄</div><div class="loc-name">Spore Cascade</div><div class="loc-note">Special Zone</div><div class="loc-count">1 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Glowfish <span class="t t-king">King</span></td><td><span class="t t-bug">Bug</span></td><td class="tc">00:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">1607</td></tr>
+    </tbody>
+  </table></div>
+</div>
+```
+
+  </div><!-- /autumn -->
+
+  <!-- WINTER -->
+
+  <div class="season-block">
+    <div class="season-hdr">
+      <div class="sico s-wi">❄️</div>
+      <div><div class="stitle">Winter</div><div class="ssub">New species first available in Winter · <span style="color:var(--snow)">5 require Snowy weather</span></div></div>
+      <div class="scount">19 species</div>
+    </div>
+
+```
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🏞️</div><div class="loc-name">Lake</div><div class="loc-count">5 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Alaska Blackfish<span class="sdot"></span></td><td><span class="t t-bug">Bug</span></td><td class="tc">06:00–22:00</td><td><span class="t t-sun">Sunny</span></td><td class="pr">88</td></tr>
+      <tr><td class="fn">Baikal Sculpin</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">10:00–24:00</td><td><span class="t t-sun">Sunny</span></td><td class="pr">238</td></tr>
+      <tr><td class="fn">Cleaner Fish<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></td><td class="tc">08:00–24:00</td><td><span class="t t-all">Any</span></td><td class="pr">65</td></tr>
+      <tr><td class="fn">Ide<span class="sdot"></span></td><td><span class="t t-any">Any</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">101</td></tr>
+      <tr><td class="fn">Lake Trout</td><td><span class="t t-any">Any</span></td><td class="tc">08:00–18:00 / 00:00–02:00</td><td><span class="t t-snow">Snowy</span></td><td class="pr">127</td></tr>
+      <tr><td class="fn">Wheatfish</td><td><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">06:00–20:00</td><td><span class="t t-all">Any</span></td><td class="pr">140</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🌊</div><div class="loc-name">River</div><div class="loc-count">7 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Lungfish</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">10:00–20:00</td><td><span class="t t-sun">Sunny</span></td><td class="pr">237</td></tr>
+      <tr><td class="fn">Paddlefish <span class="t t-king">King</span></td><td><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></td><td class="tc">06:00–22:00</td><td><span class="t t-all">Any</span></td><td class="pr">733</td></tr>
+      <tr><td class="fn">Pale Chub<span class="sdot"></span></td><td><span class="t t-any">Any</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Any</span></td><td class="pr">82</td></tr>
+      <tr><td class="fn">Pope's Goby</td><td><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">08:00–24:00</td><td><span class="t t-all">Any</span></td><td class="pr">131</td></tr>
+      <tr><td class="fn">Redtail Catfish<span class="sdot"></span></td><td><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></td><td class="tc">06:00–14:00 / 18:00–24:00</td><td><span class="t t-all">Any</span></td><td class="pr">121</td></tr>
+      <tr><td class="fn">Royal Twig Catfish</td><td><span class="t t-bug">Bug</span></td><td class="tc">08:00–22:00</td><td><span class="t t-snow">Snowy</span></td><td class="pr">206</td></tr>
+      <tr><td class="fn">Siberian Taimen</td><td><span class="t t-meat">Meat</span></td><td class="tc">10:00–24:00</td><td><span class="t t-sun">Sunny</span></td><td class="pr">163</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🌍</div><div class="loc-name">Ocean</div><div class="loc-count">6 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Barracuda</td><td><span class="t t-bug">Bug</span></td><td class="tc">16:00–24:00</td><td><span class="t t-sun">Sunny</span></td><td class="pr">210</td></tr>
+      <tr><td class="fn">Black Scraper</td><td><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></td><td class="tc">06:00–12:00 / 16:00–22:00</td><td><span class="t t-all">Any</span></td><td class="pr">106</td></tr>
+      <tr><td class="fn">Blue Angelfish</td><td><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></td><td class="tc">06:00–20:00</td><td><span class="t t-all">Any</span></td><td class="pr">98</td></tr>
+      <tr><td class="fn">Rainbow Trout</td><td><span class="t t-meat">Meat</span></td><td class="tc">12:00–22:00</td><td><span class="t t-snow">Snowy</span></td><td class="pr">137</td></tr>
+      <tr><td class="fn">Royal Gramma</td><td><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></td><td class="tc">10:00–24:00</td><td><span class="t t-all">Any</span></td><td class="pr">98</td></tr>
+      <tr><td class="fn">Whitefish</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">10:00–20:00</td><td><span class="t t-snow">Snowy</span></td><td class="pr">218</td></tr>
+    </tbody>
+  </table></div>
+</div>
+```
+
+  </div><!-- /winter -->
+
+  <!-- SPRING -->
+
+  <div class="season-block">
+    <div class="season-hdr">
+      <div class="sico s-sp">🌸</div>
+      <div><div class="stitle">Spring</div><div class="ssub">New species first available in Spring · Final 11 to complete the collection</div></div>
+      <div class="scount">11 species</div>
+    </div>
+
+```
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🏞️</div><div class="loc-name">Lake</div><div class="loc-count">3 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Crucian Carp</td><td><span class="t t-meat">Meat</span></td><td class="tc">10:00–24:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">108</td></tr>
+      <tr><td class="fn">Koi</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">12:00–24:00</td><td><span class="t t-sun">Sunny</span></td><td class="pr">101</td></tr>
+      <tr><td class="fn">Medaka</td><td><span class="t t-bug">Bug</span></td><td class="tc">06:00–20:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">108</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🌊</div><div class="loc-name">River</div><div class="loc-count">3 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Carp</td><td><span class="t t-bug">Bug</span></td><td class="tc">06:00–02:00</td><td><span class="t t-sun">Sunny</span></td><td class="pr">94</td></tr>
+      <tr><td class="fn">Common Rudd</td><td><span class="t t-meat">Meat</span></td><td class="tc">12:00–24:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">163</td></tr>
+      <tr><td class="fn">Flathead Catfish</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">10:00–22:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">152</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🌍</div><div class="loc-name">Ocean</div><div class="loc-count">3 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Anchovy</td><td><span class="t t-meat">Meat</span></td><td class="tc">12:00–24:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">115</td></tr>
+      <tr><td class="fn">Noodlefish</td><td><span class="t t-bug">Bug</span></td><td class="tc">14:00–24:00</td><td><span class="t t-sun">Sunny</span></td><td class="pr">109</td></tr>
+      <tr><td class="fn">Potato Grouper</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">06:00–16:00</td><td><span class="t t-rain">Rainy</span></td><td class="pr">176</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">✨</div><div class="loc-name">Spiritshade River</div><div class="loc-note">Special Zone</div><div class="loc-count">1 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Daisy's Ricefish</td><td><span class="t t-bug">Bug</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">143</td></tr>
+    </tbody>
+  </table></div>
+</div>
+<div class="loc-block">
+  <div class="loc-hd"><div class="loc-icon">🍄</div><div class="loc-name">Spore Cascade</div><div class="loc-note">Special Zone</div><div class="loc-count">1 species</div></div>
+  <div class="tw"><table>
+    <thead><tr><th>Species</th><th>Bait</th><th>Hours</th><th>Weather</th><th style="text-align:right">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">Fringetail Glowfish</td><td><span class="t t-veggie">Veggie</span></td><td class="tc">06:00–02:00</td><td><span class="t t-all">Sunny / Rainy</span></td><td class="pr">124</td></tr>
+    </tbody>
+  </table></div>
+</div>
+```
+
+  </div><!-- /spring -->
+</div><!-- /catalog -->
+
+<!-- ═══════ CATCH PATH ═══════ -->
+
+<div id="tab-path" class="tab">
+  <div style="font-family:'Cinzel',serif;font-size:1.1rem;color:var(--hi);letter-spacing:1px;margin-bottom:4px">Optimal Catch Path</div>
+  <div style="font-family:var(--mono);font-size:10px;color:var(--dim);margin-bottom:18px">Computed from Summer Day 1 · 105 species across 4 seasons · Zones grouped by location</div>
+  <div class="callout"><div class="ci">📊</div><div><b>Route logic:</b> Starting Summer Day 1, each phase targets fish first available that season, batched by zone to minimize travel. All-season species are cleared immediately. <span class="hl">Summer unlocks 54 species</span> — the highest single-season density.</div></div>
+
+  <!-- Summer -->
+
+  <div class="path-season">
+    <div class="ph"><div class="sico s-su">☀️</div><div style="flex:1"><div class="ptitle">Summer — Phase 1</div><div class="psub">54 species first available · Highest density season</div></div><div class="pnew">+54</div></div>
+    <div class="callout"><div class="ci">📌</div><div><b>Priority:</b> Freshwater universals → Summer freshwater → Ocean → Deep sea (Parrot Ship) → Special zones. <span style="color:var(--gold);font-weight:600">10 Summer fish require Rainy weather</span> — batch on rainy days.</div></div>
+    <div class="zone"><div class="zh">River — All-Season &amp; Summer</div><div class="fp">
+      <span class="pill"><span class="pn">Giant Barb ●</span><span class="pt">06:00–02:00</span><span class="t t-any">Any</span></span>
+      <span class="pill"><span class="pn">Giant River Prawn</span><span class="pt">06:00–02:00</span><span class="t t-any">Any</span></span>
+      <span class="pill"><span class="pn">Zander ●</span><span class="pt">06:00–02:00</span><span class="t t-any">Any</span></span>
+      <span class="pill"><span class="pn">Red Carp</span><span class="pt">06:00–02:00</span><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Chinese Hooksnout Carp ●</span><span class="pt">06:00–02:00</span><span class="t t-bug">Bug</span></span>
+      <span class="pill"><span class="pn">Archerfish ●</span><span class="pt">06:00–20:00</span><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Clown Featherback ●</span><span class="pt">06:00–12:00 / 18:00–00:00</span><span class="t t-bug">Bug</span></span>
+      <span class="pill"><span class="pn king">Arapaima (King)</span><span class="pt">12:00–02:00</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></span>
+    </div><div class="znote">Wide windows, no weather dependency. Clear these first.</div></div>
+    <div class="zone"><div class="zh">River — Summer Sunny</div><div class="fp">
+      <span class="pill"><span class="pn">Tilapia</span><span class="pt">10:00–22:00</span><span class="t t-bug">Bug</span></span>
+      <span class="pill"><span class="pn">Electric Eel</span><span class="pt">06:00–18:00</span><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Payara</span><span class="pt">06:00–12:00 / 18:00–00:00</span><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Four-Eyed Sleeper</span><span class="pt">10:00–02:00</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></span>
+    </div><div class="znote">Payara has two daily windows — schedule arrival at 06:00 or 18:00.</div></div>
+    <div class="zone"><div class="zh">River — Summer Rainy</div><div class="fp">
+      <span class="pill"><span class="pn">Guppy</span><span class="pt">08:00–20:00</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Snakehead</span><span class="pt">06:00–18:00</span><span class="t t-meat">Meat</span></span>
+    </div><div class="znote">Hold for rainy weather. Both have generous windows once rain arrives.</div></div>
+    <div class="zone"><div class="zh">Lake — Summer</div><div class="fp">
+      <span class="pill"><span class="pn">Bighead Carp ●</span><span class="pt">06:00–22:00</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Velora Cichlid ●</span><span class="pt">06:00–02:00</span><span class="t t-any">Any</span></span>
+      <span class="pill"><span class="pn">Silver Carp ●</span><span class="pt">06:00–02:00</span><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Topmouth Culter ●</span><span class="pt">06:00–02:00</span><span class="t t-any">Any</span></span>
+      <span class="pill"><span class="pn">Pumpkinseed ●</span><span class="pt">10:00–00:00</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Green Sunfish ●</span><span class="pt">12:00–02:00</span><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Betta</span><span class="pt">10:00–22:00</span><span class="t t-bug">Bug</span></span>
+    </div><div class="znote">Betta requires Sunny weather. All others available Sunny or Rainy.</div></div>
+    <div class="zone"><div class="zh">Lake — Summer Rainy</div><div class="fp">
+      <span class="pill"><span class="pn">Grass Carp</span><span class="pt">10:00–24:00</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Paradise Fish</span><span class="pt">18:00–02:00</span><span class="t t-veggie">Veggie</span></span>
+    </div><div class="znote">Paradise Fish is an evening window — plan a rainy night session.</div></div>
+    <div class="zone"><div class="zh">Ocean — All-Season &amp; Summer</div><div class="fp">
+      <span class="pill"><span class="pn">Brown Tiger Prawn</span><span class="pt">06:00–02:00</span><span class="t t-any">Any</span></span>
+      <span class="pill"><span class="pn">Clownfish ●</span><span class="pt">06:00–02:00</span><span class="t t-any">Any</span></span>
+      <span class="pill"><span class="pn">Greasyback Shrimp</span><span class="pt">06:00–02:00</span><span class="t t-any">Any</span></span>
+      <span class="pill"><span class="pn">Moorish Idol ●</span><span class="pt">06:00–18:00</span><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Redfish ●</span><span class="pt">06:00–12:00 / 18:00–00:00</span><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Tiger Puffer</span><span class="pt">14:00–00:00</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Boxfish ●</span><span class="pt">08:00–22:00</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Yellowtail Damselfish ●</span><span class="pt">08:00–20:00</span><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Spinefoot ●</span><span class="pt">06:00–14:00 / 00:00–02:00</span><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></span>
+    </div><div class="znote">Batch morning and evening runs. Shrimp and Prawns take any bait at any time.</div></div>
+    <div class="zone"><div class="zh">Ocean — Summer Sunny / Rainy</div><div class="fp">
+      <span class="pill"><span class="pn">Foureye Butterflyfish ●</span><span class="pt">12:00–02:00 · Sunny</span><span class="t t-bug">Bug</span></span>
+      <span class="pill"><span class="pn">Emperor Angelfish</span><span class="pt">08:00–22:00 · Rainy</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Lionfish</span><span class="pt">10:00–20:00 · Rainy</span><span class="t t-veggie">Veggie</span></span>
+    </div></div>
+    <div class="zone"><div class="zh">Coral Sea — Parrot Ship</div><div class="fp">
+      <span class="pill"><span class="pn">Humphead Wrasse</span><span class="pt">08:00–18:00</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Blue Tang ●</span><span class="pt">08:00–18:00</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Sardine</span><span class="pt">08:00–18:00</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn king">Swordfish (King)</span><span class="pt">06:00–18:00</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Bass</span><span class="pt">06:00–08:00 / 18:00–20:00</span><span class="t t-meat">Meat</span></span>
+    </div><div class="znote">Bass windows are brief — plan arrival at 06:00 or 18:00. Bring Veggie + Meat.</div></div>
+    <div class="zone"><div class="zh">Celestewave — Parrot Ship (Day &amp; Night)</div><div class="fp">
+      <span class="pill"><span class="pn">Dolphinfish ●</span><span class="pt">08:00–18:00</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Flounder</span><span class="pt">08:00–18:00</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Mandarinfish ●</span><span class="pt">20:00–00:00</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Ribbon Eel</span><span class="pt">20:00–02:00</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn king">Long-barbelled Dragonfish (King)</span><span class="pt">20:00–02:00</span><span class="t t-meat">Meat</span></span>
+    </div><div class="znote">Two trips needed: daytime (08:00–18:00) and night (20:00–02:00).</div></div>
+    <div class="zone"><div class="zh">Luminwave — Parrot Ship (Day &amp; Night)</div><div class="fp">
+      <span class="pill"><span class="pn">Mola Mola</span><span class="pt">08:00–18:00</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Tuna ●</span><span class="pt">08:00–18:00</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Viperfish</span><span class="pt">20:00–24:00</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Anglerfish</span><span class="pt">20:00–24:00</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn king">Megamouth Shark (King)</span><span class="pt">20:00–02:00</span><span class="t t-meat">Meat</span></span>
+    </div><div class="znote">Noble Rod minimum. Two trips: day (08:00–18:00) and night (20:00–02:00).</div></div>
+    <div class="zone"><div class="zh">Special Zones</div><div class="fp">
+      <span class="pill"><span class="pn">Ink Phoenixfish</span><span class="pt">06:00–02:00 · Spiritshade</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Comet Glowfish</span><span class="pt">06:00–02:00 · Spore Cascade</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Green Swordtail ●</span><span class="pt">06:00–02:00 · Darkwater Shore</span><span class="t t-any">Any</span></span>
+      <span class="pill"><span class="pn">Pearl Glowfish ●</span><span class="pt">06:00–02:00 · Dreamfall Garden</span><span class="t t-any">Any</span></span>
+    </div><div class="znote">Unlock Explorer Profession for Moonlit Forest access. Pearl Glowfish is RNG — refresh spawns with bait if shadows absent.</div></div>
+  </div>
+
+  <!-- Autumn -->
+
+  <div class="path-season">
+    <div class="ph"><div class="sico s-au">🍂</div><div style="flex:1"><div class="ptitle">Autumn — Phase 2</div><div class="psub">21 new species · 9 require Rainy weather</div></div><div class="pnew">+21</div></div>
+    <div class="callout callout-warn"><div class="ci">⚠️</div><div><span class="w">9 of 21 autumn fish require Rainy weather.</span> Trevally (08:00–16:00), Mackerel (12:00–20:00), and Arowana (08:00–24:00) can all be batched in one rainy afternoon.</div></div>
+    <div class="zone"><div class="zh">Lake — Autumn Only</div><div class="fp">
+      <span class="pill"><span class="pn">Alligator Gar</span><span class="pt">08:00–20:00 · Rainy</span><span class="t t-bug">Bug</span></span>
+      <span class="pill"><span class="pn">Chinese Perch ●</span><span class="pt">10:00–00:00 · Sunny</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Mud Carp</span><span class="pt">10:00–20:00 · Rainy</span><span class="t t-meat">Meat</span></span>
+    </div></div>
+    <div class="zone"><div class="zh">Lake — Autumn/Winter (start now)</div><div class="fp">
+      <span class="pill"><span class="pn">Bitterling</span><span class="pt">06:00–02:00</span><span class="t t-any">Any</span></span>
+      <span class="pill"><span class="pn">Cichlid</span><span class="pt">08:00–20:00</span><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Kissing Gourami</span><span class="pt">10:00–00:00</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></span>
+    </div></div>
+    <div class="zone"><div class="zh">River — Autumn Only</div><div class="fp">
+      <span class="pill"><span class="pn">Arowana</span><span class="pt">08:00–24:00 · Rainy</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Holland's Carp</span><span class="pt">10:00–00:00 · Sunny</span><span class="t t-bug">Bug</span></span>
+      <span class="pill"><span class="pn">Upside-Down Catfish</span><span class="pt">10:00–02:00 · Rainy</span><span class="t t-meat">Meat</span></span>
+    </div></div>
+    <div class="zone"><div class="zh">River — Autumn/Winter (start now)</div><div class="fp">
+      <span class="pill"><span class="pn">Magnificent Killifish ●</span><span class="pt">06:00–00:00</span><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Leaffish ●</span><span class="pt">12:00–02:00</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Glass Bloodfin Tetra ●</span><span class="pt">06:00–20:00</span><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Mototo Stingray ●</span><span class="pt">06:00–02:00</span><span class="t t-any">Any</span></span>
+    </div></div>
+    <div class="zone"><div class="zh">Ocean — Autumn Only</div><div class="fp">
+      <span class="pill"><span class="pn">Red Porgy ●</span><span class="pt">10:00–22:00 · Sunny</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Mackerel</span><span class="pt">12:00–20:00 · Rainy</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Trevally ●</span><span class="pt">08:00–16:00 · Rainy</span><span class="t t-bug">Bug</span></span>
+    </div></div>
+    <div class="zone"><div class="zh">Ocean — Autumn/Winter (start now)</div><div class="fp">
+      <span class="pill"><span class="pn">Butterflyfish ●</span><span class="pt">06:00–20:00</span><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Discus ●</span><span class="pt">06:00–12:00 / 16:00–00:00</span><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Orangespine Unicornfish ●</span><span class="pt">12:00–02:00</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></span>
+    </div></div>
+    <div class="zone"><div class="zh">Special Zones — Autumn</div><div class="fp">
+      <span class="pill"><span class="pn">Glassfish ●</span><span class="pt">06:00–02:00 · Spiritshade</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn king">Glowfish (King)</span><span class="pt">00:00–02:00 · Spore Cascade</span><span class="t t-bug">Bug</span></span>
+    </div><div class="znote">Glowfish (King): midnight only. Dedicate a separate session — 00:00–02:00 window.</div></div>
+  </div>
+
+  <!-- Winter -->
+
+  <div class="path-season">
+    <div class="ph"><div class="sico s-wi">❄️</div><div style="flex:1"><div class="ptitle">Winter — Phase 3</div><div class="psub">19 new species · 5 require Snowy weather</div></div><div class="pnew">+19</div></div>
+    <div class="callout callout-warn"><div class="ci">⚠️</div><div><span class="w">5 fish are Snowy-weather-only:</span> Lake Trout, Rainbow Trout, Royal Twig Catfish, Whitefish. Monitor forecast and schedule a dedicated snowy session.</div></div>
+    <div class="zone"><div class="zh">Lake — Winter</div><div class="fp">
+      <span class="pill"><span class="pn">Alaska Blackfish ●</span><span class="pt">06:00–22:00 · Sunny</span><span class="t t-bug">Bug</span></span>
+      <span class="pill"><span class="pn">Baikal Sculpin</span><span class="pt">10:00–24:00 · Sunny</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Lake Trout</span><span class="pt">08:00–18:00 / 00:00–02:00 · Snowy</span><span class="t t-any">Any</span></span>
+      <span class="pill"><span class="pn">Ide ●</span><span class="pt">06:00–02:00</span><span class="t t-any">Any</span></span>
+      <span class="pill"><span class="pn">Cleaner Fish ●</span><span class="pt">08:00–24:00</span><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Wheatfish</span><span class="pt">06:00–20:00</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></span>
+    </div></div>
+    <div class="zone"><div class="zh">River — Winter</div><div class="fp">
+      <span class="pill"><span class="pn">Lungfish</span><span class="pt">10:00–20:00 · Sunny</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Siberian Taimen</span><span class="pt">10:00–24:00 · Sunny</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Royal Twig Catfish</span><span class="pt">08:00–22:00 · Snowy</span><span class="t t-bug">Bug</span></span>
+      <span class="pill"><span class="pn">Pale Chub ●</span><span class="pt">06:00–02:00</span><span class="t t-any">Any</span></span>
+      <span class="pill"><span class="pn">Redtail Catfish ●</span><span class="pt">06:00–14:00 / 18:00–24:00</span><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Pope's Goby</span><span class="pt">08:00–24:00</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn king">Paddlefish (King)</span><span class="pt">06:00–22:00</span><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></span>
+    </div></div>
+    <div class="zone"><div class="zh">Ocean — Winter</div><div class="fp">
+      <span class="pill"><span class="pn">Barracuda</span><span class="pt">16:00–24:00 · Sunny</span><span class="t t-bug">Bug</span></span>
+      <span class="pill"><span class="pn">Rainbow Trout</span><span class="pt">12:00–22:00 · Snowy</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Whitefish</span><span class="pt">10:00–20:00 · Snowy</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Black Scraper</span><span class="pt">06:00–12:00 / 16:00–22:00</span><span class="t t-bug">Bug</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Blue Angelfish</span><span class="pt">06:00–20:00</span><span class="t t-bug">Bug</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Royal Gramma</span><span class="pt">10:00–24:00</span><span class="t t-veggie">Veggie</span><span class="t t-meat">Meat</span></span>
+    </div></div>
+  </div>
+
+  <!-- Spring -->
+
+  <div class="path-season">
+    <div class="ph"><div class="sico s-sp">🌸</div><div style="flex:1"><div class="ptitle">Spring — Phase 4 (Final)</div><div class="psub">11 final species · Collection complete</div></div><div class="pnew">+11</div></div>
+    <div class="callout"><div class="ci">📌</div><div>Only 11 Spring-exclusives remain. <span class="hl">Koi, Carp, Noodlefish need Sunny.</span> All others need Rainy. Spiritshade + Spore Cascade close out the special zones.</div></div>
+    <div class="zone"><div class="zh">Lake — Spring Only</div><div class="fp">
+      <span class="pill"><span class="pn">Koi</span><span class="pt">12:00–24:00 · Sunny</span><span class="t t-veggie">Veggie</span></span>
+      <span class="pill"><span class="pn">Medaka</span><span class="pt">06:00–20:00 · Rainy</span><span class="t t-bug">Bug</span></span>
+      <span class="pill"><span class="pn">Crucian Carp</span><span class="pt">10:00–24:00 · Rainy</span><span class="t t-meat">Meat</span></span>
+    </div></div>
+    <div class="zone"><div class="zh">River — Spring Only</div><div class="fp">
+      <span class="pill"><span class="pn">Carp</span><span class="pt">06:00–02:00 · Sunny</span><span class="t t-bug">Bug</span></span>
+      <span class="pill"><span class="pn">Common Rudd</span><span class="pt">12:00–24:00 · Rainy</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Flathead Catfish</span><span class="pt">10:00–22:00 · Rainy</span><span class="t t-veggie">Veggie</span></span>
+    </div></div>
+    <div class="zone"><div class="zh">Ocean — Spring Only</div><div class="fp">
+      <span class="pill"><span class="pn">Anchovy</span><span class="pt">12:00–24:00 · Rainy</span><span class="t t-meat">Meat</span></span>
+      <span class="pill"><span class="pn">Noodlefish</span><span class="pt">14:00–24:00 · Sunny</span><span class="t t-bug">Bug</span></span>
+      <span class="pill"><span class="pn">Potato Grouper</span><span class="pt">06:00–16:00 · Rainy</span><span class="t t-veggie">Veggie</span></span>
+    </div></div>
+    <div class="zone"><div class="zh">Special Zones — Spring</div><div class="fp">
+      <span class="pill"><span class="pn">Daisy's Ricefish</span><span class="pt">06:00–02:00 · Spiritshade</span><span class="t t-bug">Bug</span></span>
+      <span class="pill"><span class="pn">Fringetail Glowfish</span><span class="pt">06:00–02:00 · Spore Cascade</span><span class="t t-veggie">Veggie</span></span>
+    </div><div class="znote">Both available Sunny or Rainy. All day. Collection complete after these two.</div></div>
+  </div>
+</div>
+
+<!-- ═══════ GEAR ═══════ -->
+
+<div id="tab-gear" class="tab">
+  <div class="gs">
+    <div class="gh">Fishing Minigame</div>
+    <div class="tw" style="max-width:500px"><table>
+      <thead><tr><th>Line Color</th><th>Action</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--hi);font-weight:600">⚪ White</td><td>Hold M1 — Reel in</td><td style="color:var(--dim);font-family:var(--mono);font-size:10.5px">Fish moving toward you; safe to pull</td></tr>
+        <tr><td style="color:var(--coral);font-weight:600">🔴 Red</td><td>Release M1 — Let go</td><td style="color:var(--dim);font-family:var(--mono);font-size:10.5px">Fish fighting; line snaps if held</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="gs">
+    <div class="gh">Rod Progression</div>
+    <div class="tw"><table>
+      <thead><tr><th>Rod</th><th>Tier</th><th>Materials / Source</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="fn">Wooden Rod</td>  <td><span class="tier">Starter</span></td>   <td>Given by Delphin</td>               <td style="color:var(--dim)">Common species only — avoid deep-sea</td></tr>
+        <tr><td class="fn">Chrono Rod</td>  <td><span class="tier">Early</span></td>     <td>Blueprint: Delphin · Copper</td>    <td style="color:var(--dim)">Improves rare spawn rate; first upgrade</td></tr>
+        <tr><td class="fn">Silent Rod</td>  <td><span class="tier">Early–Mid</span></td> <td>Carbon Line + Charcoal</td>         <td style="color:var(--dim)">Improved sensitivity; quieter cast</td></tr>
+        <tr><td class="fn">Cloud Rod</td>   <td><span class="tier">Mid</span></td>        <td>Cloud materials</td>                <td style="color:var(--dim)">Reliable open-ocean workhorse</td></tr>
+        <tr><td class="fn">Noble Rod</td>   <td><span class="tier">Late</span></td>       <td>Prism + Iron Sheets</td>            <td style="color:var(--dim)"><b>Minimum for Celestewave / Luminwave</b></td></tr>
+        <tr><td class="fn">Titanium Rod</td><td><span class="tier">Endgame</span></td>   <td>Titanium · Senior Angler unlock</td><td style="color:var(--dim)">King Variants + rare fish</td></tr>
+        <tr><td class="fn">Astra Rod</td>   <td><span class="tier">Endgame</span></td>   <td>Astra materials</td>                <td style="color:var(--dim)">Minimal tension; top-tier general</td></tr>
+        <tr><td class="fn">Solar Rod</td>   <td><span class="tier">Endgame</span></td>   <td>Solar materials</td>                <td style="color:var(--dim)">Best-in-class; tension bar barely moves</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout callout-warn" style="margin-top:9px"><div class="ci">⚠️</div><div><span class="w">Never use Wooden or Chrono Rod</span> for Tuna, Mola Mola, or any Celestewave/Luminwave species. Noble Rod minimum for deep-sea. King Variants require Titanium, Astra, or Solar.</div></div>
+  </div>
+  <div class="gs">
+    <div class="gh">Bait Types</div>
+    <div class="bg">
+      <div class="bc"><div class="bt"><span class="t t-bug">Bug Bait</span></div><div class="bb">Betta, Foureye Butterflyfish, Tilapia, Holland's Carp, Archerfish, Alligator Gar, Alaska Blackfish, Trevally, Royal Twig Catfish, Medaka, Barracuda, Noodlefish, Carp, Glowfish (King).</div></div>
+      <div class="bc"><div class="bt"><span class="t t-veggie">Veggie Bait</span></div><div class="bb">Blue Tang, Sardine, Mandarinfish, Lionfish, Mackerel, Chinese Perch, Koi, Baikal Sculpin, Lungfish, Guppy, Paradise Fish, Potato Grouper, Flathead Catfish, Fringetail Glowfish.</div></div>
+      <div class="bc"><div class="bt"><span class="t t-meat">Meat Bait</span></div><div class="bb">Humphead Wrasse, Dolphinfish, Ribbon Eel, Tuna, Mola Mola, Red Porgy, Snakehead, Siberian Taimen, Anchovy, Common Rudd, Crucian Carp, Upside-Down Catfish.</div></div>
+      <div class="bc"><div class="bt"><span class="t t-any">Any / Omni</span></div><div class="bb">Giant Barb, Zander, Clownfish, Bitterling, Giant River Prawn, Mototo Stingray, Brown Tiger Prawn, Greasyback Shrimp, Green Swordtail, Pearl Glowfish, Velora Cichlid, Topmouth Culter, Ide, Pale Chub.</div></div>
+    </div>
+    <div class="callout" style="margin-top:9px"><div class="ci">💡</div><div><b>Spawn refresh:</b> Target not appearing? <span class="hl">Throw bait</span> to cycle the local spawn pool. Leave and re-enter the zone to fully reset shadows. <b>Lake Trout</b> has no bait listed — any bait works.</div></div>
+  </div>
+  <div class="gs">
+    <div class="gh">Fish Traps</div>
+    <div class="tw" style="max-width:540px"><table>
+      <thead><tr><th>Detail</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Unlock</td>    <td style="color:var(--hi)">Intermediate Angler rank</td></tr>
+        <tr><td>Craft At</td>  <td style="color:var(--hi)">Worktable II — Rubber + Magnets + Alloy</td></tr>
+        <tr><td>Load With</td> <td style="color:var(--hi)">Advanced Fish Food (via Chopper III)</td></tr>
+        <tr><td>Placement</td> <td style="color:var(--hi)">Active spawn zones with visible fish shadows only</td></tr>
+        <tr><td>Harvest</td>   <td style="color:var(--hi)">Next morning — reload immediately after collecting</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+function show(tabId,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tabId).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+</body>
+</html>
