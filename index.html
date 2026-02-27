@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starsand Island — Complete Fishing Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep:    #030d17;
+    --abyss:   #060f1e;
+    --surface: #0a1628;
+    --panel:   #0d1f35;
+    --card:    #102440;
+    --border:  #1a3556;
+    --glow:    #00e5ff;
+    --aqua:    #00bcd4;
+    --mint:    #26ffb8;
+    --gold:    #ffd54f;
+    --amber:   #ffab40;
+    --coral:   #ff6b6b;
+    --sun:     #fff176;
+    --muted:   #7ab3c8;
+    --text:    #cce8f0;
+    --white:   #e8f8ff;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: var(–deep);
+color: var(–text);
+font-family: ‘Nunito’, sans-serif;
+font-size: 15px;
+line-height: 1.6;
+overflow-x: hidden;
+}
+
+/* ——— ANIMATED BACKGROUND ——— */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background:
+radial-gradient(ellipse 80% 40% at 20% 80%, rgba(0,180,200,0.06) 0%, transparent 60%),
+radial-gradient(ellipse 60% 50% at 80% 10%, rgba(0,100,180,0.08) 0%, transparent 60%),
+radial-gradient(ellipse 40% 60% at 50% 50%, rgba(0,30,80,0.4) 0%, transparent 70%);
+pointer-events: none;
+z-index: 0;
+}
+
+/* Bubbles */
+.bubbles { position: fixed; bottom: 0; left: 0; right: 0; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; }
+.bubble {
+position: absolute;
+bottom: -60px;
+border-radius: 50%;
+background: radial-gradient(circle at 35% 35%, rgba(0,229,255,0.25), rgba(0,188,212,0.05));
+border: 1px solid rgba(0,229,255,0.15);
+animation: floatUp linear infinite;
+}
+.bubble:nth-child(1)  { width: 18px; height: 18px; left: 8%;   animation-duration: 14s; animation-delay: 0s; }
+.bubble:nth-child(2)  { width: 10px; height: 10px; left: 18%;  animation-duration: 10s; animation-delay: 2s; }
+.bubble:nth-child(3)  { width: 25px; height: 25px; left: 30%;  animation-duration: 17s; animation-delay: 5s; }
+.bubble:nth-child(4)  { width: 8px;  height: 8px;  left: 45%;  animation-duration: 11s; animation-delay: 1s; }
+.bubble:nth-child(5)  { width: 14px; height: 14px; left: 60%;  animation-duration: 13s; animation-delay: 3s; }
+.bubble:nth-child(6)  { width: 20px; height: 20px; left: 72%;  animation-duration: 16s; animation-delay: 7s; }
+.bubble:nth-child(7)  { width: 9px;  height: 9px;  left: 85%;  animation-duration: 9s;  animation-delay: 4s; }
+.bubble:nth-child(8)  { width: 16px; height: 16px; left: 92%;  animation-duration: 12s; animation-delay: 6s; }
+@keyframes floatUp {
+0%   { transform: translateY(0)     scale(1);   opacity: 0; }
+10%  { opacity: 1; }
+90%  { opacity: 0.4; }
+100% { transform: translateY(-110vh) scale(0.6); opacity: 0; }
+}
+
+/* ——— LAYOUT ——— */
+.everything { position: relative; z-index: 1; }
+
+/* ——— HERO ——— */
+.hero {
+text-align: center;
+padding: 80px 24px 56px;
+position: relative;
+}
+.hero-eyebrow {
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+letter-spacing: 4px;
+color: var(–aqua);
+text-transform: uppercase;
+margin-bottom: 16px;
+opacity: 0.8;
+}
+.hero h1 {
+font-family: ‘Cinzel’, serif;
+font-size: clamp(2rem, 7vw, 4.5rem);
+font-weight: 900;
+color: var(–white);
+line-height: 1.05;
+letter-spacing: 2px;
+text-shadow: 0 0 40px rgba(0,229,255,0.3), 0 4px 20px rgba(0,0,0,0.8);
+}
+.hero h1 span {
+display: block;
+font-size: 0.45em;
+font-weight: 400;
+color: var(–aqua);
+letter-spacing: 6px;
+margin-top: 8px;
+text-shadow: 0 0 20px rgba(0,229,255,0.5);
+}
+.hero-sub {
+margin-top: 20px;
+font-size: 14px;
+color: var(–muted);
+font-weight: 300;
+letter-spacing: 0.5px;
+}
+.hero-divider {
+width: 120px;
+height: 1px;
+background: linear-gradient(90deg, transparent, var(–glow), transparent);
+margin: 32px auto 0;
+box-shadow: 0 0 12px var(–glow);
+}
+
+/* ——— NAV TABS ——— */
+.nav-wrap {
+position: sticky;
+top: 0;
+z-index: 100;
+background: rgba(3,13,23,0.92);
+backdrop-filter: blur(16px);
+border-bottom: 1px solid var(–border);
+padding: 0 16px;
+}
+.nav {
+display: flex;
+gap: 0;
+overflow-x: auto;
+scrollbar-width: none;
+max-width: 1100px;
+margin: 0 auto;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav-tab {
+flex-shrink: 0;
+padding: 14px 20px;
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(–muted);
+cursor: pointer;
+border-bottom: 2px solid transparent;
+transition: all 0.2s;
+white-space: nowrap;
+background: none;
+border-top: none;
+border-left: none;
+border-right: none;
+}
+.nav-tab:hover { color: var(–white); }
+.nav-tab.active {
+color: var(–glow);
+border-bottom-color: var(–glow);
+text-shadow: 0 0 10px var(–glow);
+}
+
+/* ——— MAIN CONTAINER ——— */
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px 80px; }
+
+/* ——— SECTIONS ——— */
+.section { display: none; animation: fadeIn 0.3s ease; }
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ——— SECTION HEADINGS ——— */
+.section-title {
+font-family: ‘Cinzel’, serif;
+font-size: 1.6rem;
+font-weight: 600;
+color: var(–white);
+margin-bottom: 8px;
+letter-spacing: 1px;
+}
+.section-desc {
+color: var(–muted);
+font-size: 13.5px;
+margin-bottom: 32px;
+font-weight: 300;
+}
+
+/* ——— SEARCH BAR ——— */
+.search-wrap {
+margin-bottom: 24px;
+}
+.search-input {
+width: 100%;
+max-width: 420px;
+background: var(–panel);
+border: 1px solid var(–border);
+border-radius: 8px;
+padding: 11px 16px 11px 42px;
+color: var(–white);
+font-family: ‘Nunito’, sans-serif;
+font-size: 14px;
+outline: none;
+transition: border-color 0.2s, box-shadow 0.2s;
+background-image: url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘16’ height=‘16’ viewBox=‘0 0 24 24’ fill=‘none’ stroke=’%237ab3c8’ stroke-width=‘2’%3E%3Ccircle cx=‘11’ cy=‘11’ r=‘8’/%3E%3Cpath d=‘m21 21-4.35-4.35’/%3E%3C/svg%3E”);
+background-repeat: no-repeat;
+background-position: 14px center;
+}
+.search-input:focus { border-color: var(–aqua); box-shadow: 0 0 0 3px rgba(0,188,212,0.12); }
+.search-input::placeholder { color: var(–muted); opacity: 0.6; }
+
+/* ——— FILTER CHIPS ——— */
+.filter-row {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+margin-bottom: 24px;
+}
+.chip {
+padding: 5px 14px;
+border-radius: 20px;
+font-size: 12px;
+font-family: ‘DM Mono’, monospace;
+cursor: pointer;
+border: 1px solid var(–border);
+color: var(–muted);
+background: var(–panel);
+transition: all 0.18s;
+letter-spacing: 0.5px;
+}
+.chip:hover { border-color: var(–aqua); color: var(–aqua); }
+.chip.active { background: rgba(0,188,212,0.15); border-color: var(–aqua); color: var(–aqua); box-shadow: 0 0 8px rgba(0,188,212,0.2); }
+
+/* ——— FISH TABLE ——— */
+.biome-block { margin-bottom: 48px; }
+.biome-header {
+display: flex;
+align-items: center;
+gap: 12px;
+margin-bottom: 16px;
+}
+.biome-icon { font-size: 1.4rem; }
+.biome-name {
+font-family: ‘Cinzel’, serif;
+font-size: 1.05rem;
+font-weight: 600;
+color: var(–aqua);
+letter-spacing: 1px;
+}
+.biome-count {
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+color: var(–muted);
+background: var(–panel);
+border: 1px solid var(–border);
+padding: 2px 9px;
+border-radius: 12px;
+}
+
+.fish-table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(–border); }
+table {
+width: 100%;
+border-collapse: collapse;
+font-size: 13.5px;
+}
+thead tr {
+background: rgba(0,188,212,0.1);
+border-bottom: 1px solid var(–border);
+}
+th {
+font-family: ‘DM Mono’, monospace;
+font-size: 10px;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(–aqua);
+padding: 11px 14px;
+text-align: left;
+font-weight: 400;
+white-space: nowrap;
+}
+tbody tr {
+border-bottom: 1px solid rgba(26,53,86,0.5);
+transition: background 0.15s;
+}
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: rgba(0,188,212,0.05); }
+tbody tr.hidden-row { display: none; }
+td { padding: 10px 14px; color: var(–text); vertical-align: middle; }
+td:first-child { font-weight: 600; color: var(–white); }
+
+/* Tags inside table cells */
+.tag {
+display: inline-block;
+padding: 2px 8px;
+border-radius: 10px;
+font-size: 11px;
+font-family: ‘DM Mono’, monospace;
+white-space: nowrap;
+margin: 1px 2px;
+}
+.tag-bug    { background: rgba(76,175,80,0.15);  border: 1px solid rgba(76,175,80,0.3);  color: #81c784; }
+.tag-veggie { background: rgba(139,195,74,0.15); border: 1px solid rgba(139,195,74,0.3); color: #aed581; }
+.tag-meat   { background: rgba(239,108,0,0.15);  border: 1px solid rgba(239,108,0,0.3);  color: #ffb74d; }
+.tag-any    { background: rgba(0,188,212,0.12);  border: 1px solid rgba(0,188,212,0.25); color: var(–aqua); }
+.tag-season { background: rgba(255,213,79,0.1);  border: 1px solid rgba(255,213,79,0.25); color: var(–gold); }
+.tag-weather-sunny { background: rgba(255,241,118,0.1); border: 1px solid rgba(255,241,118,0.25); color: var(–sun); }
+.tag-weather-rainy { background: rgba(100,181,246,0.1); border: 1px solid rgba(100,181,246,0.25); color: #90caf9; }
+.tag-weather-any   { background: rgba(0,188,212,0.08); border: 1px solid rgba(0,188,212,0.2); color: var(–muted); }
+
+/* ——— INFO CARDS ——— */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-bottom: 36px; }
+.info-card {
+background: var(–panel);
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 22px;
+transition: border-color 0.2s, box-shadow 0.2s;
+}
+.info-card:hover { border-color: rgba(0,188,212,0.4); box-shadow: 0 0 20px rgba(0,188,212,0.07); }
+.info-card-icon { font-size: 1.8rem; margin-bottom: 12px; }
+.info-card-title { font-family: ‘Cinzel’, serif; font-size: 0.95rem; color: var(–white); margin-bottom: 8px; letter-spacing: 0.5px; }
+.info-card-body { font-size: 13.5px; color: var(–muted); line-height: 1.7; }
+
+/* ——— STRATEGY STEPS ——— */
+.phase-block { margin-bottom: 40px; }
+.phase-header {
+display: flex;
+align-items: center;
+gap: 16px;
+margin-bottom: 20px;
+padding-bottom: 14px;
+border-bottom: 1px solid var(–border);
+}
+.phase-num {
+width: 42px; height: 42px;
+border-radius: 50%;
+background: rgba(0,188,212,0.15);
+border: 1px solid var(–aqua);
+display: flex; align-items: center; justify-content: center;
+font-family: ‘Cinzel’, serif;
+font-size: 1rem;
+color: var(–glow);
+flex-shrink: 0;
+box-shadow: 0 0 12px rgba(0,229,255,0.2);
+}
+.phase-title { font-family: ‘Cinzel’, serif; font-size: 1.1rem; color: var(–white); letter-spacing: 0.5px; }
+.phase-sub { font-size: 12px; color: var(–muted); font-family: ‘DM Mono’, monospace; margin-top: 3px; }
+
+.step-list { list-style: none; }
+.step-item {
+display: flex;
+gap: 14px;
+margin-bottom: 14px;
+padding: 14px 16px;
+background: var(–card);
+border: 1px solid var(–border);
+border-radius: 9px;
+transition: border-color 0.2s;
+}
+.step-item:hover { border-color: rgba(0,188,212,0.35); }
+.step-num {
+width: 26px; height: 26px; min-width: 26px;
+border-radius: 50%;
+background: rgba(0,188,212,0.12);
+border: 1px solid rgba(0,188,212,0.3);
+display: flex; align-items: center; justify-content: center;
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+color: var(–aqua);
+margin-top: 1px;
+}
+.step-text { font-size: 13.5px; color: var(–text); line-height: 1.65; }
+.step-text strong { color: var(–white); }
+.step-text .highlight { color: var(–mint); font-weight: 600; }
+.step-text .warn { color: var(–amber); font-weight: 600; }
+
+/* ——— TIPS ——— */
+.tip-grid { display: grid; gap: 12px; }
+.tip-item {
+display: flex;
+gap: 12px;
+padding: 14px 16px;
+background: var(–card);
+border: 1px solid var(–border);
+border-radius: 9px;
+}
+.tip-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+.tip-text { font-size: 13.5px; color: var(–text); line-height: 1.6; }
+.tip-text strong { color: var(–white); }
+
+/* ——— ROD TABLE ——— */
+.rod-tier { color: var(–mint); font-family: ‘DM Mono’, monospace; font-size: 11px; }
+
+/* ——— PROGRESS BADGE ——— */
+.badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+.stat-badge {
+background: var(–panel);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 14px 20px;
+text-align: center;
+min-width: 110px;
+}
+.stat-num { font-family: ‘Cinzel’, serif; font-size: 2rem; color: var(–glow); line-height: 1; text-shadow: 0 0 20px rgba(0,229,255,0.4); }
+.stat-label { font-size: 11px; color: var(–muted); font-family: ‘DM Mono’, monospace; letter-spacing: 1px; margin-top: 4px; }
+
+/* ——— NO RESULTS ——— */
+.no-results { text-align: center; padding: 48px 24px; color: var(–muted); font-size: 14px; display: none; }
+.no-results.show { display: block; }
+
+/* ——— MOBILE ——— */
+@media (max-width: 600px) {
+.hero { padding: 56px 16px 40px; }
+.container { padding: 24px 14px 60px; }
+.cards-grid { grid-template-columns: 1fr; }
+th, td { padding: 8px 10px; font-size: 12.5px; }
+.badge-row { justify-content: center; }
+}
+</style>
+
+</head>
+<body>
+
+<div class="bubbles">
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div>
+</div>
+
+<div class="everything">
+
+  <div class="hero">
+    <div class="hero-eyebrow">🎣 Complete Angler's Reference</div>
+    <h1>STARSAND ISLAND<span>Fishing Guide</span></h1>
+    <p class="hero-sub">All 52+ confirmed species · 8 biomes · Every condition mapped · 7-Phase catch-all strategy</p>
+    <div class="hero-divider"></div>
+  </div>
+
+  <div class="nav-wrap">
+    <nav class="nav">
+      <button class="nav-tab active" onclick="showTab('overview')">Overview</button>
+      <button class="nav-tab" onclick="showTab('catalog')">Fish Catalog</button>
+      <button class="nav-tab" onclick="showTab('strategy')">Strategy</button>
+      <button class="nav-tab" onclick="showTab('gear')">Gear & Bait</button>
+      <button class="nav-tab" onclick="showTab('tips')">Pro Tips</button>
+    </nav>
+  </div>
+
+  <div class="container">
+
+```
+<!-- ═══════════ OVERVIEW ═══════════ -->
+<div id="tab-overview" class="section active">
+  <div class="section-title">At a Glance</div>
+  <p class="section-desc">Everything you need to know before casting your first line.</p>
+
+  <div class="badge-row">
+    <div class="stat-badge"><div class="stat-num">105</div><div class="stat-label">Total Species</div></div>
+    <div class="stat-badge"><div class="stat-num">8</div><div class="stat-label">Biomes</div></div>
+    <div class="stat-badge"><div class="stat-num">4</div><div class="stat-label">Bait Types</div></div>
+    <div class="stat-badge"><div class="stat-num">8</div><div class="stat-label">Rod Tiers</div></div>
+    <div class="stat-badge"><div class="stat-num">7</div><div class="stat-label">Strategy Phases</div></div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="info-card">
+      <div class="info-card-icon">🎓</div>
+      <div class="info-card-title">Getting Started</div>
+      <div class="info-card-body">Speak with <strong>Delphin</strong> at the AquaBlue Outpost to receive your Apprentice Angler certification and Wooden Rod. Then find <strong>Marston</strong> at the broken port and deliver 15 Stone + 15 Softwood to unlock ocean access.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🎮</div>
+      <div class="info-card-title">The Minigame</div>
+      <div class="info-card-body">Cast toward fish shadows by holding M1, then release. Once the fish bites, hold M1 to reel. Watch the line color — <strong style="color:var(--white)">White = reel safely</strong>, <strong style="color:var(--coral)">Red = release immediately</strong>. Snap the line and the fish escapes.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🪤</div>
+      <div class="info-card-title">Fish Traps</div>
+      <div class="info-card-body">Unlock Fish Traps at Intermediate Angler. Place them in active spawn areas, load with <strong>Advanced Fish Food</strong>, and collect the next morning. Run multiple traps passively while doing other activities.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">📱</div>
+      <div class="info-card-title">Track Your Progress</div>
+      <div class="info-card-body">Open the <strong>Islandpedia app</strong> on your in-game phone → Bio Research → Aquatic Life. This shows every species you've discovered and tracks collection completion. Check it after every session.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🚢</div>
+      <div class="info-card-title">Deep Sea Access</div>
+      <div class="info-card-body">Once the port is rebuilt, take the <strong>Parrot Ship</strong> to reach the Coral Sea, Celestwave, and Luminwave zones. These three deep-sea biomes contain 8 exclusive species unavailable anywhere else.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🌿</div>
+      <div class="info-card-title">Moonlit Forest</div>
+      <div class="info-card-body">Requires Explorer Profession progress. Break the Damaged Door near your home using a Slingshot. Contains the Pearl Glowfish — required for Intermediate Angler advancement.</div>
+    </div>
+  </div>
+
+  <div class="section-title" style="font-size:1.2rem; margin-bottom:8px;">Fishing Minigame — Quick Reference</div>
+  <div class="fish-table-wrap" style="max-width:600px;">
+    <table>
+      <thead><tr><th>Line Color</th><th>Action</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--white)">⚪ White</td><td>Hold M1 — Reel In</td><td>Safe, fish making progress toward you</td></tr>
+        <tr><td style="color:var(--coral)">🔴 Red</td><td>Release M1 — Let Go</td><td>Fish fighting hard; line will snap if you hold</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════ CATALOG ═══════════ -->
+<div id="tab-catalog" class="section">
+  <div class="section-title">Fish Catalog</div>
+  <p class="section-desc">Every confirmed aquatic species, organized by biome. Filter by bait type, season, or search by name.</p>
+
+  <div class="search-wrap">
+    <input class="search-input" type="text" id="fishSearch" placeholder="Search fish name…" oninput="filterFish()">
+  </div>
+
+  <div class="filter-row" id="baitFilters">
+    <div class="chip active" onclick="toggleChip(this,'bait','all')">All Bait</div>
+    <div class="chip" onclick="toggleChip(this,'bait','bug')">🐛 Bug</div>
+    <div class="chip" onclick="toggleChip(this,'bait','veggie')">🌿 Veggie</div>
+    <div class="chip" onclick="toggleChip(this,'bait','meat')">🥩 Meat</div>
+    <div class="chip" onclick="toggleChip(this,'bait','any')">✨ Any</div>
+  </div>
+
+  <div class="filter-row" id="seasonFilters">
+    <div class="chip active" onclick="toggleChip(this,'season','all')">All Seasons</div>
+    <div class="chip" onclick="toggleChip(this,'season','spring')">🌸 Spring</div>
+    <div class="chip" onclick="toggleChip(this,'season','summer')">☀️ Summer</div>
+    <div class="chip" onclick="toggleChip(this,'season','autumn')">🍂 Autumn</div>
+    <div class="chip" onclick="toggleChip(this,'season','winter')">❄️ Winter</div>
+  </div>
+
+  <div id="fishCatalog"></div>
+  <div class="no-results" id="noResults">No fish match your current filters. Try adjusting your search.</div>
+</div>
+
+<!-- ═══════════ STRATEGY ═══════════ -->
+<div id="tab-strategy" class="section">
+  <div class="section-title">7-Phase Master Strategy</div>
+  <p class="section-desc">The most efficient route to catching all 105 fish — phases are designed to group overlapping conditions and unlock content in the right order.</p>
+
+  <div id="strategyContent"></div>
+</div>
+
+<!-- ═══════════ GEAR ═══════════ -->
+<div id="tab-gear" class="section">
+  <div class="section-title">Rods & Bait</div>
+  <p class="section-desc">Rod quality determines how fast line tension builds. Better rods = slower fill = more reaction time. Always match bait to your target species.</p>
+
+  <div class="biome-block">
+    <div class="biome-header"><span class="biome-icon">🎣</span><span class="biome-name">Rod Progression</span></div>
+    <div class="fish-table-wrap">
+      <table>
+        <thead><tr><th>Rod</th><th>Tier</th><th>Key Materials</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Wooden Rod</td><td><span class="rod-tier">Starter</span></td><td>Given by Delphin</td><td>Basic — can catch most common fish</td></tr>
+          <tr><td>Chrono Rod</td><td><span class="rod-tier">Early Game</span></td><td>Copper</td><td>First upgrade; improves rare fish spawn rate</td></tr>
+          <tr><td>Silent Rod</td><td><span class="rod-tier">Early–Mid</span></td><td>Carbon Line, Charcoal</td><td>Better line sensitivity; quieter cast</td></tr>
+          <tr><td>Cloud Rod</td><td><span class="rod-tier">Mid Game</span></td><td>Cloud materials</td><td>Solid workhorse for open ocean</td></tr>
+          <tr><td>Noble Rod</td><td><span class="rod-tier">Late Game</span></td><td>Prism, Iron Sheets</td><td>Required for reliable deep-sea fishing</td></tr>
+          <tr><td>Titanium Rod</td><td><span class="rod-tier">Endgame</span></td><td>Titanium</td><td>Unlocked at Senior Angler; rare fish specialist</td></tr>
+          <tr><td>Astra Rod</td><td><span class="rod-tier">Endgame</span></td><td>Astra materials</td><td>Minimal tension; top-tier performance</td></tr>
+          <tr><td>Solar Rod</td><td><span class="rod-tier">Endgame</span></td><td>Solar materials</td><td>Best-in-class; tension bar barely moves</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="biome-block">
+    <div class="biome-header"><span class="biome-icon">🪣</span><span class="biome-name">Bait Guide</span></div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <div class="info-card-icon">🐛</div>
+        <div class="info-card-title">Bug Bait</div>
+        <div class="info-card-body">Used for picky insectivores. Key species: Betta, Foureye Butterflyfish, Tilapia, Holland's Carp, Archerfish. Purchase from Delphin.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🌿</div>
+        <div class="info-card-title">Veggie Bait</div>
+        <div class="info-card-body">Used for herbivores. Key species: Blue Tang, Sardine, Mandarinfish, Lionfish, Mackerel, Chinese Perch. Most coral reef fish accept this.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🥩</div>
+        <div class="info-card-title">Meat Bait</div>
+        <div class="info-card-body">Used for carnivores. Key species: Humphead Wrasse, Dolphinfish, Ribbon Eel, Tuna, Mola Mola, Red Porgy. Essential for deep-sea zones.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">✨</div>
+        <div class="info-card-title">Any / Omni Bait</div>
+        <div class="info-card-body">Accepted by generalist species: Giant Barb, Zander, Clownfish, Bitterling, Giant River Prawn, and others. Great when you don't know what to expect.</div>
+      </div>
+    </div>
+    <div class="info-card" style="border-color:rgba(0,229,255,0.3)">
+      <div class="info-card-icon">💡</div>
+      <div class="info-card-title">Bait Refresh Trick</div>
+      <div class="info-card-body">If your target fish isn't appearing in the water, <strong>throw bait into the area</strong> to cycle the local spawn pool. This is faster than waiting. Leave and re-enter the area to fully reset spawns if needed.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TIPS ═══════════ -->
+<div id="tab-tips" class="section">
+  <div class="section-title">Pro Tips & Expert Reminders</div>
+  <p class="section-desc">Hard-earned knowledge for efficient completionist fishing.</p>
+  <div class="tip-grid" id="tipsContent"></div>
+</div>
+```
+
+  </div><!-- /container -->
+</div><!-- /everything -->
+
+<script>
+// ——— DATA ———
+const BIOMES = [
+  {
+    id: "lake", icon: "🏞️", name: "Lake", count: 11,
+    fish: [
+      { name: "Betta",           bait: ["bug"],          time: "10:00–22:00",         seasons: ["summer"],           weather: ["sunny"] },
+      { name: "Bighead Carp",    bait: ["veggie","meat"], time: "06:00–22:00",         seasons: ["spring","summer"],  weather: ["sunny","rainy"] },
+      { name: "Bitterling",      bait: ["any"],           time: "06:00–02:00",         seasons: ["autumn","winter"],  weather: ["any"] },
+      { name: "Chinese Perch",   bait: ["veggie"],        time: "10:00–00:00",         seasons: ["autumn"],           weather: ["sunny"] },
+      { name: "Cichlid",         bait: ["bug","veggie"],  time: "08:00–20:00",         seasons: ["autumn","winter"],  weather: ["any"] },
+      { name: "Green Sunfish",   bait: ["bug","meat"],    time: "10:00–02:00",         seasons: ["spring","summer"],  weather: ["sunny","rainy"] },
+      { name: "Kissing Gourami", bait: ["veggie","meat"], time: "10:00–00:00",         seasons: ["autumn","winter"],  weather: ["any"] },
+      { name: "Pumpkinseed",     bait: ["bug","meat"],    time: "10:00–00:00",         seasons: ["summer","autumn"],  weather: ["sunny","rainy"] },
+      { name: "Silver Carp",     bait: ["bug","veggie"],  time: "06:00–02:00",         seasons: ["summer","autumn"],  weather: ["sunny","rainy"] },
+      { name: "Topmouth Cutter", bait: ["any"],           time: "06:00–02:00",         seasons: ["summer","autumn"],  weather: ["sunny","rainy"] },
+      { name: "Velora Cichlid",  bait: ["any"],           time: "06:00–02:00",         seasons: ["spring","summer"],  weather: ["any"] },
+    ]
+  },
+  {
+    id: "river", icon: "🌊", name: "River & River Lake", count: 15,
+    fish: [
+      { name: "Archerfish",              bait: ["bug","veggie"],  time: "06:00–20:00",             seasons: ["summer","autumn"],   weather: ["sunny","rainy"] },
+      { name: "Chinese Hooksnout Carp",  bait: ["any"],           time: "06:00–02:00",             seasons: ["summer","autumn"],   weather: ["sunny","rainy"] },
+      { name: "Clown Featherback",       bait: ["bug","meat"],    time: "06:00–12:00 & 18:00–00:00", seasons: ["autumn","winter"], weather: ["sunny","rainy"] },
+      { name: "Four-Eyed Sleeper",       bait: ["veggie","meat"], time: "10:00–02:00",             seasons: ["spring","summer"],   weather: ["sunny","rainy"] },
+      { name: "Giant Barb",              bait: ["any"],           time: "06:00–02:00",             seasons: ["spring","summer","autumn","winter"], weather: ["any"] },
+      { name: "Giant River Prawn",       bait: ["any"],           time: "06:00–02:00",             seasons: ["spring","summer","autumn","winter"], weather: ["any"] },
+      { name: "Glass Bloodfin Tetra",    bait: ["bug","veggie"],  time: "06:00–20:00",             seasons: ["autumn","winter"],   weather: ["any"] },
+      { name: "Holland's Carp",          bait: ["bug"],           time: "10:00–00:00",             seasons: ["autumn"],            weather: ["sunny"] },
+      { name: "Leaffish",                bait: ["meat","veggie"], time: "12:00–02:00",             seasons: ["autumn","winter"],   weather: ["any"] },
+      { name: "Magnificent Killifish",   bait: ["bug","meat"],    time: "06:00–00:00",             seasons: ["autumn","winter"],   weather: ["any"] },
+      { name: "Motoro Stingray",         bait: ["any"],           time: "06:00–02:00",             seasons: ["autumn","winter"],   weather: ["any"] },
+      { name: "Payara",                  bait: ["bug","meat"],    time: "06:00–12:00 & 18:00–00:00", seasons: ["spring","summer"], weather: ["sunny","rainy"] },
+      { name: "Red Carp",                bait: ["any"],           time: "06:00–02:00",             seasons: ["summer","autumn"],   weather: ["sunny","rainy"] },
+      { name: "Tilapia",                 bait: ["bug"],           time: "10:00–22:00",             seasons: ["summer"],            weather: ["sunny"] },
+      { name: "Zander",                  bait: ["any"],           time: "06:00–02:00",             seasons: ["spring","summer","autumn","winter"], weather: ["any"] },
+    ]
+  },
+  {
+    id: "ocean", icon: "🌍", name: "Ocean", count: 16,
+    fish: [
+      { name: "Boxfish",               bait: ["veggie","meat"], time: "08:00–22:00",             seasons: ["spring","summer"],   weather: ["sunny","rainy"] },
+      { name: "Brown Tiger Prawn",     bait: ["any"],           time: "06:00–02:00",             seasons: ["spring","summer","autumn","winter"], weather: ["any"] },
+      { name: "Butterflyfish",         bait: ["bug","veggie"],  time: "06:00–20:00",             seasons: ["autumn","winter"],   weather: ["any"] },
+      { name: "Clownfish",             bait: ["any"],           time: "06:00–02:00",             seasons: ["spring","summer","autumn","winter"], weather: ["any"] },
+      { name: "Discus",                bait: ["bug","meat"],    time: "06:00–12:00 & 16:00–00:00", seasons: ["autumn","winter"], weather: ["any"] },
+      { name: "Foureye Butterflyfish", bait: ["bug"],           time: "12:00–02:00",             seasons: ["summer"],            weather: ["sunny"] },
+      { name: "Greasybak Shrimp",      bait: ["any"],           time: "06:00–02:00",             seasons: ["spring","summer","autumn","winter"], weather: ["any"] },
+      { name: "Lionfish",              bait: ["veggie"],        time: "10:00–20:00",             seasons: ["summer"],            weather: ["rainy"] },
+      { name: "Mackerel",              bait: ["veggie"],        time: "12:00–20:00",             seasons: ["autumn"],            weather: ["rainy"] },
+      { name: "Moorish Idol",          bait: ["bug","veggie"],  time: "06:00–18:00",             seasons: ["summer","autumn"],   weather: ["sunny","rainy"] },
+      { name: "Orangespine Unicornfish",bait: ["veggie","meat"],time: "12:00–02:00",             seasons: ["autumn","winter"],   weather: ["any"] },
+      { name: "Red Porgy",             bait: ["meat"],          time: "10:00–22:00",             seasons: ["autumn"],            weather: ["sunny"] },
+      { name: "Redfish",               bait: ["bug","meat"],    time: "06:00–12:00 & 18:00–00:00", seasons: ["summer","autumn"], weather: ["sunny","rainy"] },
+      { name: "Spinefoot",             bait: ["bug","meat"],    time: "06:00–14:00 & 00:00–02:00", seasons: ["spring","summer"], weather: ["sunny","rainy"] },
+      { name: "Tiger Puffer",          bait: ["veggie","meat"], time: "14:00–00:00",             seasons: ["summer","autumn"],   weather: ["sunny","rainy"] },
+      { name: "Yellowtail Damselfish", bait: ["bug","veggie"],  time: "08:00–20:00",             seasons: ["spring","summer"],   weather: ["sunny","rainy"] },
+    ]
+  },
+  {
+    id: "coral", icon: "🪸", name: "Coral Sea", count: 3,
+    fish: [
+      { name: "Blue Tang",       bait: ["veggie"], time: "08:00–18:00", seasons: ["spring","summer","autumn"], weather: ["sunny","rainy"] },
+      { name: "Humphead Wrasse", bait: ["meat"],   time: "08:00–18:00", seasons: ["spring","summer","autumn","winter"], weather: ["any"] },
+      { name: "Sardine",         bait: ["veggie"], time: "08:00–18:00", seasons: ["spring","summer","autumn"], weather: ["sunny","rainy"] },
+    ]
+  },
+  {
+    id: "celestwave", icon: "🌙", name: "Celestwave", count: 3,
+    fish: [
+      { name: "Dolphinfish",  bait: ["meat"],   time: "08:00–18:00", seasons: ["spring","summer","autumn","winter"], weather: ["any"] },
+      { name: "Mandarinfish", bait: ["veggie"], time: "20:00–02:00", seasons: ["spring","summer","autumn","winter"], weather: ["any"] },
+      { name: "Ribbon Eel",   bait: ["meat"],   time: "20:00–02:00", seasons: ["spring","summer","autumn","winter"], weather: ["any"] },
+    ]
+  },
+  {
+    id: "luminwave", icon: "⭐", name: "Luminwave", count: 2,
+    fish: [
+      { name: "Mola Mola", bait: ["meat"], time: "08:00–18:00", seasons: ["spring","summer","autumn","winter"], weather: ["any"] },
+      { name: "Tuna",      bait: ["meat"], time: "08:00–18:00", seasons: ["spring","summer","autumn"],          weather: ["sunny","rainy"] },
+    ]
+  },
+  {
+    id: "moonlit", icon: "🌲", name: "Moonlit Forest", count: 2,
+    fish: [
+      { name: "Green Swordtail", bait: ["any"], time: "06:00–02:00", seasons: ["spring","summer","autumn","winter"], weather: ["any"] },
+      { name: "Pearl Glowfish",  bait: ["any"], time: "06:00–02:00", seasons: ["spring","summer","autumn","winter"], weather: ["any"] },
+    ]
+  },
+];
+
+const STRATEGY = [
+  {
+    phase: "I", title: "Foundation Setup", days: "Days 1–3",
+    steps: [
+      { text: "<strong>Unlock the Angler Profession first.</strong> Go directly to the AquaBlue Outpost and speak with Delphin. Receive your Apprentice Angler certificate and Wooden Rod. Complete the starter quest (catch 3 fish at the dock right next to the Outpost)." },
+      { text: "<strong>Build the Port immediately.</strong> Gather <span class='highlight'>15 Stone + 15 Softwood</span> and deliver to Marston at the broken port. This is your #1 priority — the port gates the Coral Sea, Celestwave, and Luminwave zones. Port opens the next morning." },
+      { text: "<strong>Stock all three bait types.</strong> Buy Bug, Veggie, and Meat Bait from Delphin's shop in bulk. Carrying the wrong bait — or no bait — is the single biggest time-waster for completionists." },
+      { text: "<strong>Craft the Chrono Rod ASAP.</strong> It requires Copper and is purchasable as a blueprint from Delphin. Get it before doing serious fish-hunting — it improves rare fish spawn rates." },
+      { text: "<strong>Upgrade your inventory bag</strong> using Fibers, Stones, and Softwood before long fishing sessions. Running out of inventory in deep-sea zones wastes significant travel time." },
+      { text: "<strong>Bring food on every session.</strong> Stock up before each major outing to restore energy. Running low forces you back to base mid-session." },
+    ]
+  },
+  {
+    phase: "II", title: "Freshwater Sweep", days: "Days 3–7 · Lake (11) + River (15) = 26 fish",
+    steps: [
+      { text: "<strong>Start with all-season fish first:</strong> Giant Barb, Giant River Prawn, and Zander are available at rivers every day in any weather. Catch these immediately — zero scheduling required." },
+      { text: "<strong>Hit lake universal species next:</strong> Bitterling (Autumn/Winter) and Velora Cichlid (Spring/Summer) are your first lake targets. Check your current in-game season and prioritize what's available now." },
+      { text: "<strong>Build a two-session lake rotation:</strong> Morning (06:00–10:00) targets Silver Carp, Bighead Carp, and Cichlid. Evening (10:00–02:00) captures Green Sunfish, Kissing Gourami, Pumpkinseed, and Topmouth Cutter." },
+      { text: "<strong>Time-split river species:</strong> Clown Featherback and Payara each have two windows per day (06:00–12:00 <em>and</em> 18:00–00:00). Plan sessions to hit both windows the same day for maximum efficiency." },
+      { text: "<span class='warn'>Single-season freshwater rarities (Holland's Carp, Chinese Perch — both Autumn only):</span> If it's not Autumn, queue them for later and focus on multi-season fish. Don't waste time waiting out of season." },
+      { text: "<strong>Bait refresh trick:</strong> If your target fish isn't appearing as shadows, throw bait to cycle the local spawn pool. Leave and re-enter to fully reset spawns." },
+    ]
+  },
+  {
+    phase: "III", title: "Ocean Sweep", days: "Days 7–14 · Ocean = 16 fish",
+    steps: [
+      { text: "<strong>Target all-season ocean fish first:</strong> Brown Tiger Prawn, Clownfish, and Greasybak Shrimp are available all day, any season, any weather. Pad your count quickly with these." },
+      { text: "<strong>Morning session (06:00–14:00):</strong> Spinefoot (Spring/Summer, Sunny/Rainy), Moorish Idol (Summer/Autumn), Redfish morning window (06:00–12:00). Bring Bug and Meat Bait." },
+      { text: "<strong>Afternoon session (12:00–20:00):</strong> Foureye Butterflyfish (12:00–02:00, Summer, Sunny, Bug only), Mackerel (12:00–20:00, Autumn, <span class='warn'>Rainy only</span>, Veggie)." },
+      { text: "<strong>Evening session (14:00–02:00):</strong> Tiger Puffer (14:00–00:00, Summer/Autumn), Orangespine Unicornfish (12:00–02:00, Autumn/Winter), Discus evening window (16:00–00:00)." },
+      { text: "<span class='warn'>Lionfish is the hardest ocean schedule:</span> Requires Summer + Rainy weather + 10:00–20:00 window + Veggie Bait. Watch weather and plan a dedicated rainy-summer afternoon session." },
+      { text: "<strong>Upgrade to the Noble Rod</strong> before consistently attempting Tuna and other high-resistance deep-ocean fish. The line tension is too fast for weaker rods." },
+    ]
+  },
+  {
+    phase: "IV", title: "Deep Sea Zones", days: "Days 14–20 · Parrot Ship: 8 fish across 3 zones",
+    steps: [
+      { text: "<strong>Coral Sea:</strong> Blue Tang (Veggie) + Sardine (Veggie) + Humphead Wrasse (Meat). All available 08:00–18:00. Combine into a single daytime trip. Bring Veggie <em>and</em> Meat Bait." },
+      { text: "<strong>Celestwave (Day trip):</strong> Dolphinfish, Meat Bait, 08:00–18:00. Any season, any weather." },
+      { text: "<strong>Celestwave (Night trip):</strong> Mandarinfish (Veggie) + Ribbon Eel (Meat), 20:00–02:00. Plan two separate Celestwave visits — one day, one night." },
+      { text: "<strong>Luminwave:</strong> Tuna + Mola Mola, both Meat Bait, 08:00–18:00. <span class='warn'>Never use a Wooden or Chrono Rod for Tuna — you will snap the line.</span> Noble Rod minimum." },
+      { text: "<strong>Before every Parrot Ship departure:</strong> carry enough food and bait for the entire trip. Restocking requires returning to shore and losing travel time." },
+    ]
+  },
+  {
+    phase: "V", title: "Moonlit Forest", days: "Days 20–25 · 2 confirmed species",
+    steps: [
+      { text: "<strong>Unlock the forest:</strong> Speak with Zephyria at the Exploration Club to begin the Explorer Profession. Craft a Slingshot and break the Damaged Door near your home." },
+      { text: "<strong>Navigate to Dreamfall Garden:</strong> The primary Pearl Glowfish spot is the bubble-filled water between the Life Gate camp and Dreamfall Garden. Both species accept any bait." },
+      { text: "<span class='warn'>Pearl Glowfish is RNG-based:</span> Use Bug Bait to increase spawn chances. If no shadows appear, throw bait to refresh. Leave and re-enter the zone to reset. Patience required." },
+      { text: "<strong>Backup Glowfish spot:</strong> The small pond beneath the Waterwheel at Darkwater Shore also yields Pearl Glowfish. Use this if Dreamfall Garden isn't cooperating." },
+      { text: "<strong>Green Swordtail</strong> is easy — found at Gate of Life area waterways, all seasons, any weather." },
+    ]
+  },
+  {
+    phase: "VI", title: "Fish Trap Daily Loop", days: "Ongoing from Intermediate Angler",
+    steps: [
+      { text: "<strong>Craft 3–5 Fish Traps</strong> at Worktable II (requires Rubber, Magnets, and Alloy). More traps = more passive daily income." },
+      { text: "<strong>Place traps in high-activity zones:</strong> confirmed spawn spots with visible fish shadows. Never place in decorative/stagnant water." },
+      { text: "<strong>Load every trap with Advanced Fish Food</strong> (processed via Chopper III). Traps without bait produce dramatically worse results." },
+      { text: "<strong>Daily morning routine:</strong> collect trap catches → reload bait → then proceed with active rod fishing. Don't skip reloading." },
+      { text: "<strong>Use trap downtime productively:</strong> farm, mine, complete quests, level other professions while traps fill passively." },
+    ]
+  },
+  {
+    phase: "VII", title: "Senior Angler & Endgame Completion", days: "Days 25+ · King Variants & 105 total",
+    steps: [
+      { text: "<strong>Audit your Islandpedia constantly</strong> after Phases 2–5. Bio Research → Aquatic Life shows exactly which species you're still missing." },
+      { text: "<strong>Senior Angler Aquarium Quest:</strong> Fill the AquaBlue Outpost Aquarium with 20 different species (3 of each). Prioritize all-season species first to fill slots quickly." },
+      { text: "<strong>Submit fish in batches</strong> as you collect sets of 3. Don't hoard — submit as you go to track progress." },
+      { text: "<strong>Unlock the Titanium Rod</strong> at Senior Angler tier. Equip it immediately — essential for King Variants and legendary species." },
+      { text: "<strong>King Variant hunting:</strong> These are rare RNG spawns of existing species caught with Titanium, Astra, or Solar Rods under the same base conditions as the normal version. The tension bar is extremely fast — endgame rods only." },
+      { text: "<strong>Final audit:</strong> Use the Islandpedia to identify any remaining gaps and schedule targeted sessions by season and weather until the collection is complete." },
+    ]
+  },
+];
+
+const TIPS = [
+  { icon: "⚠️", text: "<strong>NEVER use the Wooden Rod for Tuna or deep-sea fish.</strong> You will snap the line every single time. Noble Rod is the minimum." },
+  { icon: "🏪", text: "<strong>Sell fish at ANY shop</strong> — Francis, Zerine, even the vehicle shop. No need to trek back to the port after ocean sessions." },
+  { icon: "🌧️", text: "<strong>Schedule weather-specific fish proactively.</strong> Lionfish (Summer + Rainy) and Mackerel (Autumn + Rainy) are the hardest to align. Check forecasts and batch these into dedicated sessions." },
+  { icon: "🔄", text: "<strong>Bait refreshes spawns.</strong> If your target fish isn't appearing as shadows, throw bait into the area to cycle the pool — much faster than standing around waiting." },
+  { icon: "🐠", text: "<strong>Fish Ponds breed fish</strong> you've already caught — great for maintaining Aquarium stock without repeated fishing sessions. Use the Stone Pond with an Incubator upgrade." },
+  { icon: "⚡", text: "<strong>Leave and re-enter an area</strong> to fully reset the fish shadow pool. Useful when a target species simply won't spawn despite correct conditions." },
+  { icon: "💰", text: "<strong>Raw fish sell well.</strong> A single afternoon at the ocean can fund your entire early farming operation. Don't over-process — check raw vs processed prices first." },
+  { icon: "🎒", text: "<strong>Always carry food on ocean and deep-sea sessions.</strong> Running out of energy in a Parrot Ship zone forces a costly return trip to shore." },
+  { icon: "📱", text: "<strong>Islandpedia is your live tracker.</strong> It refreshes every time you discover a new species — make it a habit to check after every session to identify collection gaps." },
+  { icon: "🪤", text: "<strong>Never leave Fish Traps empty.</strong> An unloaded trap wastes the entire overnight window. Always reload with Advanced Fish Food after collecting." },
+  { icon: "🐟", text: "<strong>King Variants</strong> are rare overlays of normal fish — the catch conditions (biome, time, season, weather) match the base species, but only endgame rods can land them reliably." },
+  { icon: "🌅", text: "<strong>Time-split fish are worth planning around.</strong> Clown Featherback, Payara, Redfish, Discus, and Spinefoot each have two separate daily windows. Hit both windows in one session." },
+];
+
+// ——— STATE ———
+let activeFilters = { bait: 'all', season: 'all' };
+
+// ——— INIT ———
+document.addEventListener('DOMContentLoaded', () => {
+  buildCatalog();
+  buildStrategy();
+  buildTips();
+});
+
+function showTab(tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ——— CATALOG ———
+function buildCatalog() {
+  const container = document.getElementById('fishCatalog');
+  container.innerHTML = BIOMES.map(biome => `
+    <div class="biome-block" data-biome="${biome.id}">
+      <div class="biome-header">
+        <span class="biome-icon">${biome.icon}</span>
+        <span class="biome-name">${biome.name}</span>
+        <span class="biome-count">${biome.count} species</span>
+      </div>
+      <div class="fish-table-wrap">
+        <table>
+          <thead><tr>
+            <th>Species</th><th>Bait</th><th>Active Hours</th><th>Seasons</th><th>Weather</th>
+          </tr></thead>
+          <tbody>
+            ${biome.fish.map(f => `
+              <tr class="fish-row"
+                data-name="${f.name.toLowerCase()}"
+                data-bait="${f.bait.join(',')}"
+                data-seasons="${f.seasons.join(',')}">
+                <td>${f.name}</td>
+                <td>${f.bait.map(b => baitTag(b)).join(' ')}</td>
+                <td style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)">${f.time}</td>
+                <td>${f.seasons.map(s => `<span class="tag tag-season">${cap(s)}</span>`).join(' ')}</td>
+                <td>${f.weather.map(w => weatherTag(w)).join(' ')}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`).join('');
+}
+
+function baitTag(b) {
+  const map = { bug: ['🐛 Bug','bug'], veggie: ['🌿 Veggie','veggie'], meat: ['🥩 Meat','meat'], any: ['✨ Any','any'] };
+  const [label, cls] = map[b] || [b, 'any'];
+  return `<span class="tag tag-${cls}">${label}</span>`;
+}
+function weatherTag(w) {
+  if (w === 'sunny') return `<span class="tag tag-weather-sunny">☀️ Sunny</span>`;
+  if (w === 'rainy') return `<span class="tag tag-weather-rainy">🌧️ Rainy</span>`;
+  return `<span class="tag tag-weather-any">All</span>`;
+}
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+function toggleChip(el, type, val) {
+  document.querySelectorAll(`#${type}Filters .chip`).forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  activeFilters[type] = val;
+  filterFish();
+}
+
+function filterFish() {
+  const search = document.getElementById('fishSearch').value.toLowerCase().trim();
+  const { bait, season } = activeFilters;
+  let totalVisible = 0;
+
+  document.querySelectorAll('.fish-row').forEach(row => {
+    const name = row.dataset.name;
+    const rowBaits = row.dataset.bait.split(',');
+    const rowSeasons = row.dataset.seasons.split(',');
+    const allSeasons = ['spring','summer','autumn','winter'];
+
+    const matchSearch = !search || name.includes(search);
+    const matchBait = bait === 'all'
+      || (bait === 'any' && rowBaits.includes('any'))
+      || rowBaits.includes(bait);
+    const matchSeason = season === 'all'
+      || rowSeasons.includes(season)
+      || (rowSeasons.length === 4 && allSeasons.every(s => rowSeasons.includes(s)));
+
+    const show = matchSearch && matchBait && matchSeason;
+    row.classList.toggle('hidden-row', !show);
+    if (show) totalVisible++;
+  });
+
+  // Show/hide whole biome blocks
+  document.querySelectorAll('.biome-block').forEach(block => {
+    const visible = block.querySelectorAll('.fish-row:not(.hidden-row)').length;
+    block.style.display = visible === 0 ? 'none' : 'block';
+  });
+
+  document.getElementById('noResults').classList.toggle('show', totalVisible === 0);
+}
+
+// ——— STRATEGY ———
+function buildStrategy() {
+  document.getElementById('strategyContent').innerHTML = STRATEGY.map(p => `
+    <div class="phase-block">
+      <div class="phase-header">
+        <div class="phase-num">${p.phase}</div>
+        <div>
+          <div class="phase-title">${p.title}</div>
+          <div class="phase-sub">${p.days}</div>
+        </div>
+      </div>
+      <ul class="step-list">
+        ${p.steps.map((s, i) => `
+          <li class="step-item">
+            <div class="step-num">${i + 1}</div>
+            <div class="step-text">${s.text}</div>
+          </li>`).join('')}
+      </ul>
+    </div>`).join('');
+}
+
+// ——— TIPS ———
+function buildTips() {
+  document.getElementById('tipsContent').innerHTML = TIPS.map(t => `
+    <div class="tip-item">
+      <div class="tip-icon">${t.icon}</div>
+      <div class="tip-text">${t.text}</div>
+    </div>`).join('');
+}
+</script>
+
+</body>
+</html>
